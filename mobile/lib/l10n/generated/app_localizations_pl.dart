@@ -5287,7 +5287,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get listVisibilityPublic => 'Publiczna';
 
   @override
-  String get listVisibilityPrivateDevice => 'Prywatna · Na tym urządzeniu';
+  String get listVisibilityPrivate => 'Prywatna';
 
   @override
   String get profileListsEmpty =>
@@ -5321,7 +5321,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get listMakePrivateWarning =>
-      'Poprosimy przekaźniki o usunięcie publicznej kopii, ale już udostępnione kopie mogą pozostać w sieci. Ta lista będzie tylko na tym urządzeniu i nie powstanie jej kopia zapasowa.';
+      'Filmy zostaną zaszyfrowane, więc zobaczysz je tylko ty. Nazwa listy pozostaje widoczna, a już udostępnione kopie mogą się zachować.';
 
   @override
   String get listMakePublicTitle => 'Ustawić tę listę jako publiczną?';
