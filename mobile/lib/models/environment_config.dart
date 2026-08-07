@@ -1,15 +1,34 @@
 // ABOUTME: Environment configuration model for poc/staging/test/production/local
 // ABOUTME: Each environment maps to exactly one relay URL and API base URL
 
-/// Host address from Android emulator to reach the host machine's localhost.
+import 'package:flutter/foundation.dart';
+
+/// Host address that reaches the machine running the local Docker stack.
+///
+/// Only the Android emulator needs the `10.0.2.2` alias; the iOS Simulator,
+/// macOS and web all reach the host as `localhost`. Hardcoding the Android
+/// alias left every `LOCAL` host unreachable on iOS, where the relay connect
+/// timed out after 90s and signing never got a chance to run.
+///
+/// `127.0.0.1` is **not** interchangeable with `localhost` here — local_stack's
+/// keycast rejects it (`ALLOWED_TENANT_DOMAINS: localhost,10.0.2.2` in
+/// `local_stack/docker-compose.yml`), so signing fails with
+/// `Invalid domain: 127.0.0.1` even though the relay connects fine.
+///
+/// The `kIsWeb` guard matters because `defaultTargetPlatform` reports the
+/// browser's host platform, so a browser on Android would otherwise be handed
+/// the emulator alias.
 ///
 /// Mirrored in the native transport-security configs that allow cleartext
 /// to loopback hosts:
 ///   - mobile/android/app/src/main/res/xml/network_security_config.xml
 ///   - mobile/ios/Runner/Info.plist (NSAllowsLocalNetworking)
 ///   - mobile/macos/Runner/Info.plist (NSAllowsLocalNetworking)
-/// Keep this constant in sync with the Android <domain-config> list.
-const localHost = '10.0.2.2';
+/// Keep both values in sync with the Android <domain-config> list.
+String get localHost =>
+    !kIsWeb && defaultTargetPlatform == TargetPlatform.android
+    ? '10.0.2.2'
+    : 'localhost';
 
 /// Local Docker stack port mappings.
 const localKeycastPort = 43000;

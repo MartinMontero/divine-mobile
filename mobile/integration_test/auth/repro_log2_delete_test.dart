@@ -29,7 +29,7 @@ import '../helpers/test_setup.dart';
 /// Calls headless register, extracts the verification token from postgres,
 /// and verifies the email so the account is ready for login.
 Future<String> _registerAndVerifyViaApi(String email, String password) async {
-  const serverUrl = 'http://$localHost:$localKeycastPort';
+  final serverUrl = 'http://$localHost:$localKeycastPort';
   const clientId = 'divine-mobile';
   const redirectUri = 'http://localhost:$localKeycastPort/app/callback';
 

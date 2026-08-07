@@ -51,7 +51,7 @@ const _productionLoginOrigin = 'https://login.divine.video';
 OAuthConfig oauthConfig(Ref ref) {
   final env = ref.watch(currentEnvironmentProvider);
   if (env.environment == AppEnvironment.local) {
-    return const OAuthConfig(
+    return OAuthConfig(
       serverUrl: 'http://$localHost:$localKeycastPort',
       clientId: 'divine-mobile',
       redirectUri: 'http://localhost:$localKeycastPort/app/callback',

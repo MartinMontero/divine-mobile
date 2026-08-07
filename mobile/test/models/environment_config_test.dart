@@ -1,6 +1,7 @@
 // ABOUTME: Tests for environment configuration model
 // ABOUTME: Verifies relay URL and API URL generation for each environment
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:openvine/models/environment_config.dart';
 
@@ -33,9 +34,38 @@ void main() {
         expect(config.relayUrl, 'wss://relay.test.dvines.org');
       });
 
-      test('local returns emulator relay', () {
+      test('local relay uses the emulator alias only on Android', () {
         const config = EnvironmentConfig(environment: AppEnvironment.local);
+
+        debugDefaultTargetPlatformOverride = TargetPlatform.android;
+        addTearDown(() => debugDefaultTargetPlatformOverride = null);
         expect(config.relayUrl, 'ws://10.0.2.2:47777');
+
+        // 10.0.2.2 is the Android emulator's host alias and is not routable
+        // from an iOS Simulator -- hardcoding it timed the relay connect out
+        // after 90s, so signing never ran.
+        for (final platform in [
+          TargetPlatform.iOS,
+          TargetPlatform.macOS,
+        ]) {
+          debugDefaultTargetPlatformOverride = platform;
+          expect(
+            config.relayUrl,
+            'ws://localhost:47777',
+            reason: '$platform reaches the host as localhost',
+          );
+        }
+      });
+
+      test('local relay never hands 127.0.0.1 to a non-Android target', () {
+        const config = EnvironmentConfig(environment: AppEnvironment.local);
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+        addTearDown(() => debugDefaultTargetPlatformOverride = null);
+
+        // local_stack keycast gates on ALLOWED_TENANT_DOMAINS
+        // (localhost,10.0.2.2), so the loopback IP fails signing with
+        // "Invalid domain: 127.0.0.1" even though the relay connects.
+        expect(config.relayUrl, isNot(contains('127.0.0.1')));
       });
 
       test('production returns divine.video relay', () {
@@ -64,7 +94,13 @@ void main() {
 
       test('local returns local API URL (unified funnelcake-proxy port)', () {
         const config = EnvironmentConfig(environment: AppEnvironment.local);
+        addTearDown(() => debugDefaultTargetPlatformOverride = null);
+
+        debugDefaultTargetPlatformOverride = TargetPlatform.android;
         expect(config.apiBaseUrl, 'http://10.0.2.2:47777');
+
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+        expect(config.apiBaseUrl, 'http://localhost:47777');
       });
 
       test('production uses api.divine.video for Funnelcake REST', () {
