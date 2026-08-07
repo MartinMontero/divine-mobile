@@ -1326,7 +1326,7 @@ void main() {
           videoEventService: videoEventService,
           blossomUploadService: blossomUploadService,
           savedSoundsService: savedSoundsService,
-          soundSyncRepository: syncRepository,
+          soundSyncRepositoryGetter: () => syncRepository,
         );
 
         when(
@@ -1539,6 +1539,12 @@ void main() {
 
           expect(result, isTrue);
           verify(() => savedSoundsService.saveSound(any())).called(1);
+          // The mirror sits inside an enclosing catch-and-log, so without
+          // this the test would pass unchanged even if _mirrorSavedSound's
+          // own try/catch — or the mirror call entirely — were deleted.
+          verify(
+            () => syncRepository.publishLocalChange(any()),
+          ).called(1);
         },
       );
 
