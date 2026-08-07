@@ -5201,7 +5201,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get listPrivateListSubtitle =>
-      'Le liste private restano su questo dispositivo e non finiscono nel backup';
+      'Solo tu puoi vedere cosa c\'è in questa lista';
 
   @override
   String get listVisibilityPublic => 'Pubblica';
