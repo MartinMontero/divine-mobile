@@ -295,7 +295,6 @@ class VideosRepository {
       final ordered = await _orderBySeenFreshness(videos);
       final result = HomeFeedResult(videos: ordered);
       if (until == null) _inMemoryFeedCache?.set('home', result);
-      // Still apply ordering to cached path on next call via cache gate below
       return result;
     }
 
