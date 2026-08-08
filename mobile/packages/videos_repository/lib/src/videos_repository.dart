@@ -98,6 +98,15 @@ const int classicsMaxRandomStartOffset = 400;
 /// that without turning a single fetch into a crawl through the archive.
 const int _classicsMaxPageFetches = 3;
 
+/// Archive pages one Classics fetch may read when a seen-video lookup is
+/// wired in.
+///
+/// Dropping recently-seen videos empties far more pages than the filters
+/// [_classicsMaxPageFetches] budgets for — a heavy viewer has already watched
+/// the leaderboard top — so the budget is raised. It stays bounded because
+/// each extra page is another Funnelcake round-trip on the feed's cold path.
+const int _classicsMaxSeenFilteredFetches = 8;
+
 /// Result of a hashtag REST feed fetch.
 class HashtagFeedVideosResult {
   /// Creates a successful hashtag feed result.
@@ -839,9 +848,13 @@ class VideosRepository {
   /// within [classicsMaxRandomStartOffset] and shuffles the page, so two
   /// sessions do not see the same opening run. The next offset rides in
   /// [HomeFeedResult.paginationCursor], so the home feed paginates this like
-  /// the For You feed. Filtering can empty an archive page, so up to
-  /// [_classicsMaxPageFetches] pages are read to fill [limit] rather than
-  /// handing back a page a feed cannot paginate out of. A topped-up page can
+  /// the For You feed. Filtering can empty an archive page, so several pages
+  /// are read to fill [limit] rather than handing back a page a feed cannot
+  /// paginate out of — [_classicsMaxPageFetches] normally, or
+  /// [_classicsMaxSeenFilteredFetches] when a seen-video lookup is wired in,
+  /// since dropping recently-seen videos empties more pages. When even that
+  /// budget yields nothing, the unfiltered pages are served rather than an
+  /// empty one. A topped-up page can
   /// therefore exceed [limit]; the cursor advances past every page actually
   /// read, so trimming to [limit] would drop those videos rather than defer
   /// them.
@@ -897,17 +910,17 @@ class VideosRepository {
 
     final collected = <VideoEvent>[];
     final seenVideoKeys = <String>{};
+    // Same pages before seen-filtering. Used only when seen-filtering removed
+    // every candidate: a feed cannot paginate out of an empty page (the only
+    // load-more trigger is the near-end callback of a rendered video), so
+    // repeats beat a dead end.
+    final unfilteredCollected = <VideoEvent>[];
+    final unfilteredVideoKeys = <String>{};
     var exhausted = false;
     var failed = false;
-    // Deep-fetch budget: when filtering removes many videos we fetch deeper
-    // to avoid short pages (heavy users have seen top 500). Variable page
-    // sizes are fine for continuous feeds; we fetch until we have limit or
-    // we've tried enough pages. _classicsMaxPageFetches covers transport
-    // filtering; add extra budget for seen filtering (up to 8 total).
-    const maxSeenFilteredFetches = 8;
     final maxFetches = _seenVideoLookup == null
         ? _classicsMaxPageFetches
-        : maxSeenFilteredFetches;
+        : _classicsMaxSeenFilteredFetches;
 
     try {
       for (
@@ -942,13 +955,25 @@ class VideosRepository {
         // If filtering would drop an entire page but we have no filtered
         // results yet, don't let one leaderboard page trap us — we continue
         // fetching (the loop does). If filtering drops everything across
-        // all pages, we will fall back to the unfiltered collected below.
+        // all pages, we fall back to the unfiltered collected below.
         _appendUniqueVideos(
           collected,
           filteredPage,
           seenVideoKeys: seenVideoKeys,
         );
+        if (!identical(filteredPage, pageVideos)) {
+          _appendUniqueVideos(
+            unfilteredCollected,
+            pageVideos,
+            seenVideoKeys: unfilteredVideoKeys,
+          );
+        }
 
+        // Exhaustion is "the archive returned nothing here", not "the page
+        // came back short": the client drops rows with a missing id or URL
+        // before this sees them, so a short page is not an end-of-archive
+        // signal. Reading the count before filtering also means a page that
+        // filters down to nothing tops up instead of ending the feed.
         exhausted = stats.isEmpty;
         offset += limit;
       }
@@ -956,23 +981,13 @@ class VideosRepository {
       failed = true;
     }
 
-    // If filtering left us with nothing but upstream wasn't exhausted,
-    // return empty with hasMore true so the feed can paginate to fresh
-    // archive slices rather than showing nothing forever. If we did collect
-    // something, shuffle as before (classic is leaderboard-sorted, shuffle
-    // gives per-session variety).
-    if (collected.isEmpty &&
-        !exhausted &&
-        !failed &&
-        _seenVideoLookup != null) {
-      // All fetched pages were recently seen and filtered — treat as not
-      // exhausted and let caller fetch next cursor (which advances past the
-      // filtered window). Return empty but paginatable.
-      return HomeFeedResult(
-        videos: const [],
-        paginationCursor: _encodeClassicsOffsetCursor(offset),
-        hasMore: true,
-      );
+    // Seen-filtering emptied every page we were allowed to read: serve the
+    // unfiltered pages instead. Returning an empty page here would strand the
+    // feed — VideoFeedBloc only paginates from the near-end callback of a
+    // rendered video, so a page with no videos never asks for the next one
+    // and the surface stays empty until a manual pull-to-refresh.
+    if (collected.isEmpty && unfilteredCollected.isNotEmpty) {
+      collected.addAll(unfilteredCollected);
     }
 
     collected.shuffle(_random);

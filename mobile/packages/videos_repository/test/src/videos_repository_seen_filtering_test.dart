@@ -280,44 +280,50 @@ void main() {
       },
     );
 
-    test('classic returns a cursor after eight all-seen pages', () async {
-      when(
-        () => mockFunnelcake.getClassicVines(
-          limit: any(named: 'limit'),
-          offset: any(named: 'offset'),
-        ),
-      ).thenAnswer((invocation) async {
-        final offset = invocation.namedArguments[#offset] as int;
-        return [
-          _stats('seen-$offset-a', platform: 'vine'),
-          _stats('seen-$offset-b', platform: 'vine'),
-        ];
-      });
-      when(
-        () => mockFunnelcake.getBulkVideoStats(any()),
-      ).thenAnswer((_) async => const BulkVideoStatsResponse(stats: {}));
+    test(
+      'classic serves seen videos rather than an empty all-seen page',
+      () async {
+        when(
+          () => mockFunnelcake.getClassicVines(
+            limit: any(named: 'limit'),
+            offset: any(named: 'offset'),
+          ),
+        ).thenAnswer((invocation) async {
+          final offset = invocation.namedArguments[#offset] as int;
+          return [
+            _stats('seen-$offset-a', platform: 'vine'),
+            _stats('seen-$offset-b', platform: 'vine'),
+          ];
+        });
+        when(
+          () => mockFunnelcake.getBulkVideoStats(any()),
+        ).thenAnswer((_) async => const BulkVideoStatsResponse(stats: {}));
 
-      final repo = VideosRepository(
-        nostrClient: mockNostr,
-        funnelcakeApiClient: mockFunnelcake,
-        seenVideoLookup: SeenVideoLookup(
-          wasSeenRecently: (_, {within = const Duration(hours: 24)}) => true,
-        ),
-        random: StubRandom(offsetPage: 0),
-      );
+        final repo = VideosRepository(
+          nostrClient: mockNostr,
+          funnelcakeApiClient: mockFunnelcake,
+          seenVideoLookup: SeenVideoLookup(
+            wasSeenRecently: (_, {within = const Duration(hours: 24)}) => true,
+          ),
+          random: StubRandom(offsetPage: 0),
+        );
 
-      final result = await repo.getClassicVideos(limit: 2);
+        final result = await repo.getClassicVideos(limit: 2);
 
-      expect(result.videos, isEmpty);
-      expect(result.paginationCursor, 'classic-offset:16');
-      expect(result.hasMore, isTrue);
-      verify(
-        () => mockFunnelcake.getClassicVines(
-          limit: 2,
-          offset: any(named: 'offset'),
-        ),
-      ).called(8);
-    });
+        // An empty page would strand the feed: VideoFeedBloc only paginates
+        // from a rendered video's near-end callback, so it would never ask
+        // for the next cursor. Serve the unfiltered pages instead.
+        expect(result.videos, isNotEmpty);
+        expect(result.paginationCursor, 'classic-offset:16');
+        expect(result.hasMore, isTrue);
+        verify(
+          () => mockFunnelcake.getClassicVines(
+            limit: 2,
+            offset: any(named: 'offset'),
+          ),
+        ).called(8);
+      },
+    );
 
     test('classic cache drops videos watched after it was populated', () async {
       final seenIds = <String>{};
