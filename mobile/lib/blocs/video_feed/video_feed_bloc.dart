@@ -425,23 +425,30 @@ class VideoFeedBloc extends Bloc<VideoFeedEvent, VideoFeedBlocState> {
           .where((v) => v.videoUrl != null)
           .toList();
 
+      // Cursor-backed feeds (For You, Classics) arrive in server-ranked order,
+      // so their pages are appended untouched. `until`-paginated feeds are
+      // ordered here instead — but only the arriving page, never the videos
+      // already on screen. An `until` page is strictly older than everything
+      // loaded, so sorting it and appending lands in the same chronological
+      // place a whole-list sort would, while leaving any ordering the
+      // repository applied to earlier pages (seen-video demotion) intact and
+      // holding every already-rendered video at its current index.
+      final incomingVideos = [...validNewVideos];
+      if (!usesCursor) {
+        incomingVideos.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      }
+
       // Deduplicate by logical video identity. Addressable videos can be
       // republished with fresh event IDs, and bare d-tags can collide across
       // authors, so the key is the full addressable coordinate when present.
       final seenVideoKeys = <String>{};
       final updatedVideos = <VideoEvent>[];
-      for (final video in [...state.videos, ...validNewVideos]) {
+      for (final video in [...state.videos, ...incomingVideos]) {
         if (seenVideoKeys.add(video.feedDedupKey)) {
           updatedVideos.add(video);
         }
       }
 
-      // Cursor-backed feeds (For You, Classics) arrive in server-ranked
-      // order; re-sorting by createdAt would shuffle new videos around the
-      // current play index and resurface already-seen ones.
-      if (!usesCursor) {
-        updatedVideos.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      }
       final addedUniqueVideos = updatedVideos.length > state.videos.length;
 
       // Merge attribution metadata from pagination with existing state.

@@ -2001,6 +2001,61 @@ void main() {
       );
 
       blocTest<VideoFeedBloc, VideoFeedBlocState>(
+        'keeps the loaded following page in place when paginating',
+        setUp: () {
+          when(() => mockFollowRepository.followingPubkeys).thenReturn(['a']);
+          when(
+            () => mockVideosRepository.getHomeFeedVideos(
+              authors: any(named: 'authors'),
+              videoRefs: any(named: 'videoRefs'),
+              userPubkey: any(named: 'userPubkey'),
+              limit: any(named: 'limit'),
+              until: any(named: 'until'),
+              skipCache: any(named: 'skipCache'),
+            ),
+          ).thenAnswer(
+            (_) async => HomeFeedResult(
+              videos: [
+                createTestVideo('page2-f', createdAt: 95),
+                createTestVideo('page2-e', createdAt: 96),
+              ],
+            ),
+          );
+        },
+        build: createBloc,
+        // The repository hands back page one already ordered — here with
+        // recently-seen b and d demoted behind unseen a and c. Re-sorting the
+        // whole list on pagination would rewrite that back to chronological
+        // order and move videos across the index the viewer is sitting on.
+        seed: () => VideoFeedBlocState(
+          status: VideoFeedStatus.success,
+          source: const VideoFeedSource.following(),
+          videos: [
+            createTestVideo('a', createdAt: 100),
+            createTestVideo('c', createdAt: 98),
+            createTestVideo('b', createdAt: 99),
+            createTestVideo('d', createdAt: 97),
+          ],
+        ),
+        act: (bloc) => bloc.add(const VideoFeedLoadMoreRequested()),
+        expect: () => [
+          isA<VideoFeedBlocState>().having(
+            (s) => s.isLoadingMore,
+            'isLoadingMore',
+            true,
+          ),
+          isA<VideoFeedBlocState>()
+              .having((s) => s.isLoadingMore, 'isLoadingMore', false)
+              .having(
+                (s) => s.videos.map((v) => v.id).toList(),
+                'video ids',
+                // Page one untouched; the arriving page sorted and appended.
+                equals(['a', 'c', 'b', 'd', 'page2-e', 'page2-f']),
+              ),
+        ],
+      );
+
+      blocTest<VideoFeedBloc, VideoFeedBlocState>(
         'filters duplicate IDs from the next forYou page while preserving '
         'order',
         setUp: () {
@@ -2051,8 +2106,13 @@ void main() {
         ],
       );
 
+      // `until` pagination cannot hand back a page newer than the loaded set,
+      // so this is the misbehaving-server case. It is appended rather than
+      // sorted to the front for the same reason the forYou test above gives:
+      // hoisting a page over the video the viewer is on moves the feed under
+      // them and resurfaces what they already watched.
       blocTest<VideoFeedBloc, VideoFeedBlocState>(
-        'sorts merged following feed chronologically on load more',
+        'appends an out-of-order following page instead of hoisting it',
         setUp: () {
           final newerVideos = [
             createTestVideo('newer-c', createdAt: 5000),
@@ -2092,7 +2152,7 @@ void main() {
               .having(
                 (s) => s.videos.map((v) => v.id).toList(),
                 'video ids',
-                equals(['newer-c', 'newer-d', 'old-a', 'old-b']),
+                equals(['old-a', 'old-b', 'newer-c', 'newer-d']),
               ),
         ],
       );
