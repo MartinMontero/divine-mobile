@@ -84,9 +84,14 @@ class SeenVideoMetrics {
 /// SharedPreferences in-memory set so tests stay hermetic without a Drift
 /// instance.
 class SeenVideosService {
+  /// Creates the service.
+  ///
+  /// [database] is the production persistence dependency — `null` degrades to
+  /// the SharedPreferences-only behaviour used by tests, by early startup
+  /// before the database opens, and by the feature-flag kill switch.
   SeenVideosService({
     @visibleForTesting Duration? saveDebounceDuration,
-    @visibleForTesting AppDatabase? database,
+    AppDatabase? database,
     @visibleForTesting SharedPreferences? prefsOverride,
   }) : _saveDebounceDuration =
            saveDebounceDuration ?? const Duration(milliseconds: 100),
@@ -130,7 +135,11 @@ class SeenVideosService {
         unawaited(
           _effectiveDb!.seenVideosDao.pruneExpired().then<void>(
             (_) {},
-            onError: (Object e, StackTrace s) {},
+            onError: (Object e, StackTrace s) => Log.warning(
+              'Seen DB prune failed; stale rows remain: $e',
+              name: 'SeenVideosService',
+              category: LogCategory.system,
+            ),
           ),
         );
       }
@@ -206,11 +215,15 @@ class SeenVideosService {
               _seenLastSeen[row.videoId] = lastSeen;
             }
           }
+          // Import prefs history whenever the flag is unset, even when the
+          // table already has rows: a run that wrote a row and was killed
+          // before the flag persisted would otherwise skip the import and
+          // strand the rest of the history in the bounded blob, which rotates
+          // it away. The import ignores ids the table already holds, so the
+          // durable row always wins.
           final migrated = _prefs!.getBool(_seenVideosMigratedKey) ?? false;
-          if (!migrated && dbRows.isEmpty && _seenVideos.isNotEmpty) {
-            await _migrateMetricsToDb();
-            await _prefs!.setBool(_seenVideosMigratedKey, true);
-          } else if (dbRows.isNotEmpty && !migrated) {
+          if (!migrated) {
+            if (_seenVideos.isNotEmpty) await _migrateMetricsToDb();
             await _prefs!.setBool(_seenVideosMigratedKey, true);
           }
           Log.debug(

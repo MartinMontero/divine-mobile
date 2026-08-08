@@ -11,7 +11,12 @@ class SeenVideosDao extends DatabaseAccessor<AppDatabase>
     with _$SeenVideosDaoMixin {
   SeenVideosDao(super.attachedDatabase);
 
-  /// Upserts a single seen video.
+  /// Upserts a single seen video, refreshing `last_seen_at` only.
+  ///
+  /// `first_seen_at` on an existing row is kept: callers source it from the
+  /// bounded metrics cache, which evicts old videos, so replacing the row
+  /// would reset the stored first-seen to now for anything the cache has
+  /// forgotten.
   Future<void> markSeen(
     String videoId, {
     required int firstSeenAt,
@@ -23,11 +28,18 @@ class SeenVideosDao extends DatabaseAccessor<AppDatabase>
         firstSeenAt: firstSeenAt,
         lastSeenAt: lastSeenAt,
       ),
-      mode: InsertMode.insertOrReplace,
+      onConflict: DoUpdate(
+        (_) => SeenVideosCompanion(lastSeenAt: Value(lastSeenAt)),
+      ),
     );
   }
 
-  /// Upserts many seen videos in a single batch.
+  /// Inserts many seen videos in a single batch, keeping any existing row.
+  ///
+  /// This is the SharedPreferences import path. Rows already in the table came
+  /// from the durable store and carry a truer `first_seen_at` and a newer
+  /// `last_seen_at` than the bounded blob does, so a re-run of the import must
+  /// not overwrite them — that also makes the import idempotent.
   Future<void> markSeenBatch(List<SeenVideoRow> rows) async {
     await batch((b) {
       for (final row in rows) {
@@ -38,7 +50,7 @@ class SeenVideosDao extends DatabaseAccessor<AppDatabase>
             firstSeenAt: row.firstSeenAt,
             lastSeenAt: row.lastSeenAt,
           ),
-          mode: InsertMode.insertOrReplace,
+          mode: InsertMode.insertOrIgnore,
         );
       }
     });
@@ -88,8 +100,8 @@ class SeenVideosDao extends DatabaseAccessor<AppDatabase>
     return await q.getSingleOrNull() != null;
   }
 
-  /// Synchronous in-memory-style check using a preloaded map — prefer
-  /// [wasSeenRecently] for DB truth; this is for tests.
+  /// Every seen video id. Prefer [wasSeenRecently] for a membership check —
+  /// this reads the whole table.
   Future<Set<String>> getAllSeenIds() async {
     final rows = await select(seenVideos).get();
     return rows.map((r) => r.videoId).toSet();

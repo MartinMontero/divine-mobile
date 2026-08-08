@@ -83,6 +83,54 @@ void main() {
       },
     );
 
+    test(
+      'imports prefs history even when the table already has rows',
+      () async {
+        // A previous run wrote a row and was killed before the migrated flag
+        // persisted. The rest of the prefs history must still be imported, or
+        // it is stranded in the bounded blob and rotates away.
+        // Timestamps stay inside the 1-year TTL so the startup prune keeps
+        // them.
+        final now = DateTime.now().millisecondsSinceEpoch;
+        final durableFirstSeen = now - const Duration(days: 5).inMilliseconds;
+        final durableLastSeen = now - const Duration(days: 1).inMilliseconds;
+        final staleBlobCopy = now - const Duration(days: 30).inMilliseconds;
+
+        await db.seenVideosDao.markSeen(
+          'already-durable',
+          firstSeenAt: durableFirstSeen,
+          lastSeenAt: durableLastSeen,
+        );
+
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(
+          'seen_video_metrics',
+          '[{"videoId":"already-durable","firstSeenAt":$staleBlobCopy,'
+              '"lastSeenAt":$staleBlobCopy,'
+              '"loopCount":0,"totalWatchDurationMs":0,'
+              '"lastWatchDurationMs":0},'
+              '{"videoId":"only-in-prefs","firstSeenAt":$staleBlobCopy,'
+              '"lastSeenAt":$staleBlobCopy,'
+              '"loopCount":0,"totalWatchDurationMs":0,'
+              '"lastWatchDurationMs":0}]',
+        );
+
+        final service = SeenVideosService(database: db);
+        await service.initialize();
+
+        final rows = {
+          for (final row in await db.seenVideosDao.getAll()) row.videoId: row,
+        };
+        expect(
+          rows.keys,
+          containsAll(<String>['already-durable', 'only-in-prefs']),
+        );
+        // The durable row wins over the staler blob copy.
+        expect(rows['already-durable']!.firstSeenAt, durableFirstSeen);
+        expect(rows['already-durable']!.lastSeenAt, durableLastSeen);
+      },
+    );
+
     test('wasSeenRecently respects window', () async {
       final service = SeenVideosService(database: db);
       await service.initialize();

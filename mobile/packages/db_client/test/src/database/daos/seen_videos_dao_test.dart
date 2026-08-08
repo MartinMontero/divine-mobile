@@ -19,7 +19,7 @@ void main() {
       await database.close();
     });
 
-    test('markSeen stores and replaces timestamps for one video', () async {
+    test('markSeen stores and refreshes lastSeenAt for one video', () async {
       await dao.markSeen('video-a', firstSeenAt: 100, lastSeenAt: 200);
       await dao.markSeen('video-a', firstSeenAt: 100, lastSeenAt: 300);
 
@@ -30,6 +30,21 @@ void main() {
       expect(await dao.count(), 1);
     });
 
+    test(
+      'markSeen keeps the stored firstSeenAt when the caller has lost it',
+      () async {
+        await dao.markSeen('video-a', firstSeenAt: 100, lastSeenAt: 200);
+
+        // The bounded metrics cache evicted this video, so the service can only
+        // offer "now" as firstSeenAt. The stored original must survive.
+        await dao.markSeen('video-a', firstSeenAt: 900, lastSeenAt: 900);
+
+        final row = await dao.getAll().then((rows) => rows.single);
+        expect(row.firstSeenAt, 100);
+        expect(row.lastSeenAt, 900);
+      },
+    );
+
     test('markSeenBatch stores every supplied row', () async {
       await dao.markSeenBatch(const [
         SeenVideoRow(videoId: 'video-a', firstSeenAt: 100, lastSeenAt: 200),
@@ -38,6 +53,22 @@ void main() {
 
       expect(await dao.getAllSeenIds(), {'video-a', 'video-b'});
       expect(await dao.count(), 2);
+    });
+
+    test('markSeenBatch leaves an existing durable row untouched', () async {
+      await dao.markSeen('video-a', firstSeenAt: 100, lastSeenAt: 900);
+
+      // Re-running the import must not drag lastSeenAt back to the stale
+      // value the bounded blob still carries.
+      await dao.markSeenBatch(const [
+        SeenVideoRow(videoId: 'video-a', firstSeenAt: 50, lastSeenAt: 60),
+        SeenVideoRow(videoId: 'video-b', firstSeenAt: 300, lastSeenAt: 400),
+      ]);
+
+      final rows = {for (final row in await dao.getAll()) row.videoId: row};
+      expect(rows['video-a']!.firstSeenAt, 100);
+      expect(rows['video-a']!.lastSeenAt, 900);
+      expect(rows['video-b']!.lastSeenAt, 400);
     });
 
     test(
