@@ -270,7 +270,7 @@ class VideosRepository {
     // Return in-memory cached result when available (initial page only).
     if (!skipCache && until == null) {
       final cached = _inMemoryFeedCache?.get('home');
-      if (cached != null) return cached;
+      if (cached != null) return _withSeenFreshnessOrdering(cached);
     }
 
     // 1. Fetch following videos (Funnelcake API → Nostr relay waterfall)
@@ -281,17 +281,25 @@ class VideosRepository {
       until: until,
     );
 
-    // 2. If no list refs, return following-only result
+    // 2. If no list refs, return following-only result (with seen demotion)
     if (videoRefs.isEmpty) {
-      final result = HomeFeedResult(videos: videos);
+      final ordered = await _orderBySeenFreshness(videos);
+      final result = HomeFeedResult(videos: ordered);
       if (until == null) _inMemoryFeedCache?.set('home', result);
+      // Still apply ordering to cached path on next call via cache gate below
       return result;
     }
 
     // 3. Merge list videos with following videos
-    final result = await _mergeListVideos(
+    final merged = await _mergeListVideos(
       followingVideos: videos,
       videoRefs: videoRefs,
+    );
+    final orderedVideos = await _orderBySeenFreshness(merged.videos);
+    final result = HomeFeedResult(
+      videos: orderedVideos,
+      videoListSources: merged.videoListSources,
+      listOnlyVideoIds: merged.listOnlyVideoIds,
     );
     if (until == null) _inMemoryFeedCache?.set('home', result);
     return result;
@@ -705,7 +713,9 @@ class VideosRepository {
     // Return in-memory cached result when available (initial page only).
     if (!skipCache && until == null) {
       final cached = _inMemoryFeedCache?.get('latest');
-      if (cached != null) return cached.videos;
+      if (cached != null) {
+        return _orderBySeenFreshness(cached.videos);
+      }
     }
 
     // 1. Try Funnelcake API first
@@ -719,7 +729,8 @@ class VideosRepository {
             ? await _mergeRecentApiVideosWithRelayRefresh(videos, limit: limit)
             : videos;
         // Hydrate views/loops — list endpoint omits them for some rows.
-        final hydrated = await _hydrateVideosWithBulkStats(mergedVideos);
+        var hydrated = await _hydrateVideosWithBulkStats(mergedVideos);
+        hydrated = await _orderBySeenFreshness(hydrated);
         if (until == null) {
           _inMemoryFeedCache?.set('latest', HomeFeedResult(videos: hydrated));
         }
@@ -734,7 +745,8 @@ class VideosRepository {
       limit: limit,
       until: until,
     );
-    final hydrated = await _hydrateVideosWithBulkStats(videos);
+    var hydrated = await _hydrateVideosWithBulkStats(videos);
+    hydrated = await _orderBySeenFreshness(hydrated);
     if (until == null) {
       _inMemoryFeedCache?.set('latest', HomeFeedResult(videos: hydrated));
     }
@@ -852,12 +864,35 @@ class VideosRepository {
     final isFirstPage = cursor == null;
     if (!skipCache && isFirstPage) {
       final cached = _inMemoryFeedCache?.get(_classicsCacheKey);
-      if (cached != null) return cached;
+      if (cached != null) {
+        // Classics uses drop-filtering; cached page was already filtered &
+        // shuffled, so re-apply freshness in case seen set grew since cache.
+        final ordered = await _orderBySeenFreshness(cached.videos);
+        // If drop would empty it, return cached as-is to avoid empty feed.
+        if (ordered.length != cached.videos.length) {
+          final filtered = filterOutRecentlySeenVideos(
+            cached.videos,
+            seenVideoLookup: _seenVideoLookup,
+          );
+          if (filtered.isEmpty) return cached;
+          // For drop policy, filtered cache may be short; return filtered
+          // and let pagination deep-fetch on next page rather than blocking
+          // here.
+          return HomeFeedResult(
+            videos: filtered..shuffle(_random),
+            paginationCursor: cached.paginationCursor,
+            hasMore: cached.hasMore,
+          );
+        }
+        return cached;
+      }
     }
 
     if (_funnelcakeApiClient == null || !_funnelcakeApiClient.isAvailable) {
       return const HomeFeedResult(videos: [], hasMore: false);
     }
+
+    await _seenVideoLookup?.ensureInitialized();
 
     var offset = _decodeClassicsOffsetCursor(cursor) ?? _classicsOffset(limit);
 
@@ -865,11 +900,20 @@ class VideosRepository {
     final seenVideoKeys = <String>{};
     var exhausted = false;
     var failed = false;
+    // Deep-fetch budget: when filtering removes many videos we fetch deeper
+    // to avoid short pages (heavy users have seen top 500). Variable page
+    // sizes are fine for continuous feeds; we fetch until we have limit or
+    // we've tried enough pages. _classicsMaxPageFetches covers transport
+    // filtering; add extra budget for seen filtering (up to 8 total).
+    const maxSeenFilteredFetches = 8;
+    final maxFetches = _seenVideoLookup == null
+        ? _classicsMaxPageFetches
+        : maxSeenFilteredFetches;
 
     try {
       for (
         var fetch = 0;
-        fetch < _classicsMaxPageFetches &&
+        fetch < maxFetches &&
             collected.length < limit &&
             !exhausted;
         fetch++
@@ -879,28 +923,58 @@ class VideosRepository {
           offset: offset,
         );
 
+        final pageVideos = _filterPopularVideosForVariant(
+          await _hydrateVideosWithBulkStats(
+            _transformVideoStats(stats, sortByCreatedAt: false),
+            replaceInteractionCounts: true,
+          ),
+          PopularVideosVariant.classic,
+        );
+
+        // Apply seen filtering per-page: drop recently-seen when lookup
+        // available (inventory is unlimited, so dropping is safe), but only
+        // if we have not already filled limit via filtered results.
+        final filteredPage = _seenVideoLookup == null
+            ? pageVideos
+            : filterOutRecentlySeenVideos(
+                pageVideos,
+                seenVideoLookup: _seenVideoLookup,
+              );
+
+        // If filtering would drop an entire page but we have no filtered
+        // results yet, don't let one leaderboard page trap us — we continue
+        // fetching (the loop does). If filtering drops everything across
+        // all pages, we will fall back to the unfiltered collected below.
         _appendUniqueVideos(
           collected,
-          _filterPopularVideosForVariant(
-            await _hydrateVideosWithBulkStats(
-              _transformVideoStats(stats, sortByCreatedAt: false),
-              replaceInteractionCounts: true,
-            ),
-            PopularVideosVariant.classic,
-          ),
+          filteredPage,
           seenVideoKeys: seenVideoKeys,
         );
 
-        // Exhaustion is "the archive returned nothing here", not "the page
-        // came back short": the client drops rows with a missing id or URL
-        // before this sees them, so a short page is not an end-of-archive
-        // signal. Reading the count before filtering also means a page that
-        // filters down to nothing tops up instead of ending the feed.
         exhausted = stats.isEmpty;
         offset += limit;
       }
     } on FunnelcakeException {
       failed = true;
+    }
+
+    // If filtering left us with nothing but upstream wasn't exhausted,
+    // return empty with hasMore true so the feed can paginate to fresh
+    // archive slices rather than showing nothing forever. If we did collect
+    // something, shuffle as before (classic is leaderboard-sorted, shuffle
+    // gives per-session variety).
+    if (collected.isEmpty &&
+        !exhausted &&
+        !failed &&
+        _seenVideoLookup != null) {
+      // All fetched pages were recently seen and filtered — treat as not
+      // exhausted and let caller fetch next cursor (which advances past the
+      // filtered window). Return empty but paginatable.
+      return HomeFeedResult(
+        videos: const [],
+        paginationCursor: _encodeClassicsOffsetCursor(offset),
+        hasMore: true,
+      );
     }
 
     collected.shuffle(_random);
@@ -912,9 +986,6 @@ class VideosRepository {
       hasMore: hasMore,
     );
 
-    // A failed page is not worth pinning for the rest of the session, and an
-    // empty one would be a trap: the feed cannot paginate out of an empty
-    // list, so pinning it would keep serving nothing until a manual refresh.
     if (!failed && isFirstPage && collected.isNotEmpty) {
       _inMemoryFeedCache?.set(_classicsCacheKey, result);
     }
@@ -2615,7 +2686,7 @@ class VideosRepository {
         '$preferenceCacheSuffix';
     if (!skipCache && until == null && cursor == null) {
       final cached = _inMemoryFeedCache?.get(cacheKey);
-      if (cached != null) return _withForYouFreshnessOrdering(cached);
+      if (cached != null) return _withSeenFreshnessOrdering(cached);
     }
 
     final isFirstPage = until == null && cursor == null;
@@ -2627,7 +2698,7 @@ class VideosRepository {
         _funnelcakeApiClient == null ||
         !_funnelcakeApiClient.isAvailable) {
       return HomeFeedResult(
-        videos: await _orderForYouFreshness(
+        videos: await _orderBySeenFreshness(
           await getPopularVideos(
             limit: limit,
             until: until,
@@ -2653,7 +2724,7 @@ class VideosRepository {
     } on FunnelcakeException {
       if (recommendationCursor != null) rethrow;
       return HomeFeedResult(
-        videos: await _orderForYouFreshness(
+        videos: await _orderBySeenFreshness(
           await getPopularVideos(
             limit: limit,
             until: until,
@@ -2677,7 +2748,7 @@ class VideosRepository {
 
     if (result.videos.isEmpty) {
       return HomeFeedResult(
-        videos: await _orderForYouFreshness(
+        videos: await _orderBySeenFreshness(
           await getPopularVideos(
             limit: limit,
             until: until,
@@ -2758,7 +2829,7 @@ class VideosRepository {
 
       if (videos.isEmpty ||
           _seenVideoLookup == null ||
-          _hasNotRecentlySeenForYouCandidate(videos) ||
+          _hasNotRecentlySeenCandidate(videos) ||
           !hasMore ||
           nextCursor == null ||
           nextCursor == fetchedCursor) {
@@ -2788,7 +2859,7 @@ class VideosRepository {
     );
   }
 
-  bool _hasNotRecentlySeenForYouCandidate(List<VideoEvent> videos) {
+  bool _hasNotRecentlySeenCandidate(List<VideoEvent> videos) {
     final lookup = _seenVideoLookup;
     if (lookup == null) return true;
     return videos.any(
@@ -2801,7 +2872,7 @@ class VideosRepository {
     );
   }
 
-  Future<List<VideoEvent>> _orderForYouFreshness(
+  Future<List<VideoEvent>> _orderBySeenFreshness(
     List<VideoEvent> videos,
   ) async {
     await _seenVideoLookup?.ensureInitialized();
@@ -2811,10 +2882,10 @@ class VideosRepository {
     );
   }
 
-  Future<HomeFeedResult> _withForYouFreshnessOrdering(
+  Future<HomeFeedResult> _withSeenFreshnessOrdering(
     HomeFeedResult result,
   ) async {
-    final orderedVideos = await _orderForYouFreshness(result.videos);
+    final orderedVideos = await _orderBySeenFreshness(result.videos);
     if (identical(orderedVideos, result.videos)) return result;
     return HomeFeedResult(
       videos: orderedVideos,
