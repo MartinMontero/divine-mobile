@@ -113,8 +113,17 @@ void main() {
 
       // Default mock behaviors
       when(() => mockNostrClient.publicKey).thenReturn(testUserPubkey);
+      when(
+        () => mockNostrClient.resolvePublicKey(),
+      ).thenAnswer((_) async => testUserPubkey);
       when(() => mockNostrClient.hasKeys).thenReturn(false);
       when(() => mockNostrClient.unsubscribe(any())).thenAnswer((_) async {});
+      when(
+        () => mockNostrClient.subscribe(
+          any(),
+          subscriptionId: any(named: 'subscriptionId'),
+        ),
+      ).thenAnswer((_) => const Stream.empty());
       when(
         () => mockLocalStorage.getAllLikeRecords(),
       ).thenAnswer((_) async => []);
@@ -2542,6 +2551,88 @@ void main() {
       });
     });
 
+    group('signer readiness (#6813)', () {
+      test(
+        'syncUserReactions filters on the resolved key, not the stale cache',
+        () async {
+          // The cache stays empty when the signer acquired its key after the
+          // client initialized. Reading it directly would query
+          // authors: [''], which matches no event.
+          when(() => mockNostrClient.publicKey).thenReturn('');
+          when(
+            () => mockNostrClient.resolvePublicKey(),
+          ).thenAnswer((_) async => testUserPubkey);
+          mockQueryEventsSequence([
+            [],
+            [],
+          ]);
+
+          repository = createRepository();
+          await repository.syncUserReactions();
+
+          final captured = verify(
+            () => mockNostrClient.queryEvents(captureAny()),
+          ).captured.cast<List<Filter>>();
+          expect(captured, isNotEmpty);
+          for (final filters in captured) {
+            expect(filters.single.authors, equals([testUserPubkey]));
+          }
+        },
+      );
+
+      test(
+        'syncUserReactions keeps local data and skips relays with no key',
+        () async {
+          when(
+            () => mockNostrClient.resolvePublicKey(),
+          ).thenAnswer((_) async => null);
+          when(() => mockLocalStorage.getAllLikeRecords()).thenAnswer(
+            (_) async => [createLikeRecord()],
+          );
+
+          repository = createRepository();
+          final result = await repository.syncUserReactions();
+
+          verifyNever(() => mockNostrClient.queryEvents(any()));
+          expect(result.orderedEventIds, contains(testEventId));
+        },
+      );
+
+      test(
+        'syncUserReactions keeps local data when key resolution throws',
+        () async {
+          when(
+            () => mockNostrClient.resolvePublicKey(),
+          ).thenThrow(StateError('signer unavailable'));
+          when(() => mockLocalStorage.getAllLikeRecords()).thenAnswer(
+            (_) async => [createLikeRecord()],
+          );
+
+          repository = createRepository();
+          final result = await repository.syncUserReactions();
+
+          verifyNever(() => mockNostrClient.queryEvents(any()));
+          expect(result.orderedEventIds, contains(testEventId));
+        },
+      );
+
+      test(
+        'getUserVoteStatuses returns empty without querying with no key',
+        () async {
+          when(
+            () => mockNostrClient.resolvePublicKey(),
+          ).thenAnswer((_) async => null);
+
+          repository = createRepository();
+          final statuses = await repository.getUserVoteStatuses([testEventId]);
+
+          verifyNever(() => mockNostrClient.queryEvents(any()));
+          expect(statuses.upvotedIds, isEmpty);
+          expect(statuses.downvotedIds, isEmpty);
+        },
+      );
+    });
+
     group('syncUserReactions', () {
       test('fetches reactions from relay and stores locally', () async {
         const targetId = 'target_event_1234567890abcdef';
@@ -3454,7 +3545,9 @@ void main() {
 
     group('initialize', () {
       test('loads records from local storage', () async {
-        when(() => mockNostrClient.hasKeys).thenReturn(false);
+        when(
+          () => mockNostrClient.resolvePublicKey(),
+        ).thenAnswer((_) async => null);
         when(() => mockLocalStorage.getAllLikeRecords()).thenAnswer(
           (_) async => [
             createLikeRecord(
@@ -3470,8 +3563,7 @@ void main() {
         expect(await repository.isLiked('event_a_1234567890abcdef'), isTrue);
       });
 
-      test('sets up subscription when client has keys', () async {
-        when(() => mockNostrClient.hasKeys).thenReturn(true);
+      test('sets up subscription when the client resolves a key', () async {
         when(
           () => mockNostrClient.subscribe(
             any(),
@@ -3491,7 +3583,9 @@ void main() {
       });
 
       test('skips subscription when client has no keys', () async {
-        when(() => mockNostrClient.hasKeys).thenReturn(false);
+        when(
+          () => mockNostrClient.resolvePublicKey(),
+        ).thenAnswer((_) async => null);
 
         repository = createRepository();
         await repository.initialize();
@@ -3504,8 +3598,39 @@ void main() {
         );
       });
 
+      test(
+        'subscribes with the resolved key when the publicKey cache is stale',
+        () async {
+          when(() => mockNostrClient.publicKey).thenReturn('');
+          when(
+            () => mockNostrClient.resolvePublicKey(),
+          ).thenAnswer((_) async => testUserPubkey);
+          when(
+            () => mockNostrClient.subscribe(
+              any(),
+              subscriptionId: any(named: 'subscriptionId'),
+            ),
+          ).thenAnswer((_) => const Stream.empty());
+
+          repository = createRepository();
+          await repository.initialize();
+
+          final captured =
+              verify(
+                    () => mockNostrClient.subscribe(
+                      captureAny(),
+                      subscriptionId: any(named: 'subscriptionId'),
+                    ),
+                  ).captured.single
+                  as List<Filter>;
+          expect(captured.single.authors, equals([testUserPubkey]));
+        },
+      );
+
       test('is idempotent', () async {
-        when(() => mockNostrClient.hasKeys).thenReturn(false);
+        when(
+          () => mockNostrClient.resolvePublicKey(),
+        ).thenAnswer((_) async => null);
 
         repository = createRepository();
         await repository.initialize();
