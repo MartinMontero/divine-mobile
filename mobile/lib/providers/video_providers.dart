@@ -35,8 +35,6 @@ import 'package:openvine/services/dead_media_feed_guard.dart';
 import 'package:openvine/services/event_api_client.dart';
 import 'package:openvine/services/event_router.dart';
 import 'package:openvine/services/nsfw_content_filter.dart';
-// ignore: unnecessary_import
-import 'package:openvine/services/pending_action_service.dart';
 import 'package:openvine/services/personal_event_cache_service.dart';
 import 'package:openvine/services/seen_videos_service.dart';
 import 'package:openvine/services/subscribed_list_video_cache.dart';
@@ -120,15 +118,21 @@ PersonalEventCacheService personalEventCacheService(Ref ref) {
 /// Split storage: seen set (id+lastSeen) in Drift `seen_videos` table
 /// (unbounded, ~1yr TTL) + bounded metrics blob. DB injected when
 /// available; tests get the pure-SharedPreferences fallback.
+///
+/// The Drift half is gated on [FeatureFlag.clientSeenFiltering] as well as the
+/// filtering itself. Without that gate the kill switch would still leave the
+/// startup hydration and every per-view write in place, which is the load it
+/// exists to shed.
 @Riverpod(keepAlive: true)
 SeenVideosService seenVideosService(Ref ref) {
   AppDatabase? db;
-  try {
-    db = ref.watch(databaseProvider);
-  } catch (_) {
-    db = null;
+  if (ref.watch(clientSeenFilteringEnabledProvider)) {
+    try {
+      db = ref.watch(databaseProvider);
+    } catch (_) {
+      db = null;
+    }
   }
-  // ignore: invalid_use_of_visible_for_testing_member
   final service = SeenVideosService(database: db);
   unawaited(service.initialize());
   ref.onDispose(() => unawaited(service.dispose()));
@@ -514,14 +518,9 @@ VideosRepository videosRepository(Ref ref) {
   final moderationLabelService = ref.watch(moderationLabelServiceProvider);
   final funnelcakeClient = ref.watch(funnelcakeApiClientProvider);
   final seenVideosService = ref.watch(seenVideosServiceProvider);
-  final clientSeenFilteringEnabled = () {
-    try {
-      final flagService = ref.watch(featureFlagServiceProvider);
-      return flagService.isEnabled(FeatureFlag.clientSeenFiltering);
-    } catch (_) {
-      return true;
-    }
-  }();
+  final clientSeenFilteringEnabled = ref.watch(
+    clientSeenFilteringEnabledProvider,
+  );
   final divineHostFilterService = ref.read(divineHostFilterServiceProvider);
   final feedAspectRatioPreference = ref.watch(
     feedAspectRatioPreferenceServiceProvider,

@@ -3,6 +3,7 @@
 
 import 'package:models/models.dart' hide LogCategory;
 import 'package:openvine/extensions/video_event_extensions.dart';
+import 'package:openvine/features/feature_flags/providers/feature_flag_providers.dart';
 import 'package:openvine/providers/auth_providers.dart';
 import 'package:openvine/providers/curation_providers.dart';
 import 'package:openvine/providers/feed_refresh_helpers.dart';
@@ -10,9 +11,6 @@ import 'package:openvine/providers/feed_viewer_preference_hints.dart';
 import 'package:openvine/providers/moderation_providers.dart';
 import 'package:openvine/providers/preferences_providers.dart';
 import 'package:openvine/providers/readiness_gate_providers.dart';
-// ignore: directives_ordering
-import 'package:openvine/features/feature_flags/models/feature_flag.dart';
-import 'package:openvine/features/feature_flags/providers/feature_flag_providers.dart';
 import 'package:openvine/providers/video_providers.dart';
 import 'package:openvine/state/video_feed_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -159,19 +157,7 @@ class ForYouFeed extends _$ForYouFeed {
         return const VideoFeedState(videos: [], hasMoreContent: false);
       }
 
-      final clientSeenFilteringEnabled = (() {
-        try {
-          return ref
-              .read(featureFlagServiceProvider)
-              .isEnabled(
-                FeatureFlag.clientSeenFiltering,
-              );
-        } catch (_) {
-          return true;
-        }
-      })();
-
-      final freshOrderedVideos = clientSeenFilteringEnabled
+      final freshOrderedVideos = ref.read(clientSeenFilteringEnabledProvider)
           ? prioritizeNotRecentlySeenVideos(
               filteredVideos,
               seenVideoLookup: SeenVideoLookup(
@@ -267,20 +253,8 @@ class ForYouFeed extends _$ForYouFeed {
       await seenVideosService.initialize();
       if (!ref.mounted) return;
 
-      final clientSeenFilteringEnabledLoadMore = (() {
-        try {
-          return ref
-              .read(featureFlagServiceProvider)
-              .isEnabled(
-                FeatureFlag.clientSeenFiltering,
-              );
-        } catch (_) {
-          return true;
-        }
-      })();
-
       final newVideos = dedupeByFeedKey(
-        clientSeenFilteringEnabledLoadMore
+        ref.read(clientSeenFilteringEnabledProvider)
             ? prioritizeNotRecentlySeenVideos(
                 filteredVideos,
                 seenVideoLookup: SeenVideoLookup(

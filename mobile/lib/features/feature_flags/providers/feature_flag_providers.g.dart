@@ -251,3 +251,69 @@ final class IsFeatureEnabledFamily extends $Family
   @override
   String toString() => r'isFeatureEnabledProvider';
 }
+
+/// Whether client-side seen-video filtering is on.
+///
+/// Resolving the flag needs the whole flag chain, including
+/// `sharedPreferencesProvider`, which many widget tests do not override. Those
+/// tests should keep the shipped default rather than fail, so a failure to
+/// resolve falls back to the build default (`FF_CLIENT_SEEN_FILTERING`,
+/// on by default) instead of propagating.
+
+@ProviderFor(clientSeenFilteringEnabled)
+final clientSeenFilteringEnabledProvider =
+    ClientSeenFilteringEnabledProvider._();
+
+/// Whether client-side seen-video filtering is on.
+///
+/// Resolving the flag needs the whole flag chain, including
+/// `sharedPreferencesProvider`, which many widget tests do not override. Those
+/// tests should keep the shipped default rather than fail, so a failure to
+/// resolve falls back to the build default (`FF_CLIENT_SEEN_FILTERING`,
+/// on by default) instead of propagating.
+
+final class ClientSeenFilteringEnabledProvider
+    extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  /// Whether client-side seen-video filtering is on.
+  ///
+  /// Resolving the flag needs the whole flag chain, including
+  /// `sharedPreferencesProvider`, which many widget tests do not override. Those
+  /// tests should keep the shipped default rather than fail, so a failure to
+  /// resolve falls back to the build default (`FF_CLIENT_SEEN_FILTERING`,
+  /// on by default) instead of propagating.
+  ClientSeenFilteringEnabledProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'clientSeenFilteringEnabledProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$clientSeenFilteringEnabledHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    return clientSeenFilteringEnabled(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$clientSeenFilteringEnabledHash() =>
+    r'562c987e3491159dbedf0aa4f3b2e557e0e477c7';

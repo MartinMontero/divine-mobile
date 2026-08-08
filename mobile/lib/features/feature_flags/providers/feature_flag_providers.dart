@@ -66,3 +66,21 @@ bool isFeatureEnabled(Ref ref, FeatureFlag flag) {
   final state = ref.watch(featureFlagStateProvider);
   return state[flag] ?? false;
 }
+
+/// Whether client-side seen-video filtering is on.
+///
+/// Resolving the flag needs the whole flag chain, including
+/// `sharedPreferencesProvider`, which many widget tests do not override. Those
+/// tests should keep the shipped default rather than fail, so a failure to
+/// resolve falls back to the build default (`FF_CLIENT_SEEN_FILTERING`,
+/// on by default) instead of propagating.
+@Riverpod(keepAlive: true)
+bool clientSeenFilteringEnabled(Ref ref) {
+  try {
+    return ref
+        .watch(featureFlagServiceProvider)
+        .isEnabled(FeatureFlag.clientSeenFiltering);
+  } on Object {
+    return true;
+  }
+}

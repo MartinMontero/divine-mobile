@@ -119,6 +119,11 @@ String _$personalEventCacheServiceHash() =>
 /// Split storage: seen set (id+lastSeen) in Drift `seen_videos` table
 /// (unbounded, ~1yr TTL) + bounded metrics blob. DB injected when
 /// available; tests get the pure-SharedPreferences fallback.
+///
+/// The Drift half is gated on [FeatureFlag.clientSeenFiltering] as well as the
+/// filtering itself. Without that gate the kill switch would still leave the
+/// startup hydration and every per-view write in place, which is the load it
+/// exists to shed.
 
 @ProviderFor(seenVideosService)
 final seenVideosServiceProvider = SeenVideosServiceProvider._();
@@ -128,6 +133,11 @@ final seenVideosServiceProvider = SeenVideosServiceProvider._();
 /// Split storage: seen set (id+lastSeen) in Drift `seen_videos` table
 /// (unbounded, ~1yr TTL) + bounded metrics blob. DB injected when
 /// available; tests get the pure-SharedPreferences fallback.
+///
+/// The Drift half is gated on [FeatureFlag.clientSeenFiltering] as well as the
+/// filtering itself. Without that gate the kill switch would still leave the
+/// startup hydration and every per-view write in place, which is the load it
+/// exists to shed.
 
 final class SeenVideosServiceProvider
     extends
@@ -142,6 +152,11 @@ final class SeenVideosServiceProvider
   /// Split storage: seen set (id+lastSeen) in Drift `seen_videos` table
   /// (unbounded, ~1yr TTL) + bounded metrics blob. DB injected when
   /// available; tests get the pure-SharedPreferences fallback.
+  ///
+  /// The Drift half is gated on [FeatureFlag.clientSeenFiltering] as well as the
+  /// filtering itself. Without that gate the kill switch would still leave the
+  /// startup hydration and every per-view write in place, which is the load it
+  /// exists to shed.
   SeenVideosServiceProvider._()
     : super(
         from: null,
@@ -176,7 +191,7 @@ final class SeenVideosServiceProvider
   }
 }
 
-String _$seenVideosServiceHash() => r'f591d3c80445dab2fab1d4157f1ff5b50ef7509a';
+String _$seenVideosServiceHash() => r'7e45af0ee619651a5e9655a98e513dec9e7303f0';
 
 /// Subscription manager for centralized subscription management
 
@@ -950,7 +965,7 @@ final class VideosRepositoryProvider
   }
 }
 
-String _$videosRepositoryHash() => r'2f56f89d3fc4244b0488c10ad82996cacfa9afdb';
+String _$videosRepositoryHash() => r'c68f072afea14b71ded1d78e06df6b526bb535b8';
 
 /// Provider for LikesRepository instance
 ///
