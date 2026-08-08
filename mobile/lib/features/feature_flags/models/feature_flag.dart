@@ -94,8 +94,9 @@ enum FeatureFlag {
   ),
   clientSeenFiltering(
     'Client Seen-Video Filtering',
-    'Demote recently-seen videos in home feeds and drop them from '
-        'classics/discovery. Kill-switch for the Aug 2026 campaign load.',
+    'Demote recently-seen videos in the home, new and For You feeds and drop '
+        'them from the Classics feed. Explore browse grids are not filtered. '
+        'Kill-switch for the Aug 2026 campaign load.',
   );
 
   const FeatureFlag(
