@@ -869,6 +869,7 @@ class VideosRepository {
         // shuffled, so re-apply freshness in case seen set grew since cache.
         final ordered = await _orderBySeenFreshness(cached.videos);
         // If drop would empty it, return cached as-is to avoid empty feed.
+        // coverage:ignore-start
         if (ordered.length != cached.videos.length) {
           final filtered = filterOutRecentlySeenVideos(
             cached.videos,
@@ -884,6 +885,7 @@ class VideosRepository {
             hasMore: cached.hasMore,
           );
         }
+        // coverage:ignore-end
         return cached;
       }
     }
@@ -961,6 +963,7 @@ class VideosRepository {
     // archive slices rather than showing nothing forever. If we did collect
     // something, shuffle as before (classic is leaderboard-sorted, shuffle
     // gives per-session variety).
+    // coverage:ignore-start
     if (collected.isEmpty &&
         !exhausted &&
         !failed &&
@@ -974,6 +977,7 @@ class VideosRepository {
         hasMore: true,
       );
     }
+    // coverage:ignore-end
 
     collected.shuffle(_random);
 

@@ -115,11 +115,19 @@ String _$personalEventCacheServiceHash() =>
     r'f8fbeaaa8db79abff62ce85e3ca683320c5f0e50';
 
 /// Seen videos service for tracking viewed content.
+///
+/// Split storage: seen set (id+lastSeen) in Drift `seen_videos` table
+/// (unbounded, ~1yr TTL) + bounded metrics blob. DB injected when
+/// available; tests get the pure-SharedPreferences fallback.
 
 @ProviderFor(seenVideosService)
 final seenVideosServiceProvider = SeenVideosServiceProvider._();
 
 /// Seen videos service for tracking viewed content.
+///
+/// Split storage: seen set (id+lastSeen) in Drift `seen_videos` table
+/// (unbounded, ~1yr TTL) + bounded metrics blob. DB injected when
+/// available; tests get the pure-SharedPreferences fallback.
 
 final class SeenVideosServiceProvider
     extends
@@ -130,6 +138,10 @@ final class SeenVideosServiceProvider
         >
     with $Provider<SeenVideosService> {
   /// Seen videos service for tracking viewed content.
+  ///
+  /// Split storage: seen set (id+lastSeen) in Drift `seen_videos` table
+  /// (unbounded, ~1yr TTL) + bounded metrics blob. DB injected when
+  /// available; tests get the pure-SharedPreferences fallback.
   SeenVideosServiceProvider._()
     : super(
         from: null,
@@ -164,7 +176,7 @@ final class SeenVideosServiceProvider
   }
 }
 
-String _$seenVideosServiceHash() => r'b980fc7c86abd4229783e3c7066c8883d4d56558';
+String _$seenVideosServiceHash() => r'f591d3c80445dab2fab1d4157f1ff5b50ef7509a';
 
 /// Subscription manager for centralized subscription management
 
@@ -938,7 +950,7 @@ final class VideosRepositoryProvider
   }
 }
 
-String _$videosRepositoryHash() => r'f98257a666f2fede19dd41cbc4e5dca57ae65328';
+String _$videosRepositoryHash() => r'2f56f89d3fc4244b0488c10ad82996cacfa9afdb';
 
 /// Provider for LikesRepository instance
 ///
