@@ -59,6 +59,8 @@ class _DivineVideoMetricsTrackerState
   ProviderSubscription<AnalyticsService>? _analyticsServiceSubscription;
   late AuthService _authService;
   late SeenVideosService _seenVideosService;
+  late final ProviderSubscription<SeenVideosService>
+  _seenVideosServiceSubscription;
 
   @override
   void initState() {
@@ -69,7 +71,14 @@ class _DivineVideoMetricsTrackerState
       (_, next) => _analyticsService = next,
     );
     _authService = ref.read(authServiceProvider);
+    // Tracked rather than captured: the seen service is rebuilt without its
+    // database when the seen-filtering kill switch flips, and a captured
+    // instance would keep writing to the detached one.
     _seenVideosService = ref.read(seenVideosServiceProvider);
+    _seenVideosServiceSubscription = ref.listenManual<SeenVideosService>(
+      seenVideosServiceProvider,
+      (_, next) => _seenVideosService = next,
+    );
     if (widget.isActive) _startTracking();
   }
 
@@ -259,6 +268,7 @@ class _DivineVideoMetricsTrackerState
     _finalizeAndPublish();
     unawaited(_stateSubscription?.cancel());
     _analyticsServiceSubscription?.close();
+    _seenVideosServiceSubscription.close();
     super.dispose();
   }
 

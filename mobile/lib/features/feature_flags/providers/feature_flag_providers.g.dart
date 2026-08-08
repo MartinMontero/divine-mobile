@@ -254,11 +254,16 @@ final class IsFeatureEnabledFamily extends $Family
 
 /// Whether client-side seen-video filtering is on.
 ///
-/// Resolving the flag needs the whole flag chain, including
+/// Watches [featureFlagStateProvider] rather than the service: the service
+/// keeps one identity for the process and only notifies listeners, so watching
+/// it would freeze this on whatever the flag read at first build — including
+/// the build default, when that first read beats the unawaited load of
+/// persisted overrides. The kill switch has to work without a restart.
+///
+/// Resolving the flag needs the whole chain, including
 /// `sharedPreferencesProvider`, which many widget tests do not override. Those
 /// tests should keep the shipped default rather than fail, so a failure to
-/// resolve falls back to the build default (`FF_CLIENT_SEEN_FILTERING`,
-/// on by default) instead of propagating.
+/// resolve falls back to on.
 
 @ProviderFor(clientSeenFilteringEnabled)
 final clientSeenFilteringEnabledProvider =
@@ -266,22 +271,32 @@ final clientSeenFilteringEnabledProvider =
 
 /// Whether client-side seen-video filtering is on.
 ///
-/// Resolving the flag needs the whole flag chain, including
+/// Watches [featureFlagStateProvider] rather than the service: the service
+/// keeps one identity for the process and only notifies listeners, so watching
+/// it would freeze this on whatever the flag read at first build — including
+/// the build default, when that first read beats the unawaited load of
+/// persisted overrides. The kill switch has to work without a restart.
+///
+/// Resolving the flag needs the whole chain, including
 /// `sharedPreferencesProvider`, which many widget tests do not override. Those
 /// tests should keep the shipped default rather than fail, so a failure to
-/// resolve falls back to the build default (`FF_CLIENT_SEEN_FILTERING`,
-/// on by default) instead of propagating.
+/// resolve falls back to on.
 
 final class ClientSeenFilteringEnabledProvider
     extends $FunctionalProvider<bool, bool, bool>
     with $Provider<bool> {
   /// Whether client-side seen-video filtering is on.
   ///
-  /// Resolving the flag needs the whole flag chain, including
+  /// Watches [featureFlagStateProvider] rather than the service: the service
+  /// keeps one identity for the process and only notifies listeners, so watching
+  /// it would freeze this on whatever the flag read at first build — including
+  /// the build default, when that first read beats the unawaited load of
+  /// persisted overrides. The kill switch has to work without a restart.
+  ///
+  /// Resolving the flag needs the whole chain, including
   /// `sharedPreferencesProvider`, which many widget tests do not override. Those
   /// tests should keep the shipped default rather than fail, so a failure to
-  /// resolve falls back to the build default (`FF_CLIENT_SEEN_FILTERING`,
-  /// on by default) instead of propagating.
+  /// resolve falls back to on.
   ClientSeenFilteringEnabledProvider._()
     : super(
         from: null,
@@ -316,4 +331,4 @@ final class ClientSeenFilteringEnabledProvider
 }
 
 String _$clientSeenFilteringEnabledHash() =>
-    r'562c987e3491159dbedf0aa4f3b2e557e0e477c7';
+    r'3ab8cc71db3b641dce2ceab439ea440da75a1824';
