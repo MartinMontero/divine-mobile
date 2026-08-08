@@ -5100,6 +5100,15 @@
   "@videoRecorderStopMotionAssembleFailed": {
     "description": "Snackbar shown when assembling captured stop-motion frames into a video failed."
   },
+  "videoRecorderStopMotionShotsLeft": "{count, plural, =0{No shots left} =1{1 shot left} other{{count} shots left}}",
+  "@videoRecorderStopMotionShotsLeft": {
+    "description": "Label above the stop-motion budget bar in the recorder top bar, counting how many more stills fit in the maximum clip length.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "videoRecorderToggleFlashLabel": "Toggle flash",
   "videoRecorderCycleTimerLabel": "Cycle timer",
   "videoRecorderToggleAspectRatioLabel": "Toggle aspect ratio",
@@ -5792,7 +5801,7 @@
   "videoEditorCloseSemanticLabel": "Close",
   "videoEditorDoneSemanticLabel": "Done",
   "videoEditorLevelSemanticLabel": "Level",
-  "videoMetadataBackSemanticLabel": "Back",
+  "videoMetadataClosePostDetailsSemanticLabel": "Close post details",
   "videoMetadataDismissHelpDialogSemanticLabel": "Dismiss help dialog",
   "videoMetadataGotItButton": "Got it!",
   "videoMetadataLimitReachedWarning": "64KB limit reached. Remove some content to continue.",
@@ -6197,8 +6206,8 @@
     "description": "Snackbar message shown when url_launcher fails to open the profile website link."
   },
   "videoMetadataEditCoverTitle": "Edit cover",
-  "videoMetadataEditCoverCloseSemanticLabel": "Close cover editor",
-  "videoMetadataEditCoverConfirmSemanticLabel": "Confirm cover selection",
+  "videoMetadataEditCoverCloseSemanticLabel": "Discard cover changes",
+  "videoMetadataEditCoverConfirmSemanticLabel": "Use selected frame as video cover",
   "videoMetadataEditCoverStripSemanticLabel": "Seek through video to select cover frame",
   "videoMetadataTagsPickerSearchHint": "Search or add tags",
   "videoMetadataTagsPickerEmptyHint": "Add tags to help people discover your video",
@@ -6619,5 +6628,12 @@
   "soundCreditTitleLabel": "Sound title",
   "soundCreditCreatorLabel": "Creator",
   "soundCreditSourceUrlLabel": "Source URL",
-  "soundCreditPublicHashtagsLabel": "Public hashtags"
+  "soundCreditPublicHashtagsLabel": "Public hashtags",
+  "videoMetadataTagsPickerCancelSemanticLabel": "Cancel tag selection",
+  "videoMetadataTagsPickerConfirmSemanticLabel": "Apply selected tags",
+  "userPickerCancelSemanticLabel": "Cancel user selection",
+  "userPickerConfirmSemanticLabel": "Confirm selected users",
+  "userPickerClearSelectionSemanticLabel": "Clear user selection",
+  "videoMetadataContentWarningsPickerCancelSemanticLabel": "Cancel content warning selection",
+  "videoMetadataContentWarningsPickerConfirmSemanticLabel": "Apply selected content warnings"
 }

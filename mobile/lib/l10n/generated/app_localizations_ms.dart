@@ -8534,6 +8534,17 @@ class AppLocalizationsMs extends AppLocalizations {
       'Tidak dapat mencipta video. Cuba lagi.';
 
   @override
+  String videoRecorderStopMotionShotsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Tinggal $count syot',
+      zero: 'Tiada syot tinggal',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get videoRecorderToggleFlashLabel => 'Togol denyar';
 
   @override
@@ -9637,7 +9648,8 @@ class AppLocalizationsMs extends AppLocalizations {
   String get videoEditorLevelSemanticLabel => 'Tahap';
 
   @override
-  String get videoMetadataBackSemanticLabel => 'Kembali';
+  String get videoMetadataClosePostDetailsSemanticLabel =>
+      'Tutup butiran siaran';
 
   @override
   String get videoMetadataDismissHelpDialogSemanticLabel =>
@@ -10475,11 +10487,11 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get videoMetadataEditCoverCloseSemanticLabel =>
-      'Tutup penyunting muka depan';
+      'Buang perubahan muka depan';
 
   @override
   String get videoMetadataEditCoverConfirmSemanticLabel =>
-      'Sahkan pemilihan muka depan';
+      'Gunakan bingkai dipilih sebagai muka depan video';
 
   @override
   String get videoMetadataEditCoverStripSemanticLabel =>
@@ -11142,4 +11154,30 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get soundCreditPublicHashtagsLabel => 'Public hashtags';
+
+  @override
+  String get videoMetadataTagsPickerCancelSemanticLabel =>
+      'Batalkan pemilihan tag';
+
+  @override
+  String get videoMetadataTagsPickerConfirmSemanticLabel =>
+      'Gunakan tag yang dipilih';
+
+  @override
+  String get userPickerCancelSemanticLabel => 'Batalkan pemilihan pengguna';
+
+  @override
+  String get userPickerConfirmSemanticLabel => 'Sahkan pengguna yang dipilih';
+
+  @override
+  String get userPickerClearSelectionSemanticLabel =>
+      'Kosongkan pemilihan pengguna';
+
+  @override
+  String get videoMetadataContentWarningsPickerCancelSemanticLabel =>
+      'Batalkan pemilihan amaran kandungan';
+
+  @override
+  String get videoMetadataContentWarningsPickerConfirmSemanticLabel =>
+      'Gunakan amaran kandungan yang dipilih';
 }
