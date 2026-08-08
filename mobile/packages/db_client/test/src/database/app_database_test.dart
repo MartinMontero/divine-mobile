@@ -1341,6 +1341,82 @@ void main() {
       });
     });
 
+    group('seen videos', () {
+      test(
+        'upgrade path — existing database gets the table on reopen',
+        () async {
+          await database.customStatement('DROP TABLE seen_videos');
+          await database.close();
+
+          database = AppDatabase.test(NativeDatabase(File(tempDbPath)));
+
+          final tables = await database
+              .customSelect(
+                "SELECT name FROM sqlite_master WHERE type='table' "
+                "AND name='seen_videos'",
+              )
+              .get();
+          expect(
+            tables,
+            hasLength(1),
+            reason: 'seen_videos must be re-created on reopen',
+          );
+
+          await database.seenVideosDao.markSeen(
+            'video-a',
+            firstSeenAt: 100,
+            lastSeenAt: 200,
+          );
+          expect(
+            await database.seenVideosDao.hasSeen('video-a'),
+            isTrue,
+            reason: 'the recreated table must be writable',
+          );
+        },
+      );
+
+      test(
+        'schema parity — fresh install matches the runtime '
+        'CREATE-IF-NOT-EXISTS path',
+        () async {
+          final freshColumns = await _collectTableInfo(database, 'seen_videos');
+          final freshIndexes = await _collectIndexNames(
+            database,
+            'seen_videos',
+          );
+
+          expect(
+            freshColumns,
+            isNotEmpty,
+            reason: 'precondition: fresh install should have seen_videos',
+          );
+
+          await database.customStatement('DROP TABLE seen_videos');
+          await database.close();
+
+          database = AppDatabase.test(NativeDatabase(File(tempDbPath)));
+          await database
+              .customSelect(
+                "SELECT name FROM sqlite_master WHERE type='table' "
+                "AND name='seen_videos'",
+              )
+              .get();
+
+          final recreatedColumns = await _collectTableInfo(
+            database,
+            'seen_videos',
+          );
+          final recreatedIndexes = await _collectIndexNames(
+            database,
+            'seen_videos',
+          );
+
+          expect(recreatedColumns, equals(freshColumns));
+          expect(recreatedIndexes, equals(freshIndexes));
+        },
+      );
+    });
+
     group('event table d_tag column', () {
       test(
         'upgrade path — adds, indexes, and backfills d_tag on reopen',
