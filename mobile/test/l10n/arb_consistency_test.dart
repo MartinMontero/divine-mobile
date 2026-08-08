@@ -372,6 +372,10 @@ void main() {
 
 // Add keys here only when a translation pass is intentionally deferred.
 const _knownUntranslatedDebt = <String>{
+  // Creator-analytics 'people watched this' framing, added with the
+  // video-card post-date change; translation deferred to the next
+  // analytics localization pass.
+  'analyticsWatchedCount',
   // Saved-sound organization and public-credit copy; translation is deferred
   // to the next sound-library localization pass.
   'savedSoundYourLabel',

@@ -2793,6 +2793,11 @@ class AppLocalizationsPt extends AppLocalizations {
       'Dados de visualização indisponíveis';
 
   @override
+  String analyticsWatchedCount(String count) {
+    return '$count people watched this';
+  }
+
+  @override
   String analyticsViewsCount(String count) {
     return '$count visualizações';
   }

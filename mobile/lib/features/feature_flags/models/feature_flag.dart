@@ -91,6 +91,13 @@ enum FeatureFlag {
         'Off by default until the push service fans out kind 34236 to '
         'subscribers — with it off, the bell would publish a subscription '
         'that nothing ever delivers.',
+  ),
+  videoCardPostDate(
+    'Post Date On Video Cards',
+    'Show when a video was posted instead of a public loop count. Small '
+        'counts discourage viewing on exactly the new content the feed pays '
+        'to surface. Creators still see their own numbers, and counts large '
+        'enough to attract — classic Vines especially — still show.',
   );
 
   const FeatureFlag(

@@ -2864,6 +2864,11 @@ class AppLocalizationsRo extends AppLocalizations {
       'Date de vizualizare indisponibile';
 
   @override
+  String analyticsWatchedCount(String count) {
+    return '$count people watched this';
+  }
+
+  @override
   String analyticsViewsCount(String count) {
     return '$count vizualizări';
   }
