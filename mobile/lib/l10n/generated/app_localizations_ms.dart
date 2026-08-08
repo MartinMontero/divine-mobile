@@ -6372,6 +6372,10 @@ class AppLocalizationsMs extends AppLocalizations {
       'Kelayakan kandungan memerlukan sambungan internet.';
 
   @override
+  String get videoMetadataC2paMissingNoteServiceUnavailable =>
+      'The content credential service didn\'t respond. This isn\'t your connection.';
+
+  @override
   String get videoMetadataC2paMissingRegenerate => 'Jana semula';
 
   @override
@@ -8530,6 +8534,17 @@ class AppLocalizationsMs extends AppLocalizations {
       'Tidak dapat mencipta video. Cuba lagi.';
 
   @override
+  String videoRecorderStopMotionShotsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Tinggal $count syot',
+      zero: 'Tiada syot tinggal',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get videoRecorderToggleFlashLabel => 'Togol denyar';
 
   @override
@@ -9914,6 +9929,14 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get profileBadgeFallbackSemanticLabel => 'Lencana';
+
+  @override
+  String get profileBadgeFooterBody =>
+      'Lencana ialah anugerah kecil yang sesiapa sahaja boleh buat di Nostr. Berikan satu kepada rakan, pencipta, atau seseorang yang menceriakan hari anda.';
+
+  @override
+  String get profileBadgeFooterLink =>
+      'Buat lencana anda sendiri di badges.divine.video';
 
   @override
   String get minorAccountReviewWelcomePageTitle => 'Panduan keluarga';

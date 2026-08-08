@@ -6401,6 +6401,10 @@ class AppLocalizationsFil extends AppLocalizations {
       'Kailangan ng internet connection ang content credentials.';
 
   @override
+  String get videoMetadataC2paMissingNoteServiceUnavailable =>
+      'The content credential service didn\'t respond. This isn\'t your connection.';
+
+  @override
   String get videoMetadataC2paMissingRegenerate => 'I-regenerate';
 
   @override
@@ -8574,6 +8578,18 @@ class AppLocalizationsFil extends AppLocalizations {
       'Hindi magawa ang video. Subukan ulit.';
 
   @override
+  String videoRecorderStopMotionShotsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count shot na lang',
+      one: '1 shot na lang',
+      zero: 'Wala nang natitirang shot',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get videoRecorderToggleFlashLabel => 'I-toggle ang flash';
 
   @override
@@ -9973,6 +9989,14 @@ class AppLocalizationsFil extends AppLocalizations {
 
   @override
   String get profileBadgeFallbackSemanticLabel => 'Badge';
+
+  @override
+  String get profileBadgeFooterBody =>
+      'Ang mga badge ay maliliit na parangal na kahit sino ay puwedeng gumawa sa Nostr. Bigyan ang isang kaibigan, isang creator, o kung sino man ang nagpasaya sa araw mo.';
+
+  @override
+  String get profileBadgeFooterLink =>
+      'Gumawa ng sarili mo sa badges.divine.video';
 
   @override
   String get minorAccountReviewWelcomePageTitle => 'Family guide';

@@ -11054,11 +11054,17 @@ abstract class AppLocalizations {
   /// **'We couldn\'t add content credentials, so this video won\'t be confirmed as Human-Made. Regenerate to try again, or post it as-is.'**
   String get videoMetadataC2paMissingBody;
 
-  /// Small trailing note under the missing-content-credential bottom sheet, hinting that the (remote) content-credential signing step requires connectivity. Not phrased as the definitive cause, since signing can also fail for other reasons.
+  /// Small trailing note under the missing-content-credential bottom sheet, shown when the device is offline, where connectivity really is the likely cause. When the device is online, videoMetadataC2paMissingNoteServiceUnavailable is shown instead.
   ///
   /// In en, this message translates to:
   /// **'Content credentials need an internet connection.'**
   String get videoMetadataC2paMissingNote;
+
+  /// Small trailing note under the missing-content-credential bottom sheet, shown when the device IS online, so signing failed on the service side (outage, misconfigured endpoint, rejected request). Explicitly rules out the user's connection, because the previous connectivity-only wording sent users to debug working wifi.
+  ///
+  /// In en, this message translates to:
+  /// **'The content credential service didn\'t respond. This isn\'t your connection.'**
+  String get videoMetadataC2paMissingNoteServiceUnavailable;
 
   /// Primary button on the missing-content-credential bottom sheet. Re-renders the video to attempt the C2PA signature again.
   ///
@@ -14604,6 +14610,12 @@ abstract class AppLocalizations {
   /// **'Couldn\'t create the video. Try again.'**
   String get videoRecorderStopMotionAssembleFailed;
 
+  /// Label above the stop-motion budget bar in the recorder top bar, counting how many more stills fit in the maximum clip length.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No shots left} =1{1 shot left} other{{count} shots left}}'**
+  String videoRecorderStopMotionShotsLeft(int count);
+
   /// No description provided for @videoRecorderToggleFlashLabel.
   ///
   /// In en, this message translates to:
@@ -17001,6 +17013,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Badge'**
   String get profileBadgeFallbackSemanticLabel;
+
+  /// Short explainer at the bottom of the profile badge detail sheet, inviting people to create their own badges.
+  ///
+  /// In en, this message translates to:
+  /// **'Badges are little awards anyone can make on Nostr. Give one to a friend, a creator, or someone who made your day.'**
+  String get profileBadgeFooterBody;
+
+  /// Link label in the profile badge detail sheet that opens the Divine Badges app (badges.divine.video).
+  ///
+  /// In en, this message translates to:
+  /// **'Make your own at badges.divine.video'**
+  String get profileBadgeFooterLink;
 
   /// No description provided for @minorAccountReviewWelcomePageTitle.
   ///

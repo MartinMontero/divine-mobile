@@ -6291,6 +6291,10 @@ class AppLocalizationsTr extends AppLocalizations {
       'İçerik kimlik bilgileri internet bağlantısı gerektirir.';
 
   @override
+  String get videoMetadataC2paMissingNoteServiceUnavailable =>
+      'The content credential service didn\'t respond. This isn\'t your connection.';
+
+  @override
   String get videoMetadataC2paMissingRegenerate => 'Yeniden oluştur';
 
   @override
@@ -8434,6 +8438,17 @@ class AppLocalizationsTr extends AppLocalizations {
       'Video oluşturulamadı. Tekrar deneyin.';
 
   @override
+  String videoRecorderStopMotionShotsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count çekim kaldı',
+      zero: 'Kalan çekim yok',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get videoRecorderToggleFlashLabel => 'Flaşı değiştir';
 
   @override
@@ -9814,6 +9829,14 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get profileBadgeFallbackSemanticLabel => 'Badge';
+
+  @override
+  String get profileBadgeFooterBody =>
+      'Rozetler, Nostr\'da herkesin oluşturabileceği küçük ödüllerdir. Bir arkadaşına, bir içerik üreticisine ya da gününü güzelleştiren birine ver.';
+
+  @override
+  String get profileBadgeFooterLink =>
+      'Kendi rozetini badges.divine.video\'da oluştur';
 
   @override
   String get minorAccountReviewWelcomePageTitle => 'Family guide';

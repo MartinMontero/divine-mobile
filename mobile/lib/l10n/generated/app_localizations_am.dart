@@ -6197,6 +6197,10 @@ class AppLocalizationsAm extends AppLocalizations {
       'የይዘት መታወቂያዎች የበይነመረብ ግንኙነት ያስፈልጋቸዋል።';
 
   @override
+  String get videoMetadataC2paMissingNoteServiceUnavailable =>
+      'The content credential service didn\'t respond. This isn\'t your connection.';
+
+  @override
   String get videoMetadataC2paMissingRegenerate => 'እንደገና ፍጠር';
 
   @override
@@ -8300,6 +8304,18 @@ class AppLocalizationsAm extends AppLocalizations {
       'ቪዲዮውን መፍጠር አልተቻለም። እንደገና ይሞክሩ።';
 
   @override
+  String videoRecorderStopMotionShotsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ፎቶዎች ቀርተዋል',
+      one: '1 ፎቶ ቀርቷል',
+      zero: 'ምንም የቀረ ፎቶ የለም',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get videoRecorderToggleFlashLabel => 'ብልጭታ ቀያይር';
 
   @override
@@ -9635,6 +9651,13 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get profileBadgeFallbackSemanticLabel => 'Badge';
+
+  @override
+  String get profileBadgeFooterBody =>
+      'ባጆች በNostr ላይ ማንኛውም ሰው መፍጠር የሚችላቸው ትንንሽ ሽልማቶች ናቸው። ለጓደኛ፣ ለፈጣሪ ወይም ቀንህን ላሳመረልህ ሰው አንዷን ስጥ።';
+
+  @override
+  String get profileBadgeFooterLink => 'የራስህን በbadges.divine.video ፍጠር';
 
   @override
   String get minorAccountReviewWelcomePageTitle => 'Family guide';

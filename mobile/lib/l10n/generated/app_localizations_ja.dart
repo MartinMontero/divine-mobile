@@ -6048,6 +6048,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get videoMetadataC2paMissingNote => 'コンテンツ認証情報にはインターネット接続が必要です。';
 
   @override
+  String get videoMetadataC2paMissingNoteServiceUnavailable =>
+      'The content credential service didn\'t respond. This isn\'t your connection.';
+
+  @override
   String get videoMetadataC2paMissingRegenerate => '再生成';
 
   @override
@@ -8111,6 +8115,17 @@ class AppLocalizationsJa extends AppLocalizations {
       '動画を作成できませんでした。もう一度お試しください。';
 
   @override
+  String videoRecorderStopMotionShotsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '残り$count枚',
+      zero: '残り0枚',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get videoRecorderToggleFlashLabel => 'フラッシュを切り替え';
 
   @override
@@ -9430,6 +9445,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get profileBadgeFallbackSemanticLabel => 'Badge';
+
+  @override
+  String get profileBadgeFooterBody =>
+      'バッジは Nostr で誰でも作れる小さな賞。友だちやクリエイター、今日をいい日にしてくれた人に贈ってみて。';
+
+  @override
+  String get profileBadgeFooterLink => 'badges.divine.video で自分のバッジを作る';
 
   @override
   String get minorAccountReviewWelcomePageTitle => 'Family guide';

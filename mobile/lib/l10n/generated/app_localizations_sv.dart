@@ -6321,6 +6321,10 @@ class AppLocalizationsSv extends AppLocalizations {
       'Innehållsuppgifter kräver en internetanslutning.';
 
   @override
+  String get videoMetadataC2paMissingNoteServiceUnavailable =>
+      'The content credential service didn\'t respond. This isn\'t your connection.';
+
+  @override
   String get videoMetadataC2paMissingRegenerate => 'Generera om';
 
   @override
@@ -8474,6 +8478,18 @@ class AppLocalizationsSv extends AppLocalizations {
       'Det gick inte att skapa videon. Försök igen.';
 
   @override
+  String videoRecorderStopMotionShotsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count bilder kvar',
+      one: '1 bild kvar',
+      zero: 'Inga bilder kvar',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get videoRecorderToggleFlashLabel => 'Växla blixt';
 
   @override
@@ -9861,6 +9877,13 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get profileBadgeFallbackSemanticLabel => 'Badge';
+
+  @override
+  String get profileBadgeFooterBody =>
+      'Märken är små utmärkelser som vem som helst kan skapa på Nostr. Ge ett till en vän, en kreatör eller någon som gjorde din dag.';
+
+  @override
+  String get profileBadgeFooterLink => 'Skapa ditt eget på badges.divine.video';
 
   @override
   String get minorAccountReviewWelcomePageTitle => 'Family guide';

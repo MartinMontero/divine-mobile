@@ -6380,6 +6380,10 @@ class AppLocalizationsBg extends AppLocalizations {
       'Удостоверенията за съдържание изискват интернет връзка.';
 
   @override
+  String get videoMetadataC2paMissingNoteServiceUnavailable =>
+      'The content credential service didn\'t respond. This isn\'t your connection.';
+
+  @override
   String get videoMetadataC2paMissingRegenerate => 'Генерирай отново';
 
   @override
@@ -8553,6 +8557,18 @@ class AppLocalizationsBg extends AppLocalizations {
       'Видеото не можа да се създаде. Опитайте отново.';
 
   @override
+  String videoRecorderStopMotionShotsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Остават $count кадъра',
+      one: 'Остава 1 кадър',
+      zero: 'Няма останали кадри',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get videoRecorderToggleFlashLabel => 'Превключване на светкавицата';
 
   @override
@@ -9957,6 +9973,13 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get profileBadgeFallbackSemanticLabel => 'Badge';
+
+  @override
+  String get profileBadgeFooterBody =>
+      'Значките са малки награди, които всеки може да създаде в Nostr. Подари една на приятел, на творец или на някой, който ти е разведрил деня.';
+
+  @override
+  String get profileBadgeFooterLink => 'Създай своя на badges.divine.video';
 
   @override
   String get minorAccountReviewWelcomePageTitle => 'Family guide';

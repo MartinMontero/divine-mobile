@@ -6070,6 +6070,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get videoMetadataC2paMissingNote => '콘텐츠 자격 증명에는 인터넷 연결이 필요합니다.';
 
   @override
+  String get videoMetadataC2paMissingNoteServiceUnavailable =>
+      'The content credential service didn\'t respond. This isn\'t your connection.';
+
+  @override
   String get videoMetadataC2paMissingRegenerate => '재생성';
 
   @override
@@ -8135,6 +8139,17 @@ class AppLocalizationsKo extends AppLocalizations {
       '동영상을 만들지 못했습니다. 다시 시도해 주세요.';
 
   @override
+  String videoRecorderStopMotionShotsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count컷 남음',
+      zero: '남은 컷 없음',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get videoRecorderToggleFlashLabel => '플래시 전환';
 
   @override
@@ -9457,6 +9472,13 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get profileBadgeFallbackSemanticLabel => 'Badge';
+
+  @override
+  String get profileBadgeFooterBody =>
+      '배지는 Nostr에서 누구나 만들 수 있는 작은 상이에요. 친구나 크리에이터, 오늘 하루를 즐겁게 해준 사람에게 하나 보내보세요.';
+
+  @override
+  String get profileBadgeFooterLink => 'badges.divine.video에서 직접 만들기';
 
   @override
   String get minorAccountReviewWelcomePageTitle => 'Family guide';

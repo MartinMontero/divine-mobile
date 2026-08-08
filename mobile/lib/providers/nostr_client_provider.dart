@@ -251,33 +251,34 @@ class NostrService extends _$NostrService {
         .map((relay) => relay.url)
         .toList();
 
-    // Create initial NostrClient using the atomic identity as signer.
-    // currentIdentity is nullable — before auth completes, the factory falls
-    // back to a no-op LocalKeySigner. _onAuthStateChanged recreates the client
-    // once the user authenticates.
+    // Create the initial NostrClient using the atomic identity as signer.
+    // currentIdentity is nullable; signed-out startup still exposes a placeholder
+    // client for consumers, but the placeholder must not initialize relays.
     final client = _createClient(authService.currentIdentity);
     final clientGeneration = _nextClientGeneration();
     _pendingPubkey = initialPubkey;
 
-    // NIP-65 discovered-relays callback — see _userRelaysDiscoveredCallbackFor.
-    _registerClientCallbacks(
-      authService: authService,
-      client: client,
-      pubkey: initialPubkey,
-      clientGeneration: clientGeneration,
-    );
-
-    // Schedule initialization after build completes
-    // Add user relays BEFORE initialize() to avoid race condition
-    Future.microtask(
-      () => _initializeClient(
+    if (initialPubkey != null) {
+      // NIP-65 discovered-relays callback — see _userRelaysDiscoveredCallbackFor.
+      _registerClientCallbacks(
+        authService: authService,
         client: client,
         pubkey: initialPubkey,
         clientGeneration: clientGeneration,
-        userRelayUrls: userRelayUrls,
-        source: 'build',
-      ),
-    );
+      );
+
+      // Schedule initialization after build completes.
+      // Add user relays BEFORE initialize() to avoid race condition.
+      Future.microtask(
+        () => _initializeClient(
+          client: client,
+          pubkey: initialPubkey,
+          clientGeneration: clientGeneration,
+          userRelayUrls: userRelayUrls,
+          source: 'build',
+        ),
+      );
+    }
 
     ref.onDispose(() {
       _initializationRetryTimer?.cancel();
@@ -343,21 +344,16 @@ class NostrService extends _$NostrService {
       );
       initializationTracker.begin(client);
       initialization = initializationTracker;
-      await _runClientInitialization(
-        client,
-        userRelayUrls,
-        source: source,
-      );
+      await _runClientInitialization(client, userRelayUrls, source: source);
       // The provider can be disposed during the await (e.g. a rapid identity
       // switch rebuilds it, or a test container is torn down mid-init). Reading
       // `ref` after disposal throws, so bail before the ref-backed checks below.
       if (!ref.mounted) return;
-      if (_isCurrentClientForPubkey(client, pubkey, clientGeneration)) {
-        _lastPubkey = pubkey;
-        _initializationFailureCount = 0;
-        _initializationRetryTimer?.cancel();
-        _initializationRetryTimer = null;
-      }
+      if (!_isCurrentClientForPubkey(client, pubkey, clientGeneration)) return;
+      _lastPubkey = pubkey;
+      _initializationFailureCount = 0;
+      _initializationRetryTimer?.cancel();
+      _initializationRetryTimer = null;
       _markClientReadyIfCurrent(client, pubkey, clientGeneration);
       Log.info(
         '[NostrService] Client initialized via $source()',
@@ -493,11 +489,7 @@ class NostrService extends _$NostrService {
       );
       initializationTracker.begin(client);
       initialization = initializationTracker;
-      await _runClientInitialization(
-        client,
-        userRelayUrls,
-        source: 'retry',
-      );
+      await _runClientInitialization(client, userRelayUrls, source: 'retry');
       if (!_isActiveIdentity(pubkey, clientGeneration)) {
         _disposeClient(client);
         return;
@@ -635,6 +627,15 @@ class NostrService extends _$NostrService {
       final clientGeneration = _nextClientGeneration();
       _pendingPubkey = newPubkey;
 
+      state = newClient;
+      _setSessionIdentityState(newPubkey);
+
+      if (newPubkey == null) {
+        _lastPubkey = null;
+        _pendingPubkey = null;
+        return;
+      }
+
       // NIP-65 discovered-relays callback — see _userRelaysDiscoveredCallbackFor.
       _registerClientCallbacks(
         authService: authService,
@@ -642,9 +643,6 @@ class NostrService extends _$NostrService {
         pubkey: newPubkey,
         clientGeneration: clientGeneration,
       );
-
-      state = newClient;
-      _setSessionIdentityState(newPubkey);
 
       await _initializeClient(
         client: newClient,
@@ -723,6 +721,25 @@ class NostrService extends _$NostrService {
       if (targetPubkey == null || pubkey != targetPubkey || relayUrls.isEmpty) {
         return;
       }
+      // Last gate before this callback's discovered relays become permanent
+      // pool members. Discovery already applies the same rule; keeping it
+      // here protects the late-add path if a future caller hands the callback
+      // a list that did not come straight from discovery (#6585).
+      final admitted = admitRemoteSuppliedRelays(
+        relayUrls,
+        cap: RelayListCaps.nip65,
+        onRejected: (url) => Log.warning(
+          '[NostrService] Refusing discovered relay: $url',
+          name: 'NostrService',
+          category: LogCategory.system,
+        ),
+        onTruncated: (kept, total) => Log.warning(
+          '[NostrService] Discovery returned $total relays; adding $kept',
+          name: 'NostrService',
+          category: LogCategory.system,
+        ),
+      );
+      if (admitted.isEmpty) return;
       Future.microtask(() async {
         try {
           if (!_isCurrentClientForPubkey(
@@ -732,7 +749,7 @@ class NostrService extends _$NostrService {
           )) {
             return;
           }
-          final added = await client.addRelays(relayUrls);
+          final added = await client.addRelays(admitted);
           if (added > 0) {
             Log.info(
               '[NostrService] Added $added discovered relay(s) after NIP-65 discovery',

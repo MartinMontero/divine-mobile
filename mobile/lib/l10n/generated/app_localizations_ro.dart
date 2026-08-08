@@ -6483,6 +6483,10 @@ class AppLocalizationsRo extends AppLocalizations {
       'Acreditările de conținut necesită o conexiune la internet.';
 
   @override
+  String get videoMetadataC2paMissingNoteServiceUnavailable =>
+      'The content credential service didn\'t respond. This isn\'t your connection.';
+
+  @override
   String get videoMetadataC2paMissingRegenerate => 'Regenerează';
 
   @override
@@ -8658,6 +8662,19 @@ class AppLocalizationsRo extends AppLocalizations {
       'Videoclipul nu a putut fi creat. Încearcă din nou.';
 
   @override
+  String videoRecorderStopMotionShotsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Au mai rămas $count de cadre',
+      few: 'Au mai rămas $count cadre',
+      one: 'A mai rămas 1 cadru',
+      zero: 'Nu mai sunt cadre',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get videoRecorderToggleFlashLabel => 'Activează/dezactivează blițul';
 
   @override
@@ -10065,6 +10082,14 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get profileBadgeFallbackSemanticLabel => 'Badge';
+
+  @override
+  String get profileBadgeFooterBody =>
+      'Insignele sunt mici recompense pe care oricine le poate crea pe Nostr. Dăruiește una unui prieten, unui creator sau cuiva care ți-a făcut ziua mai bună.';
+
+  @override
+  String get profileBadgeFooterLink =>
+      'Creează-ți propria insignă pe badges.divine.video';
 
   @override
   String get minorAccountReviewWelcomePageTitle => 'Family guide';

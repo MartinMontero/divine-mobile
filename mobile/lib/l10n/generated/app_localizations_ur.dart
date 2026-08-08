@@ -6330,6 +6330,10 @@ class AppLocalizationsUr extends AppLocalizations {
       'مواد اسناد کے لیے انٹرنیٹ کنکشن درکار ہے۔';
 
   @override
+  String get videoMetadataC2paMissingNoteServiceUnavailable =>
+      'The content credential service didn\'t respond. This isn\'t your connection.';
+
+  @override
   String get videoMetadataC2paMissingRegenerate => 'دوبارہ بنائیں';
 
   @override
@@ -8478,6 +8482,18 @@ class AppLocalizationsUr extends AppLocalizations {
       'ویڈیو نہیں بن سکی۔ دوبارہ کوشش کریں۔';
 
   @override
+  String videoRecorderStopMotionShotsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count شاٹس باقی',
+      one: '1 شاٹ باقی',
+      zero: 'کوئی شاٹ باقی نہیں',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get videoRecorderToggleFlashLabel => 'فلیش ٹوگل کریں';
 
   @override
@@ -9858,6 +9874,13 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get profileBadgeFallbackSemanticLabel => 'بیج';
+
+  @override
+  String get profileBadgeFooterBody =>
+      'بیجز چھوٹے انعامات ہیں جو کوئی بھی Nostr پر بنا سکتا ہے۔ کسی دوست، تخلیق کار، یا اس شخص کو دیں جس نے آپ کا دن بنا دیا۔';
+
+  @override
+  String get profileBadgeFooterLink => 'badges.divine.video پر اپنا بیج بنائیں';
 
   @override
   String get minorAccountReviewWelcomePageTitle => 'خاندانی رہنما';

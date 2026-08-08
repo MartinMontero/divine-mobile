@@ -6332,6 +6332,10 @@ class AppLocalizationsVi extends AppLocalizations {
       'Chứng nhận nội dung cần kết nối internet.';
 
   @override
+  String get videoMetadataC2paMissingNoteServiceUnavailable =>
+      'The content credential service didn\'t respond. This isn\'t your connection.';
+
+  @override
   String get videoMetadataC2paMissingRegenerate => 'Tạo lại';
 
   @override
@@ -8483,6 +8487,17 @@ class AppLocalizationsVi extends AppLocalizations {
       'Không tạo được video. Thử lại nhé.';
 
   @override
+  String videoRecorderStopMotionShotsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Còn $count lượt chụp',
+      zero: 'Hết lượt chụp',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get videoRecorderToggleFlashLabel => 'Bật/tắt đèn flash';
 
   @override
@@ -9861,6 +9876,14 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get profileBadgeFallbackSemanticLabel => 'Huy hiệu';
+
+  @override
+  String get profileBadgeFooterBody =>
+      'Huy hiệu là những phần thưởng nhỏ mà bất kỳ ai cũng có thể tạo trên Nostr. Tặng một huy hiệu cho bạn bè, nhà sáng tạo, hoặc người đã làm bừng sáng ngày của bạn.';
+
+  @override
+  String get profileBadgeFooterLink =>
+      'Tạo huy hiệu của riêng bạn tại badges.divine.video';
 
   @override
   String get minorAccountReviewWelcomePageTitle => 'Hướng dẫn gia đình';
