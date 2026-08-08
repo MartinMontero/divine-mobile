@@ -131,6 +131,44 @@ void main() {
       },
     );
 
+    test(
+      'hydrates only the recency window, not the whole table',
+      () async {
+        final now = DateTime.now().millisecondsSinceEpoch;
+        final insideWindow =
+            now -
+            (SeenVideosService.seenHydrationWindow - const Duration(days: 1))
+                .inMilliseconds;
+        final outsideWindow =
+            now -
+            (SeenVideosService.seenHydrationWindow + const Duration(days: 1))
+                .inMilliseconds;
+
+        await db.seenVideosDao.markSeen(
+          'recent',
+          firstSeenAt: insideWindow,
+          lastSeenAt: insideWindow,
+        );
+        await db.seenVideosDao.markSeen(
+          'ancient',
+          firstSeenAt: outsideWindow,
+          lastSeenAt: outsideWindow,
+        );
+
+        final service = SeenVideosService(database: db);
+        await service.initialize();
+
+        expect(service.hasSeenVideo('recent'), isTrue);
+        expect(
+          service.hasSeenVideo('ancient'),
+          isFalse,
+          reason: 'rows outside the window must stay in the table, not memory',
+        );
+        // Still durably present — only memory is bounded.
+        expect(await db.seenVideosDao.hasSeen('ancient'), isTrue);
+      },
+    );
+
     test('wasSeenRecently respects window', () async {
       final service = SeenVideosService(database: db);
       await service.initialize();

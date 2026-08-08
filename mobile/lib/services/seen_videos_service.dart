@@ -103,6 +103,19 @@ class SeenVideosService {
   static const String _seenVideosMigratedKey = 'seen_videos_migrated_to_db';
   static const int _maxSeenVideos = 1000;
 
+  /// How much of the durable seen set is hydrated into memory at startup.
+  ///
+  /// The table is unbounded (TTL ~1 year) and a heavy viewer accumulates tens
+  /// of thousands of rows, so reading all of it would move the truncation
+  /// problem this storage split exists to solve into a multi-second main
+  /// isolate decode. Only recency is ever asked of the in-memory set, so a
+  /// window comfortably wider than [defaultSeenRecencyWindow] is enough.
+  /// Anything older is still in the table and reachable through the DAO.
+  static const Duration seenHydrationWindow = Duration(days: 30);
+
+  /// Longest window [wasSeenRecently] answers from memory alone.
+  static const Duration defaultSeenRecencyWindow = Duration(hours: 24);
+
   final Map<String, SeenVideoMetrics> _seenVideos = {};
   final Map<String, DateTime> _seenLastSeen = {};
   final Duration _saveDebounceDuration;
@@ -205,7 +218,9 @@ class SeenVideosService {
       }
       if (_effectiveDb != null) {
         try {
-          final dbRows = await _effectiveDb!.seenVideosDao.getAll();
+          final dbRows = await _effectiveDb!.seenVideosDao.getSeenSince(
+            DateTime.now().subtract(seenHydrationWindow).millisecondsSinceEpoch,
+          );
           for (final row in dbRows) {
             final lastSeen = DateTime.fromMillisecondsSinceEpoch(
               row.lastSeenAt,
@@ -331,7 +346,11 @@ class SeenVideosService {
     }
   }
 
+  /// Whether [videoId] is in the hydrated window — not "ever seen". Older
+  /// history stays in the table; ask the DAO for that.
   bool hasSeenVideo(String videoId) => _seenLastSeen.containsKey(videoId);
+
+  /// Seen ids inside the hydrated window. See [hasSeenVideo].
   Set<String> getSeenVideoIds() => _seenLastSeen.keys.toSet();
   SeenVideoMetrics? getVideoMetrics(String videoId) => _seenVideos[videoId];
   Future<void> markVideoAsSeen(String videoId) async =>
@@ -469,10 +488,20 @@ class SeenVideosService {
         .toList();
   }
 
+  /// Whether [videoId] was seen inside [within].
+  ///
+  /// Answered from the hydrated window, so [within] must not exceed
+  /// [seenHydrationWindow] — a longer window would silently miss rows that are
+  /// in the table but not in memory. Query the DAO directly for those.
   bool wasSeenRecently(
     String videoId, {
-    Duration within = const Duration(hours: 24),
+    Duration within = defaultSeenRecencyWindow,
   }) {
+    assert(
+      within <= seenHydrationWindow,
+      'wasSeenRecently($within) exceeds the hydrated window '
+      '($seenHydrationWindow); use SeenVideosDao.wasSeenRecently instead.',
+    );
     final lastSeen = _seenLastSeen[videoId];
     if (lastSeen == null) return false;
     final cutoff = DateTime.now().subtract(within);

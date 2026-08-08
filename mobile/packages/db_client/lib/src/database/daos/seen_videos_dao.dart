@@ -100,6 +100,17 @@ class SeenVideosDao extends DatabaseAccessor<AppDatabase>
     return await q.getSingleOrNull() != null;
   }
 
+  /// Rows last seen at or after [cutoffMs].
+  ///
+  /// The seen set is unbounded by design, so callers that only answer recency
+  /// questions read this window instead of [getAll]. Served by
+  /// `idx_seen_videos_last_seen_at`.
+  Future<List<SeenVideoRow>> getSeenSince(int cutoffMs) {
+    return (select(
+      seenVideos,
+    )..where((t) => t.lastSeenAt.isBiggerOrEqualValue(cutoffMs))).get();
+  }
+
   /// Every seen video id. Prefer [wasSeenRecently] for a membership check —
   /// this reads the whole table.
   Future<Set<String>> getAllSeenIds() async {
