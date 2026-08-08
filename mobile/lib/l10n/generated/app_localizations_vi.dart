@@ -8501,6 +8501,17 @@ class AppLocalizationsVi extends AppLocalizations {
       'Không tạo được video. Thử lại nhé.';
 
   @override
+  String videoRecorderStopMotionShotsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Còn $count lượt chụp',
+      zero: 'Hết lượt chụp',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get videoRecorderToggleFlashLabel => 'Bật/tắt đèn flash';
 
   @override
