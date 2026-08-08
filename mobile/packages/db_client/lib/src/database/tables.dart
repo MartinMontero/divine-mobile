@@ -1617,7 +1617,6 @@ class SeenVideos extends Table {
 }
 
 /// Pubkeys the server has reported as having a NIP-62 request to vanish.
-
 ///
 /// Exists to *honour* an erasure request rather than to retain data about one:
 /// it holds an already-public pubkey and a local timestamp, and it is what
