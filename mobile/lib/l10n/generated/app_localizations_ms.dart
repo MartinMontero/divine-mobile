@@ -3801,12 +3801,6 @@ class AppLocalizationsMs extends AppLocalizations {
       'Simpan untuk tontonan kemudian';
 
   @override
-  String get shareMenuAddToBookmarkSet => 'Tambah ke Set Penanda Buku';
-
-  @override
-  String get shareMenuAddToBookmarkSetSubtitle => 'Susun dalam koleksi';
-
-  @override
   String get shareMenuFollowSets => 'Senarai Orang';
 
   @override
@@ -4185,9 +4179,6 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get shareMenuUnknown => 'Tidak diketahui';
-
-  @override
-  String get shareMenuCreateBookmarkSet => 'Cipta Set Penanda Buku';
 
   @override
   String get shareMenuSetName => 'Nama Set';

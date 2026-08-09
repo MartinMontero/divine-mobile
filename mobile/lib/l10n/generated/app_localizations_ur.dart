@@ -3772,12 +3772,6 @@ class AppLocalizationsUr extends AppLocalizations {
       'بعد میں دیکھنے کے لیے محفوظ کریں';
 
   @override
-  String get shareMenuAddToBookmarkSet => 'بک مارک سیٹ میں شامل کریں';
-
-  @override
-  String get shareMenuAddToBookmarkSetSubtitle => 'مجموعوں میں ترتیب دیں';
-
-  @override
   String get shareMenuFollowSets => 'لوگوں کی فہرستیں';
 
   @override
@@ -4157,9 +4151,6 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get shareMenuUnknown => 'نامعلوم';
-
-  @override
-  String get shareMenuCreateBookmarkSet => 'بک مارک سیٹ بنائیں';
 
   @override
   String get shareMenuSetName => 'سیٹ کا نام';

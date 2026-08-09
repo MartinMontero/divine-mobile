@@ -3786,12 +3786,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get shareMenuAddToBookmarksSubtitle => 'Bewaar om later te bekijken';
 
   @override
-  String get shareMenuAddToBookmarkSet => 'Toevoegen aan bladwijzerset';
-
-  @override
-  String get shareMenuAddToBookmarkSetSubtitle => 'Orden in collecties';
-
-  @override
   String get shareMenuFollowSets => 'Volgsets';
 
   @override
@@ -4170,9 +4164,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get shareMenuUnknown => 'Onbekend';
-
-  @override
-  String get shareMenuCreateBookmarkSet => 'Bladwijzerset maken';
 
   @override
   String get shareMenuSetName => 'Setnaam';

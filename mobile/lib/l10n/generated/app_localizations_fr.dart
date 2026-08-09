@@ -3825,12 +3825,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shareMenuAddToBookmarksSubtitle => 'Garder pour plus tard';
 
   @override
-  String get shareMenuAddToBookmarkSet => 'Ajouter à un ensemble de favoris';
-
-  @override
-  String get shareMenuAddToBookmarkSetSubtitle => 'Organiser en collections';
-
-  @override
   String get shareMenuFollowSets => 'Ensembles d\'abonnements';
 
   @override
@@ -4214,9 +4208,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get shareMenuUnknown => 'Inconnu';
-
-  @override
-  String get shareMenuCreateBookmarkSet => 'Créer un ensemble de favoris';
 
   @override
   String get shareMenuSetName => 'Nom de l\'ensemble';

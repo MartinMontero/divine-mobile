@@ -3815,12 +3815,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get shareMenuAddToBookmarksSubtitle => 'Für später speichern';
 
   @override
-  String get shareMenuAddToBookmarkSet => 'Zu Lesezeichen-Set hinzufügen';
-
-  @override
-  String get shareMenuAddToBookmarkSetSubtitle => 'In Sammlungen organisieren';
-
-  @override
   String get shareMenuFollowSets => 'Follow-Sets';
 
   @override
@@ -4202,9 +4196,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get shareMenuUnknown => 'Unbekannt';
-
-  @override
-  String get shareMenuCreateBookmarkSet => 'Lesezeichen-Set erstellen';
 
   @override
   String get shareMenuSetName => 'Set-Name';

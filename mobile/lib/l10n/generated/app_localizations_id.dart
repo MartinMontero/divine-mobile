@@ -3733,12 +3733,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get shareMenuAddToBookmarksSubtitle => 'Simpan untuk ditonton nanti';
 
   @override
-  String get shareMenuAddToBookmarkSet => 'Tambah ke Set Bookmark';
-
-  @override
-  String get shareMenuAddToBookmarkSetSubtitle => 'Susun dalam koleksi';
-
-  @override
   String get shareMenuFollowSets => 'Set Ikuti';
 
   @override
@@ -4115,9 +4109,6 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get shareMenuUnknown => 'Tidak Dikenal';
-
-  @override
-  String get shareMenuCreateBookmarkSet => 'Buat Set Bookmark';
 
   @override
   String get shareMenuSetName => 'Nama Set';

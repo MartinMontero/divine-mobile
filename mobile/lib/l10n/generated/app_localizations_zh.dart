@@ -3567,12 +3567,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get shareMenuAddToBookmarksSubtitle => '存起来稍后看';
 
   @override
-  String get shareMenuAddToBookmarkSet => '加入收藏集';
-
-  @override
-  String get shareMenuAddToBookmarkSetSubtitle => '按合集整理';
-
-  @override
   String get shareMenuFollowSets => '人物列表';
 
   @override
@@ -3930,9 +3924,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get shareMenuUnknown => '未知';
-
-  @override
-  String get shareMenuCreateBookmarkSet => '创建收藏集';
 
   @override
   String get shareMenuSetName => '集合名称';

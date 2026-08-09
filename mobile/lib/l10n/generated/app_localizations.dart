@@ -6566,18 +6566,6 @@ abstract class AppLocalizations {
   /// **'Save for later viewing'**
   String get shareMenuAddToBookmarksSubtitle;
 
-  /// No description provided for @shareMenuAddToBookmarkSet.
-  ///
-  /// In en, this message translates to:
-  /// **'Add to Bookmark Set'**
-  String get shareMenuAddToBookmarkSet;
-
-  /// No description provided for @shareMenuAddToBookmarkSetSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Organize in collections'**
-  String get shareMenuAddToBookmarkSetSubtitle;
-
   /// No description provided for @shareMenuFollowSets.
   ///
   /// In en, this message translates to:
@@ -7201,12 +7189,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unknown'**
   String get shareMenuUnknown;
-
-  /// No description provided for @shareMenuCreateBookmarkSet.
-  ///
-  /// In en, this message translates to:
-  /// **'Create Bookmark Set'**
-  String get shareMenuCreateBookmarkSet;
 
   /// No description provided for @shareMenuSetName.
   ///

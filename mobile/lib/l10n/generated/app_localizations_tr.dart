@@ -3740,13 +3740,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get shareMenuAddToBookmarksSubtitle => 'Sonra izlemek için kaydet';
 
   @override
-  String get shareMenuAddToBookmarkSet => 'Yer İmi Setine Ekle';
-
-  @override
-  String get shareMenuAddToBookmarkSetSubtitle =>
-      'Koleksiyonlar halinde düzenle';
-
-  @override
   String get shareMenuFollowSets => 'Takip Setleri';
 
   @override
@@ -4122,9 +4115,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get shareMenuUnknown => 'Bilinmeyen';
-
-  @override
-  String get shareMenuCreateBookmarkSet => 'Yer İmi Seti Oluştur';
 
   @override
   String get shareMenuSetName => 'Set Adı';
