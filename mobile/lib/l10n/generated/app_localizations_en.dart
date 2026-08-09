@@ -1310,6 +1310,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get videoSettingsCaptionsOff => 'Captions off';
 
   @override
+  String get videoSettingsCaptionsOnForVideo => 'Captions on for this video';
+
+  @override
+  String get videoSettingsCaptionsOffForVideo => 'Captions off for this video';
+
+  @override
   String get contentWarningLabel => 'Content Warning';
 
   @override
