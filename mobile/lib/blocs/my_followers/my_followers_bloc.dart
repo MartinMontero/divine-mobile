@@ -43,18 +43,6 @@ class MyFollowersBloc extends Bloc<MyFollowersEvent, MyFollowersState> {
       )
       .toList();
 
-  int _visibleFollowerCount({
-    required List<String> rawPubkeys,
-    required List<String> visiblePubkeys,
-    required int authoritativeCount,
-  }) {
-    final hiddenKnownFollowers = rawPubkeys.length - visiblePubkeys.length;
-    return max(
-      visiblePubkeys.length,
-      authoritativeCount - hiddenKnownFollowers,
-    );
-  }
-
   /// Handle request to load current user's followers list.
   ///
   /// Delegates to [FollowRepository.watchMyFollowersCached] for
@@ -80,11 +68,7 @@ class MyFollowersBloc extends Bloc<MyFollowersEvent, MyFollowersState> {
             status: MyFollowersStatus.success,
             rawFollowersPubkeys: result.data.pubkeys,
             followersPubkeys: visiblePubkeys,
-            followerCount: _visibleFollowerCount(
-              rawPubkeys: result.data.pubkeys,
-              visiblePubkeys: visiblePubkeys,
-              authoritativeCount: result.data.count,
-            ),
+            authoritativeFollowerCount: result.data.count,
             isRefreshing: result.isStale,
           );
         },
@@ -107,20 +91,11 @@ class MyFollowersBloc extends Bloc<MyFollowersEvent, MyFollowersState> {
     Emitter<MyFollowersState> emit,
   ) {
     if (state.status != MyFollowersStatus.success) return;
-    final visiblePubkeys = _filterPubkeys(state.rawFollowersPubkeys);
-    final previousHiddenKnownFollowers =
-        state.rawFollowersPubkeys.length - state.followersPubkeys.length;
-    final authoritativeCount =
-        state.followerCount + previousHiddenKnownFollowers;
-
+    // followerCount derives from the unchanged authoritative count, so
+    // re-filtering alone updates it.
     emit(
       state.copyWith(
-        followersPubkeys: visiblePubkeys,
-        followerCount: _visibleFollowerCount(
-          rawPubkeys: state.rawFollowersPubkeys,
-          visiblePubkeys: visiblePubkeys,
-          authoritativeCount: authoritativeCount,
-        ),
+        followersPubkeys: _filterPubkeys(state.rawFollowersPubkeys),
       ),
     );
   }
