@@ -558,13 +558,7 @@
   "videoGridEditVideoSubtitle": "عنوان، تفصیل اور ہیش ٹیگز اپڈیٹ کریں",
   "videoGridDeleteVideo": "ویڈیو حذف کریں",
   "videoGridDeleteVideoSubtitle": "یہ ویڈیو Divine سے ہٹائیں۔ یہ دیگر Nostr کلائنٹس پر پھر بھی نظر آ سکتی ہے۔",
-  "videoGridDeleteConfirmTitle": "ویڈیو حذف کریں",
-  "videoGridDeleteConfirmMessage": "یہ ویڈیو Divine سے مستقل طور پر حذف ہو جائے گی۔ دیگر ریلے استعمال کرنے والے تھرڈ پارٹی Nostr کلائنٹس پر یہ پھر بھی نظر آ سکتی ہے۔",
-  "videoGridDeleteConfirmNote": "اس سے ریلے کو حذف کرنے کی درخواست بھیجی جائے گی۔ نوٹ: کچھ ریلے کے پاس پھر بھی کیش شدہ کاپیاں ہو سکتی ہیں۔",
-  "videoGridDeleteCancel": "منسوخ کریں",
-  "videoGridDeleteConfirm": "حذف کریں",
   "videoGridDeletingContent": "مواد حذف ہو رہا ہے...",
-  "videoGridDeleteSuccess": "حذف کی درخواست کامیابی سے بھیج دی گئی",
   "videoGridDeleteFailure": "مواد حذف نہیں ہو سکا: {error}",
   "@videoGridDeleteFailure": {
     "placeholders": {
@@ -2204,7 +2198,6 @@
   "shareMenuEditVideoSubtitle": "عنوان، تفصیل اور ہیش ٹیگز اپڈیٹ کریں",
   "shareMenuDeleteVideo": "ویڈیو حذف کریں",
   "shareMenuDeleteVideoSubtitle": "یہ ویڈیو Divine سے ہٹائیں۔ یہ دیگر Nostr کلائنٹس پر پھر بھی نظر آ سکتی ہے۔",
-  "shareMenuDeleteWarning": "یہ تمام ریلے کو حذف کی درخواست (NIP-09) بھیجتا ہے۔ کچھ ریلے پھر بھی مواد رکھ سکتے ہیں۔",
   "shareMenuVideoInTheseLists": "ویڈیو ان فہرستوں میں ہے:",
   "shareMenuVideoCount": "{count} ویڈیوز",
   "@shareMenuVideoCount": {
@@ -2227,7 +2220,6 @@
       }
     }
   },
-  "shareMenuDeleteRequestSent": "ویڈیو حذف ہو گئی",
   "shareMenuDeleteFailedNotInitialized": "حذف کرنے کی سہولت ابھی تیار نہیں۔ تھوڑی دیر میں دوبارہ کوشش کریں۔",
   "shareMenuDeleteFailedNotOwner": "آپ صرف اپنی ویڈیوز حذف کر سکتے ہیں۔",
   "shareMenuDeleteFailedNotAuthenticated": "دوبارہ سائن ان کریں، پھر حذف کر کے دیکھیں۔",
@@ -2293,7 +2285,6 @@
     }
   },
   "shareMenuDeleteVideoQuestion": "ویڈیو حذف کریں؟",
-  "shareMenuDeleteRelayWarning": "اس سے ریلے کو حذف کی درخواست بھیجی جائے گی۔ نوٹ: کچھ ریلے کے پاس پھر بھی کیش شدہ کاپیاں ہو سکتی ہیں۔",
   "shareMenuVideoDeletionRequested": "ویڈیو حذف ہو گئی",
   "shareMenuContentLabels": "مواد لیبلز",
   "shareMenuAddContentLabels": "مواد لیبلز شامل کریں",
@@ -3673,7 +3664,7 @@
   "commonNotNow": "ابھی نہیں",
   "commonLoading": "لوڈ ہو رہا ہے",
   "@commonLoading": {
-    "description": "Screen-reader label for a blocking progress spinner that covers the screen while an action is being prepared. Announced instead of the content behind it, which is not reachable while the spinner is up."
+    "description": "Screen-reader label for a progress indicator, announced while content or an action is loading. Covers both a full-screen spinner that blocks the content behind it and a small inline one next to content that stays reachable."
   },
   "videoMetadataEditCoverFailedSnackbar": "کور اپڈیٹ نہیں ہو سکا۔ دوبارہ کوشش کریں۔",
   "@videoMetadataEditCoverFailedSnackbar": {
@@ -5117,8 +5108,9 @@
   },
   "videoRecorderCloseLabel": "ویڈیو ریکارڈر بند کریں",
   "videoRecorderContinueToEditorLabel": "ویڈیو ایڈیٹر پر جائیں",
-  "videoRecorderCaptureCloseLabel": "بند کریں",
-  "videoRecorderCaptureNextLabel": "آگے",
+  "videoRecorderCameraPreviewLabel": "کیمرہ پیش منظر",
+  "videoRecorderCameraPreviewFocusHint": "کیمرے کو فوکس کریں",
+  "videoRecorderSwitchToModeLabel": "{mode} موڈ پر سوئچ کریں",
   "videoRecorderLipSyncAddAudioFirst": "ریکارڈنگ سے پہلے آڈیو شامل کریں",
   "@videoRecorderLipSyncAddAudioFirst": {
     "description": "Snackbar shown when the user taps the record button in lip-sync mode without first selecting a sound."
@@ -5146,6 +5138,16 @@
   "videoRecorderStabilizationModePreviewOptimized": "پیش منظر بہتر",
   "videoRecorderStabilizationModeLowLatency": "کم تاخیر",
   "videoRecorderStabilizationModeAuto": "خودکار",
+  "videoRecorderFlashValueOff": "بند",
+  "videoRecorderFlashValueOn": "چالو",
+  "videoRecorderFlashValueAuto": "خودکار",
+  "videoRecorderTimerValueOff": "بند",
+  "videoRecorderTimerValueThreeSeconds": "3 سیکنڈ",
+  "videoRecorderTimerValueTenSeconds": "10 سیکنڈ",
+  "videoRecorderAspectRatioValueSquare": "مربع",
+  "videoRecorderAspectRatioValueVertical": "عمودی",
+  "videoRecorderCameraValueFront": "سامنے والا کیمرہ",
+  "videoRecorderCameraValueBack": "پچھلا کیمرہ",
   "videoRecorderLibraryEmptyLabel": "کلپ لائبریری، کوئی کلپ نہیں",
   "videoRecorderLibraryOpenLabel": "{clipCount, plural, one{کلپ لائبریری کھولیں، 1 کلپ} other{کلپ لائبریری کھولیں، {clipCount} کلپس}}",
   "@videoRecorderLibraryOpenLabel": {

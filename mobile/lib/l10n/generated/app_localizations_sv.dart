@@ -1141,27 +1141,7 @@ class AppLocalizationsSv extends AppLocalizations {
       'Ta bort det här innehållet permanent';
 
   @override
-  String get videoGridDeleteConfirmTitle => 'Ta bort video';
-
-  @override
-  String get videoGridDeleteConfirmMessage =>
-      'Är du säker på att du vill ta bort den här videon?';
-
-  @override
-  String get videoGridDeleteConfirmNote =>
-      'Detta skickar en borttagningsbegäran (NIP-09) till alla reler. Vissa reler kan fortfarande behålla innehållet.';
-
-  @override
-  String get videoGridDeleteCancel => 'Avbryt';
-
-  @override
-  String get videoGridDeleteConfirm => 'Ta bort';
-
-  @override
   String get videoGridDeletingContent => 'Tar bort innehåll...';
-
-  @override
-  String get videoGridDeleteSuccess => 'Borttagningsbegäran skickad';
 
   @override
   String videoGridDeleteFailure(Object error) {
@@ -3991,10 +3971,6 @@ class AppLocalizationsSv extends AppLocalizations {
       'Ta bort det här innehållet permanent';
 
   @override
-  String get shareMenuDeleteWarning =>
-      'Detta skickar en borttagningsbegäran (NIP-09) till alla reler. Vissa reler kan fortfarande behålla innehållet.';
-
-  @override
   String get shareMenuVideoInTheseLists => 'Videon finns i de här listorna:';
 
   @override
@@ -4007,7 +3983,7 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get shareMenuDeleteConfirmation =>
-      'Är du säker på att du vill ta bort den här videon?';
+      'Det här tar bort videon permanent från Divine. Den kan fortfarande visas i Nostr-klienter från tredje part som använder andra reler.';
 
   @override
   String get shareMenuCancel => 'Avbryt';
@@ -4022,9 +3998,6 @@ class AppLocalizationsSv extends AppLocalizations {
   String shareMenuFailedToDeleteContent(String error) {
     return 'Kunde inte ta bort innehåll: $error';
   }
-
-  @override
-  String get shareMenuDeleteRequestSent => 'Borttagningsbegäran skickad';
 
   @override
   String get shareMenuDeleteFailedNotInitialized =>
@@ -4141,11 +4114,7 @@ class AppLocalizationsSv extends AppLocalizations {
   String get shareMenuDeleteVideoQuestion => 'Ta bort video?';
 
   @override
-  String get shareMenuDeleteRelayWarning =>
-      'Detta skickar en borttagningsbegäran till reler. Obs: Vissa reler kan fortfarande ha cachade kopior.';
-
-  @override
-  String get shareMenuVideoDeletionRequested => 'Videoborttagning begärd';
+  String get shareMenuVideoDeletionRequested => 'Video borttagen';
 
   @override
   String get shareMenuContentLabels => 'Innehållsetiketter';
@@ -8486,10 +8455,15 @@ class AppLocalizationsSv extends AppLocalizations {
       'Fortsätt till videoredigeraren';
 
   @override
-  String get videoRecorderCaptureCloseLabel => 'Stäng';
+  String get videoRecorderCameraPreviewLabel => 'Kameraförhandsvisning';
 
   @override
-  String get videoRecorderCaptureNextLabel => 'Nästa';
+  String get videoRecorderCameraPreviewFocusHint => 'Fokusera kameran';
+
+  @override
+  String videoRecorderSwitchToModeLabel(String mode) {
+    return 'Byt till läget $mode';
+  }
 
   @override
   String get videoRecorderLipSyncAddAudioFirst =>
@@ -8545,6 +8519,36 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get videoRecorderStabilizationModeAuto => 'Auto';
+
+  @override
+  String get videoRecorderFlashValueOff => 'Av';
+
+  @override
+  String get videoRecorderFlashValueOn => 'På';
+
+  @override
+  String get videoRecorderFlashValueAuto => 'Auto';
+
+  @override
+  String get videoRecorderTimerValueOff => 'Av';
+
+  @override
+  String get videoRecorderTimerValueThreeSeconds => '3 sekunder';
+
+  @override
+  String get videoRecorderTimerValueTenSeconds => '10 sekunder';
+
+  @override
+  String get videoRecorderAspectRatioValueSquare => 'Kvadratisk';
+
+  @override
+  String get videoRecorderAspectRatioValueVertical => 'Stående';
+
+  @override
+  String get videoRecorderCameraValueFront => 'Främre kamera';
+
+  @override
+  String get videoRecorderCameraValueBack => 'Bakre kamera';
 
   @override
   String get videoRecorderLibraryEmptyLabel => 'Klippbibliotek, inga klipp';

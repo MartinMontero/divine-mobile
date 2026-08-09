@@ -452,13 +452,7 @@
     "videoGridEditVideoSubtitle": "Actualizează titlul, descrierea și hashtagurile",
     "videoGridDeleteVideo": "Șterge videoclipul",
     "videoGridDeleteVideoSubtitle": "Elimină definitiv acest conținut",
-    "videoGridDeleteConfirmTitle": "Șterge videoclipul",
-    "videoGridDeleteConfirmMessage": "Sigur vrei să ștergi acest videoclip?",
-    "videoGridDeleteConfirmNote": "Asta va trimite o cerere de ștergere (NIP-09) către toate relay-urile. Unele relay-uri pot păstra totuși conținutul.",
-    "videoGridDeleteCancel": "Anulează",
-    "videoGridDeleteConfirm": "Șterge",
     "videoGridDeletingContent": "Se șterge conținutul...",
-    "videoGridDeleteSuccess": "Cererea de ștergere a fost trimisă cu succes",
     "videoGridDeleteFailure": "N-am putut șterge conținutul: {error}",
     "@videoGridDeleteFailure": {
         "placeholders": {
@@ -1578,12 +1572,10 @@
         }
     },
     "shareMenuClose": "Închide",
-    "shareMenuDeleteConfirmation": "Sigur vrei să ștergi acest videoclip?",
-    "shareMenuDeleteWarning": "Asta va trimite o cerere de ștergere (NIP-09) către toate relay-urile. Unele relay-uri pot păstra totuși conținutul.",
+    "shareMenuDeleteConfirmation": "Asta va șterge definitiv acest videoclip din Divine. Poate apărea în continuare în clienți Nostr terți care folosesc alte relay-uri.",
     "shareMenuCancel": "Anulează",
     "shareMenuDelete": "Șterge",
     "shareMenuDeletingContent": "Se șterge conținutul...",
-    "shareMenuDeleteRequestSent": "Cererea de ștergere a fost trimisă cu succes",
     "shareMenuFailedToDeleteContent": "N-am putut șterge conținutul: {error}",
     "@shareMenuFailedToDeleteContent": {
         "placeholders": {
@@ -1627,8 +1619,7 @@
         }
     },
     "shareMenuDeleteVideoQuestion": "Ștergi videoclipul?",
-    "shareMenuDeleteRelayWarning": "Asta va trimite o cerere de ștergere către relay-uri. Notă: Unele relay-uri pot avea încă copii în cache.",
-    "shareMenuVideoDeletionRequested": "Cerere de ștergere a videoclipului trimisă",
+    "shareMenuVideoDeletionRequested": "Videoclip șters",
     "shareMenuFailedToDeleteVideo": "N-am putut șterge videoclipul: {error}",
     "@shareMenuFailedToDeleteVideo": {
         "placeholders": {
@@ -2900,8 +2891,9 @@
     "libraryTrashEmptyConfirmMessage": "Asta șterge definitiv din coș {count, plural, =1{1 clip} other{{count} clipuri}} imediat.",
     "videoRecorderCloseLabel": "Închide înregistratorul video",
     "videoRecorderContinueToEditorLabel": "Continuă către editorul video",
-    "videoRecorderCaptureCloseLabel": "Închide",
-    "videoRecorderCaptureNextLabel": "Următorul",
+    "videoRecorderCameraPreviewLabel": "Previzualizare cameră",
+    "videoRecorderCameraPreviewFocusHint": "Focalizează camera",
+    "videoRecorderSwitchToModeLabel": "Comută la modul {mode}",
     "videoRecorderLipSyncAddAudioFirst": "Adaugă audio înainte de înregistrare",
     "videoRecorderStopMotionAssembleFailed": "Videoclipul nu a putut fi creat. Încearcă din nou.",
     "videoRecorderStopMotionShotsLeft": "{count, plural, =0{Nu mai sunt cadre} =1{A mai rămas 1 cadru} few{Au mai rămas {count} cadre} other{Au mai rămas {count} de cadre}}",
@@ -2923,6 +2915,16 @@
     "videoRecorderStabilizationModePreviewOptimized": "Optimizată pentru previzualizare",
     "videoRecorderStabilizationModeLowLatency": "Latență redusă",
     "videoRecorderStabilizationModeAuto": "Automată",
+    "videoRecorderFlashValueOff": "Dezactivat",
+    "videoRecorderFlashValueOn": "Activat",
+    "videoRecorderFlashValueAuto": "Automat",
+    "videoRecorderTimerValueOff": "Dezactivat",
+    "videoRecorderTimerValueThreeSeconds": "3 secunde",
+    "videoRecorderTimerValueTenSeconds": "10 secunde",
+    "videoRecorderAspectRatioValueSquare": "Pătrat",
+    "videoRecorderAspectRatioValueVertical": "Vertical",
+    "videoRecorderCameraValueFront": "Cameră frontală",
+    "videoRecorderCameraValueBack": "Cameră posterioară",
     "videoRecorderLibraryEmptyLabel": "Bibliotecă de clipuri, fără clipuri",
     "videoRecorderLibraryOpenLabel": "{clipCount, plural, one{Deschide biblioteca de clipuri, 1 clip} other{Deschide biblioteca de clipuri, {clipCount} clipuri}}",
     "@videoRecorderLibraryOpenLabel": {

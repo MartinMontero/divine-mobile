@@ -1155,27 +1155,7 @@ class AppLocalizationsMs extends AppLocalizations {
       'Alih keluar video ini daripada Divine. Ia mungkin masih muncul pada klien Nostr lain.';
 
   @override
-  String get videoGridDeleteConfirmTitle => 'Padam Video';
-
-  @override
-  String get videoGridDeleteConfirmMessage =>
-      'Ini akan memadam video ini secara kekal daripada Divine. Ia mungkin masih muncul pada klien Nostr pihak ketiga yang menggunakan relay lain.';
-
-  @override
-  String get videoGridDeleteConfirmNote =>
-      'Ini akan menghantar permintaan pemadaman kepada relay. Nota: Sesetengah relay mungkin masih mempunyai salinan cache.';
-
-  @override
-  String get videoGridDeleteCancel => 'Batal';
-
-  @override
-  String get videoGridDeleteConfirm => 'Padam';
-
-  @override
   String get videoGridDeletingContent => 'Memadam kandungan...';
-
-  @override
-  String get videoGridDeleteSuccess => 'Permintaan pemadaman berjaya dihantar';
 
   @override
   String videoGridDeleteFailure(Object error) {
@@ -4024,10 +4004,6 @@ class AppLocalizationsMs extends AppLocalizations {
       'Alih keluar video ini daripada Divine. Ia mungkin masih muncul pada klien Nostr lain.';
 
   @override
-  String get shareMenuDeleteWarning =>
-      'Ini menghantar permintaan pemadaman (NIP-09) kepada semua relay. Sesetengah relay mungkin masih menyimpan kandungan itu.';
-
-  @override
   String get shareMenuVideoInTheseLists => 'Video berada dalam senarai ini:';
 
   @override
@@ -4055,9 +4031,6 @@ class AppLocalizationsMs extends AppLocalizations {
   String shareMenuFailedToDeleteContent(String error) {
     return 'Gagal memadam kandungan: $error';
   }
-
-  @override
-  String get shareMenuDeleteRequestSent => 'Video dipadam';
 
   @override
   String get shareMenuDeleteFailedNotInitialized =>
@@ -4173,10 +4146,6 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get shareMenuDeleteVideoQuestion => 'Padam Video?';
-
-  @override
-  String get shareMenuDeleteRelayWarning =>
-      'Ini akan menghantar permintaan pemadaman kepada relay. Nota: Sesetengah relay mungkin masih mempunyai salinan cache.';
 
   @override
   String get shareMenuVideoDeletionRequested => 'Video dipadam';
@@ -8542,10 +8511,15 @@ class AppLocalizationsMs extends AppLocalizations {
       'Teruskan ke penyunting video';
 
   @override
-  String get videoRecorderCaptureCloseLabel => 'Tutup';
+  String get videoRecorderCameraPreviewLabel => 'Pratonton kamera';
 
   @override
-  String get videoRecorderCaptureNextLabel => 'Seterusnya';
+  String get videoRecorderCameraPreviewFocusHint => 'Fokuskan kamera';
+
+  @override
+  String videoRecorderSwitchToModeLabel(String mode) {
+    return 'Tukar kepada mod $mode';
+  }
 
   @override
   String get videoRecorderLipSyncAddAudioFirst =>
@@ -8600,6 +8574,36 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get videoRecorderStabilizationModeAuto => 'Auto';
+
+  @override
+  String get videoRecorderFlashValueOff => 'Mati';
+
+  @override
+  String get videoRecorderFlashValueOn => 'Hidup';
+
+  @override
+  String get videoRecorderFlashValueAuto => 'Auto';
+
+  @override
+  String get videoRecorderTimerValueOff => 'Mati';
+
+  @override
+  String get videoRecorderTimerValueThreeSeconds => '3 saat';
+
+  @override
+  String get videoRecorderTimerValueTenSeconds => '10 saat';
+
+  @override
+  String get videoRecorderAspectRatioValueSquare => 'Segi empat sama';
+
+  @override
+  String get videoRecorderAspectRatioValueVertical => 'Menegak';
+
+  @override
+  String get videoRecorderCameraValueFront => 'Kamera hadapan';
+
+  @override
+  String get videoRecorderCameraValueBack => 'Kamera belakang';
 
   @override
   String get videoRecorderLibraryEmptyLabel => 'Pustaka klip, tiada klip';

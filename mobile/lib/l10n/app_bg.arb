@@ -483,13 +483,7 @@
     "videoGridEditVideoSubtitle": "Актуализирай заглавие, описание и хаштагове",
     "videoGridDeleteVideo": "Изтрий видеото",
     "videoGridDeleteVideoSubtitle": "Премахни това видео от Divine. Може още да се вижда в други Nostr клиенти.",
-    "videoGridDeleteConfirmTitle": "Изтрий видеото",
-    "videoGridDeleteConfirmMessage": "Това ще изтрие за постоянно това видео от Divine. Може още да се вижда в Nostr клиенти на трети страни, които използват други релета.",
-    "videoGridDeleteConfirmNote": "Това ще изпрати заявка за изтриване до релетата. Забележка: Някои релета все още може да имат кеширани копия.",
-    "videoGridDeleteCancel": "Отказ",
-    "videoGridDeleteConfirm": "Изтрий",
     "videoGridDeletingContent": "Трием съдържанието...",
-    "videoGridDeleteSuccess": "Заявката за изтриване е изпратена",
     "videoGridDeleteFailure": "Неуспешно изтриване на съдържание: {error}",
     "@videoGridDeleteFailure": {
         "placeholders": {
@@ -1743,7 +1737,6 @@
     "shareMenuEditVideoSubtitle": "Актуализирай заглавие, описание и хаштагове",
     "shareMenuDeleteVideo": "Изтрий видеото",
     "shareMenuDeleteVideoSubtitle": "Премахни това видео от Divine. Може още да се вижда в други Nostr клиенти.",
-    "shareMenuDeleteWarning": "Това изпраща заявка за изтриване (NIP-09) до всички релета. Някои релета все още могат да запазят съдържанието.",
     "shareMenuVideoInTheseLists": "Видеото е в тези списъци:",
     "shareMenuVideoCount": "{count} видеа",
     "@shareMenuVideoCount": {
@@ -1766,7 +1759,6 @@
             }
         }
     },
-    "shareMenuDeleteRequestSent": "Видеото е изтрито",
     "shareMenuDeleteFailedNotInitialized": "Изтриването още не е готово. Опитай пак след малко.",
     "shareMenuDeleteFailedNotOwner": "Можеш да триеш само собствените си видеа.",
     "shareMenuDeleteFailedNotAuthenticated": "Влез отново, после пробвай да изтриеш.",
@@ -1818,7 +1810,6 @@
         }
     },
     "shareMenuDeleteVideoQuestion": "Да изтрием видеото?",
-    "shareMenuDeleteRelayWarning": "Това ще изпрати заявка за изтриване до релетата. Забележка: Някои релета все още може да имат кеширани копия.",
     "shareMenuVideoDeletionRequested": "Видеото е изтрито",
     "shareMenuContentLabels": "Етикети за съдържание",
     "shareMenuAddContentLabels": "Добави етикети за съдържание",
@@ -3168,8 +3159,9 @@
     "libraryTrashEmptyConfirmMessage": "Това ще изтрие окончателно {count, plural, =1{1 клип} other{{count} клипа}} от кошчето веднага.",
     "videoRecorderCloseLabel": "Затворете видеорекордер",
     "videoRecorderContinueToEditorLabel": "Продължете към видеоредактора",
-    "videoRecorderCaptureCloseLabel": "Затвори",
-    "videoRecorderCaptureNextLabel": "Следваща",
+    "videoRecorderCameraPreviewLabel": "Преглед от камерата",
+    "videoRecorderCameraPreviewFocusHint": "Фокусиране на камерата",
+    "videoRecorderSwitchToModeLabel": "Превключване към режим {mode}",
     "videoRecorderLipSyncAddAudioFirst": "Добавете аудио преди запис",
     "videoRecorderStopMotionAssembleFailed": "Видеото не можа да се създаде. Опитайте отново.",
     "videoRecorderStopMotionShotsLeft": "{count, plural, =0{Няма останали кадри} =1{Остава 1 кадър} other{Остават {count} кадъра}}",
@@ -3191,6 +3183,16 @@
     "videoRecorderStabilizationModePreviewOptimized": "Оптимизирана за преглед",
     "videoRecorderStabilizationModeLowLatency": "Ниска латентност",
     "videoRecorderStabilizationModeAuto": "Авто",
+    "videoRecorderFlashValueOff": "Изкл.",
+    "videoRecorderFlashValueOn": "Вкл.",
+    "videoRecorderFlashValueAuto": "Авто",
+    "videoRecorderTimerValueOff": "Изкл.",
+    "videoRecorderTimerValueThreeSeconds": "3 секунди",
+    "videoRecorderTimerValueTenSeconds": "10 секунди",
+    "videoRecorderAspectRatioValueSquare": "Квадратно",
+    "videoRecorderAspectRatioValueVertical": "Вертикално",
+    "videoRecorderCameraValueFront": "Предна камера",
+    "videoRecorderCameraValueBack": "Задна камера",
     "videoRecorderLibraryEmptyLabel": "Библиотека с клипове, няма клипове",
     "videoRecorderLibraryOpenLabel": "{clipCount, plural, one{Отвори библиотеката с клипове, 1 клип} other{Отвори библиотеката с клипове, {clipCount} клипа}}",
     "@videoRecorderLibraryOpenLabel": {

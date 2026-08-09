@@ -452,13 +452,7 @@
     "videoGridEditVideoSubtitle": "Perbarui judul, deskripsi, dan hashtag",
     "videoGridDeleteVideo": "Hapus Video",
     "videoGridDeleteVideoSubtitle": "Hapus konten ini secara permanen",
-    "videoGridDeleteConfirmTitle": "Hapus Video",
-    "videoGridDeleteConfirmMessage": "Yakin mau menghapus video ini?",
-    "videoGridDeleteConfirmNote": "Ini akan mengirim permintaan hapus (NIP-09) ke semua relay. Beberapa relay mungkin masih menyimpan kontennya.",
-    "videoGridDeleteCancel": "Batal",
-    "videoGridDeleteConfirm": "Hapus",
     "videoGridDeletingContent": "Menghapus konten...",
-    "videoGridDeleteSuccess": "Permintaan hapus berhasil dikirim",
     "videoGridDeleteFailure": "Gagal menghapus konten: {error}",
     "@videoGridDeleteFailure": {
         "placeholders": {
@@ -1575,12 +1569,10 @@
         }
     },
     "shareMenuClose": "Tutup",
-    "shareMenuDeleteConfirmation": "Yakin mau menghapus video ini?",
-    "shareMenuDeleteWarning": "Ini akan mengirim permintaan hapus (NIP-09) ke semua relay. Beberapa relay mungkin masih menyimpan kontennya.",
+    "shareMenuDeleteConfirmation": "Ini akan menghapus video ini secara permanen dari Divine. Video ini mungkin masih muncul di klien Nostr pihak ketiga yang menggunakan relay lain.",
     "shareMenuCancel": "Batal",
     "shareMenuDelete": "Hapus",
     "shareMenuDeletingContent": "Menghapus konten...",
-    "shareMenuDeleteRequestSent": "Permintaan hapus berhasil dikirim",
     "shareMenuFailedToDeleteContent": "Gagal menghapus konten: {error}",
     "@shareMenuFailedToDeleteContent": {
         "placeholders": {
@@ -1624,8 +1616,7 @@
         }
     },
     "shareMenuDeleteVideoQuestion": "Hapus Video?",
-    "shareMenuDeleteRelayWarning": "Ini akan mengirim permintaan hapus ke relay. Catatan: Beberapa relay mungkin masih punya salinan cache.",
-    "shareMenuVideoDeletionRequested": "Penghapusan video diminta",
+    "shareMenuVideoDeletionRequested": "Video dihapus",
     "shareMenuFailedToDeleteVideo": "Gagal menghapus video: {error}",
     "@shareMenuFailedToDeleteVideo": {
         "placeholders": {
@@ -3235,8 +3226,9 @@
     "videoRecorderAutosaveFoundSubtitle": "Apakah kamu ingin melanjutkan dari tempat kamu berhenti?",
     "videoRecorderAutosaveFoundTitle": "Kami menemukan pekerjaan yang belum selesai",
     "videoRecorderAutosaveRestoreFailure": "Tidak dapat memulihkan draf kamu",
-    "videoRecorderCaptureCloseLabel": "Tutup",
-    "videoRecorderCaptureNextLabel": "Berikutnya",
+    "videoRecorderCameraPreviewLabel": "Pratinjau kamera",
+    "videoRecorderCameraPreviewFocusHint": "Fokuskan kamera",
+    "videoRecorderSwitchToModeLabel": "Beralih ke mode {mode}",
     "videoRecorderLipSyncAddAudioFirst": "Tambahkan audio sebelum merekam",
     "videoRecorderStopMotionAssembleFailed": "Tidak dapat membuat video. Coba lagi.",
     "videoRecorderStopMotionShotsLeft": "{count, plural, =0{Tidak ada jepretan tersisa} other{Sisa {count} jepretan}}",
@@ -3297,6 +3289,16 @@
     "videoRecorderStabilizationModePreviewOptimized": "Dioptimalkan untuk pratinjau",
     "videoRecorderStabilizationModeLowLatency": "Latensi rendah",
     "videoRecorderStabilizationModeAuto": "Otomatis",
+    "videoRecorderFlashValueOff": "Nonaktif",
+    "videoRecorderFlashValueOn": "Aktif",
+    "videoRecorderFlashValueAuto": "Otomatis",
+    "videoRecorderTimerValueOff": "Nonaktif",
+    "videoRecorderTimerValueThreeSeconds": "3 detik",
+    "videoRecorderTimerValueTenSeconds": "10 detik",
+    "videoRecorderAspectRatioValueSquare": "Persegi",
+    "videoRecorderAspectRatioValueVertical": "Vertikal",
+    "videoRecorderCameraValueFront": "Kamera depan",
+    "videoRecorderCameraValueBack": "Kamera belakang",
     "videoRecorderToggleFlashLabel": "Ganti flash",
     "videoRecorderToggleGhostFrameLabel": "Ganti frame hantu",
     "videoRecorderToggleGridLabel": "Ganti grid",

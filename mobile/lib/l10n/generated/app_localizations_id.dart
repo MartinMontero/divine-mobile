@@ -1122,26 +1122,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get videoGridDeleteVideoSubtitle => 'Hapus konten ini secara permanen';
 
   @override
-  String get videoGridDeleteConfirmTitle => 'Hapus Video';
-
-  @override
-  String get videoGridDeleteConfirmMessage => 'Yakin mau menghapus video ini?';
-
-  @override
-  String get videoGridDeleteConfirmNote =>
-      'Ini akan mengirim permintaan hapus (NIP-09) ke semua relay. Beberapa relay mungkin masih menyimpan kontennya.';
-
-  @override
-  String get videoGridDeleteCancel => 'Batal';
-
-  @override
-  String get videoGridDeleteConfirm => 'Hapus';
-
-  @override
   String get videoGridDeletingContent => 'Menghapus konten...';
-
-  @override
-  String get videoGridDeleteSuccess => 'Permintaan hapus berhasil dikirim';
 
   @override
   String videoGridDeleteFailure(Object error) {
@@ -3953,10 +3934,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get shareMenuDeleteVideoSubtitle => 'Hapus konten ini secara permanen';
 
   @override
-  String get shareMenuDeleteWarning =>
-      'Ini akan mengirim permintaan hapus (NIP-09) ke semua relay. Beberapa relay mungkin masih menyimpan kontennya.';
-
-  @override
   String get shareMenuVideoInTheseLists => 'Video ada di daftar ini:';
 
   @override
@@ -3968,7 +3945,8 @@ class AppLocalizationsId extends AppLocalizations {
   String get shareMenuClose => 'Tutup';
 
   @override
-  String get shareMenuDeleteConfirmation => 'Yakin mau menghapus video ini?';
+  String get shareMenuDeleteConfirmation =>
+      'Ini akan menghapus video ini secara permanen dari Divine. Video ini mungkin masih muncul di klien Nostr pihak ketiga yang menggunakan relay lain.';
 
   @override
   String get shareMenuCancel => 'Batal';
@@ -3983,9 +3961,6 @@ class AppLocalizationsId extends AppLocalizations {
   String shareMenuFailedToDeleteContent(String error) {
     return 'Gagal menghapus konten: $error';
   }
-
-  @override
-  String get shareMenuDeleteRequestSent => 'Permintaan hapus berhasil dikirim';
 
   @override
   String get shareMenuDeleteFailedNotInitialized =>
@@ -4103,11 +4078,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get shareMenuDeleteVideoQuestion => 'Hapus Video?';
 
   @override
-  String get shareMenuDeleteRelayWarning =>
-      'Ini akan mengirim permintaan hapus ke relay. Catatan: Beberapa relay mungkin masih punya salinan cache.';
-
-  @override
-  String get shareMenuVideoDeletionRequested => 'Penghapusan video diminta';
+  String get shareMenuVideoDeletionRequested => 'Video dihapus';
 
   @override
   String get shareMenuContentLabels => 'Label konten';
@@ -8445,10 +8416,15 @@ class AppLocalizationsId extends AppLocalizations {
   String get videoRecorderContinueToEditorLabel => 'Lanjutkan ke editor video';
 
   @override
-  String get videoRecorderCaptureCloseLabel => 'Tutup';
+  String get videoRecorderCameraPreviewLabel => 'Pratinjau kamera';
 
   @override
-  String get videoRecorderCaptureNextLabel => 'Berikutnya';
+  String get videoRecorderCameraPreviewFocusHint => 'Fokuskan kamera';
+
+  @override
+  String videoRecorderSwitchToModeLabel(String mode) {
+    return 'Beralih ke mode $mode';
+  }
 
   @override
   String get videoRecorderLipSyncAddAudioFirst =>
@@ -8503,6 +8479,36 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get videoRecorderStabilizationModeAuto => 'Otomatis';
+
+  @override
+  String get videoRecorderFlashValueOff => 'Nonaktif';
+
+  @override
+  String get videoRecorderFlashValueOn => 'Aktif';
+
+  @override
+  String get videoRecorderFlashValueAuto => 'Otomatis';
+
+  @override
+  String get videoRecorderTimerValueOff => 'Nonaktif';
+
+  @override
+  String get videoRecorderTimerValueThreeSeconds => '3 detik';
+
+  @override
+  String get videoRecorderTimerValueTenSeconds => '10 detik';
+
+  @override
+  String get videoRecorderAspectRatioValueSquare => 'Persegi';
+
+  @override
+  String get videoRecorderAspectRatioValueVertical => 'Vertikal';
+
+  @override
+  String get videoRecorderCameraValueFront => 'Kamera depan';
+
+  @override
+  String get videoRecorderCameraValueBack => 'Kamera belakang';
 
   @override
   String get videoRecorderLibraryEmptyLabel =>

@@ -1156,27 +1156,7 @@ class AppLocalizationsNl extends AppLocalizations {
       'Deze inhoud definitief verwijderen';
 
   @override
-  String get videoGridDeleteConfirmTitle => 'Video verwijderen';
-
-  @override
-  String get videoGridDeleteConfirmMessage =>
-      'Weet je zeker dat je deze video wilt verwijderen?';
-
-  @override
-  String get videoGridDeleteConfirmNote =>
-      'Dit stuurt een verwijderverzoek (NIP-09) naar alle relays. Sommige relays kunnen de inhoud alsnog bewaren.';
-
-  @override
-  String get videoGridDeleteCancel => 'Annuleren';
-
-  @override
-  String get videoGridDeleteConfirm => 'Verwijderen';
-
-  @override
   String get videoGridDeletingContent => 'Inhoud verwijderen...';
-
-  @override
-  String get videoGridDeleteSuccess => 'Verwijderverzoek succesvol verstuurd';
 
   @override
   String videoGridDeleteFailure(Object error) {
@@ -4009,10 +3989,6 @@ class AppLocalizationsNl extends AppLocalizations {
       'Deze inhoud definitief verwijderen';
 
   @override
-  String get shareMenuDeleteWarning =>
-      'Dit stuurt een verwijderverzoek (NIP-09) naar alle relays. Sommige relays kunnen de inhoud alsnog bewaren.';
-
-  @override
   String get shareMenuVideoInTheseLists => 'Video staat in deze lijsten:';
 
   @override
@@ -4025,7 +4001,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get shareMenuDeleteConfirmation =>
-      'Weet je zeker dat je deze video wilt verwijderen?';
+      'Hiermee wordt deze video permanent uit Divine verwijderd. Hij kan nog steeds verschijnen in Nostr-clients van derden die andere relays gebruiken.';
 
   @override
   String get shareMenuCancel => 'Annuleren';
@@ -4040,10 +4016,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String shareMenuFailedToDeleteContent(String error) {
     return 'Inhoud verwijderen mislukt: $error';
   }
-
-  @override
-  String get shareMenuDeleteRequestSent =>
-      'Verwijderverzoek succesvol verstuurd';
 
   @override
   String get shareMenuDeleteFailedNotInitialized =>
@@ -4161,12 +4133,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get shareMenuDeleteVideoQuestion => 'Video verwijderen?';
 
   @override
-  String get shareMenuDeleteRelayWarning =>
-      'Dit stuurt een verwijderverzoek naar relays. Let op: sommige relays hebben misschien nog gecachte kopieën.';
-
-  @override
-  String get shareMenuVideoDeletionRequested =>
-      'Video-verwijdering aangevraagd';
+  String get shareMenuVideoDeletionRequested => 'Video verwijderd';
 
   @override
   String get shareMenuContentLabels => 'Inhoudslabels';
@@ -8526,10 +8493,15 @@ class AppLocalizationsNl extends AppLocalizations {
   String get videoRecorderContinueToEditorLabel => 'Doorgaan naar video-editor';
 
   @override
-  String get videoRecorderCaptureCloseLabel => 'Sluiten';
+  String get videoRecorderCameraPreviewLabel => 'Cameravoorbeeld';
 
   @override
-  String get videoRecorderCaptureNextLabel => 'Volgende';
+  String get videoRecorderCameraPreviewFocusHint => 'Camera scherpstellen';
+
+  @override
+  String videoRecorderSwitchToModeLabel(String mode) {
+    return 'Overschakelen naar de modus $mode';
+  }
 
   @override
   String get videoRecorderLipSyncAddAudioFirst =>
@@ -8585,6 +8557,36 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get videoRecorderStabilizationModeAuto => 'Automatisch';
+
+  @override
+  String get videoRecorderFlashValueOff => 'Uit';
+
+  @override
+  String get videoRecorderFlashValueOn => 'Aan';
+
+  @override
+  String get videoRecorderFlashValueAuto => 'Automatisch';
+
+  @override
+  String get videoRecorderTimerValueOff => 'Uit';
+
+  @override
+  String get videoRecorderTimerValueThreeSeconds => '3 seconden';
+
+  @override
+  String get videoRecorderTimerValueTenSeconds => '10 seconden';
+
+  @override
+  String get videoRecorderAspectRatioValueSquare => 'Vierkant';
+
+  @override
+  String get videoRecorderAspectRatioValueVertical => 'Verticaal';
+
+  @override
+  String get videoRecorderCameraValueFront => 'Frontcamera';
+
+  @override
+  String get videoRecorderCameraValueBack => 'Achtercamera';
 
   @override
   String get videoRecorderLibraryEmptyLabel => 'Clipbibliotheek, geen clips';

@@ -452,13 +452,7 @@
     "videoGridEditVideoSubtitle": "Atualize título, descrição e hashtags",
     "videoGridDeleteVideo": "Excluir vídeo",
     "videoGridDeleteVideoSubtitle": "Remover este conteúdo permanentemente",
-    "videoGridDeleteConfirmTitle": "Excluir vídeo",
-    "videoGridDeleteConfirmMessage": "Tem certeza que quer excluir este vídeo?",
-    "videoGridDeleteConfirmNote": "Isso vai enviar uma solicitação de exclusão (NIP-09) para todos os relays. Alguns relays podem manter o conteúdo mesmo assim.",
-    "videoGridDeleteCancel": "Cancelar",
-    "videoGridDeleteConfirm": "Excluir",
     "videoGridDeletingContent": "Excluindo conteúdo...",
-    "videoGridDeleteSuccess": "Solicitação de exclusão enviada com sucesso",
     "videoGridDeleteFailure": "Falha ao excluir conteúdo: {error}",
     "@videoGridDeleteFailure": {
         "placeholders": {
@@ -1578,12 +1572,10 @@
         }
     },
     "shareMenuClose": "Fechar",
-    "shareMenuDeleteConfirmation": "Tem certeza que quer excluir este vídeo?",
-    "shareMenuDeleteWarning": "Isso vai enviar uma solicitação de exclusão (NIP-09) para todos os relays. Alguns relays podem manter o conteúdo mesmo assim.",
+    "shareMenuDeleteConfirmation": "Isso excluirá permanentemente este vídeo do Divine. Ele ainda pode aparecer em clientes Nostr de terceiros que usam outros relays.",
     "shareMenuCancel": "Cancelar",
     "shareMenuDelete": "Excluir",
     "shareMenuDeletingContent": "Excluindo conteúdo...",
-    "shareMenuDeleteRequestSent": "Solicitação de exclusão enviada com sucesso",
     "shareMenuFailedToDeleteContent": "Falha ao excluir conteúdo: {error}",
     "@shareMenuFailedToDeleteContent": {
         "placeholders": {
@@ -1627,8 +1619,7 @@
         }
     },
     "shareMenuDeleteVideoQuestion": "Excluir vídeo?",
-    "shareMenuDeleteRelayWarning": "Isso vai enviar uma solicitação de exclusão para os relays. Nota: alguns relays ainda podem ter cópias em cache.",
-    "shareMenuVideoDeletionRequested": "Exclusão de vídeo solicitada",
+    "shareMenuVideoDeletionRequested": "Vídeo excluído",
     "shareMenuFailedToDeleteVideo": "Falha ao excluir vídeo: {error}",
     "@shareMenuFailedToDeleteVideo": {
         "placeholders": {
@@ -2900,8 +2891,9 @@
     "libraryTrashEmptyConfirmMessage": "Isso exclui permanentemente da lixeira {count, plural, =1{1 clipe} other{{count} clipes}} agora mesmo.",
     "videoRecorderCloseLabel": "Fechar gravador de vídeo",
     "videoRecorderContinueToEditorLabel": "Continuar para o editor de vídeo",
-    "videoRecorderCaptureCloseLabel": "Fechar",
-    "videoRecorderCaptureNextLabel": "Próximo",
+    "videoRecorderCameraPreviewLabel": "Pré-visualização da câmara",
+    "videoRecorderCameraPreviewFocusHint": "Focar a câmara",
+    "videoRecorderSwitchToModeLabel": "Mudar para o modo {mode}",
     "videoRecorderLipSyncAddAudioFirst": "Adicione áudio antes de gravar",
     "videoRecorderStopMotionAssembleFailed": "Não foi possível criar o vídeo. Tente novamente.",
     "videoRecorderStopMotionShotsLeft": "{count, plural, =0{Nenhuma foto restante} =1{Resta 1 foto} other{Restam {count} fotos}}",
@@ -2923,6 +2915,16 @@
     "videoRecorderStabilizationModePreviewOptimized": "Otimizada para visualização",
     "videoRecorderStabilizationModeLowLatency": "Baixa latência",
     "videoRecorderStabilizationModeAuto": "Automática",
+    "videoRecorderFlashValueOff": "Desativado",
+    "videoRecorderFlashValueOn": "Ativado",
+    "videoRecorderFlashValueAuto": "Automático",
+    "videoRecorderTimerValueOff": "Desativado",
+    "videoRecorderTimerValueThreeSeconds": "3 segundos",
+    "videoRecorderTimerValueTenSeconds": "10 segundos",
+    "videoRecorderAspectRatioValueSquare": "Quadrado",
+    "videoRecorderAspectRatioValueVertical": "Vertical",
+    "videoRecorderCameraValueFront": "Câmera frontal",
+    "videoRecorderCameraValueBack": "Câmera traseira",
     "videoRecorderLibraryEmptyLabel": "Biblioteca de clipes, sem clipes",
     "videoRecorderLibraryOpenLabel": "{clipCount, plural, one{Abrir biblioteca de clipes, 1 clipe} other{Abrir biblioteca de clipes, {clipCount} clipes}}",
     "@videoRecorderLibraryOpenLabel": {

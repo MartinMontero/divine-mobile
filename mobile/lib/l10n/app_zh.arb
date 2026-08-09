@@ -558,13 +558,7 @@
   "videoGridEditVideoSubtitle": "更新标题、简介和话题标签",
   "videoGridDeleteVideo": "删除视频",
   "videoGridDeleteVideoSubtitle": "从 Divine 删除此视频。它可能仍会出现在其他 Nostr 客户端上。",
-  "videoGridDeleteConfirmTitle": "删除视频",
-  "videoGridDeleteConfirmMessage": "这会从 Divine 永久删除该视频。使用其他中继的第三方 Nostr 客户端上可能仍会显示。",
-  "videoGridDeleteConfirmNote": "这会向中继发送删除请求。注意：部分中继可能仍保留缓存副本。",
-  "videoGridDeleteCancel": "取消",
-  "videoGridDeleteConfirm": "删除",
   "videoGridDeletingContent": "正在删除内容...",
-  "videoGridDeleteSuccess": "删除请求已成功发送",
   "videoGridDeleteFailure": "删除内容失败：{error}",
   "@videoGridDeleteFailure": {
     "placeholders": {
@@ -2204,7 +2198,6 @@
   "shareMenuEditVideoSubtitle": "更新标题、简介和话题标签",
   "shareMenuDeleteVideo": "删除视频",
   "shareMenuDeleteVideoSubtitle": "从 Divine 删除此视频。它可能仍会出现在其他 Nostr 客户端上。",
-  "shareMenuDeleteWarning": "这会向所有中继发送删除请求（NIP-09）。部分中继可能仍会保留该内容。",
   "shareMenuVideoInTheseLists": "视频已在这些列表中：",
   "shareMenuVideoCount": "{count} 个视频",
   "@shareMenuVideoCount": {
@@ -2227,7 +2220,6 @@
       }
     }
   },
-  "shareMenuDeleteRequestSent": "视频已删除",
   "shareMenuDeleteFailedNotInitialized": "删除功能还没准备好，请稍后再试。",
   "shareMenuDeleteFailedNotOwner": "你只能删除自己的视频。",
   "shareMenuDeleteFailedNotAuthenticated": "请重新登录后再删除。",
@@ -2293,7 +2285,6 @@
     }
   },
   "shareMenuDeleteVideoQuestion": "删除视频？",
-  "shareMenuDeleteRelayWarning": "这会向中继发送删除请求。注意：部分中继可能仍保留缓存副本。",
   "shareMenuVideoDeletionRequested": "视频已删除",
   "shareMenuContentLabels": "内容标签",
   "shareMenuAddContentLabels": "添加内容标签",
@@ -3673,7 +3664,7 @@
   "commonNotNow": "暂不",
   "commonLoading": "加载中",
   "@commonLoading": {
-    "description": "Screen-reader label for a blocking progress spinner that covers the screen while an action is being prepared. Announced instead of the content behind it, which is not reachable while the spinner is up."
+    "description": "Screen-reader label for a progress indicator, announced while content or an action is loading. Covers both a full-screen spinner that blocks the content behind it and a small inline one next to content that stays reachable."
   },
   "videoMetadataEditCoverFailedSnackbar": "封面更新失败，请重试。",
   "@videoMetadataEditCoverFailedSnackbar": {
@@ -5117,8 +5108,9 @@
   },
   "videoRecorderCloseLabel": "关闭录像机",
   "videoRecorderContinueToEditorLabel": "进入视频编辑器",
-  "videoRecorderCaptureCloseLabel": "关闭",
-  "videoRecorderCaptureNextLabel": "下一步",
+  "videoRecorderCameraPreviewLabel": "相机预览",
+  "videoRecorderCameraPreviewFocusHint": "相机对焦",
+  "videoRecorderSwitchToModeLabel": "切换到{mode}模式",
   "videoRecorderLipSyncAddAudioFirst": "录制前请先添加音频",
   "@videoRecorderLipSyncAddAudioFirst": {
     "description": "Snackbar shown when the user taps the record button in lip-sync mode without first selecting a sound."
@@ -5146,6 +5138,16 @@
   "videoRecorderStabilizationModePreviewOptimized": "预览优化",
   "videoRecorderStabilizationModeLowLatency": "低延迟",
   "videoRecorderStabilizationModeAuto": "自动",
+  "videoRecorderFlashValueOff": "关闭",
+  "videoRecorderFlashValueOn": "开启",
+  "videoRecorderFlashValueAuto": "自动",
+  "videoRecorderTimerValueOff": "关闭",
+  "videoRecorderTimerValueThreeSeconds": "3秒",
+  "videoRecorderTimerValueTenSeconds": "10秒",
+  "videoRecorderAspectRatioValueSquare": "正方形",
+  "videoRecorderAspectRatioValueVertical": "竖屏",
+  "videoRecorderCameraValueFront": "前置摄像头",
+  "videoRecorderCameraValueBack": "后置摄像头",
   "videoRecorderLibraryEmptyLabel": "片段库，没有片段",
   "videoRecorderLibraryOpenLabel": "{clipCount, plural, one{打开片段库，1 个片段} other{打开片段库，{clipCount} 个片段}}",
   "@videoRecorderLibraryOpenLabel": {

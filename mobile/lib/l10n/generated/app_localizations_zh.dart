@@ -1082,26 +1082,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '从 Divine 删除此视频。它可能仍会出现在其他 Nostr 客户端上。';
 
   @override
-  String get videoGridDeleteConfirmTitle => '删除视频';
-
-  @override
-  String get videoGridDeleteConfirmMessage =>
-      '这会从 Divine 永久删除该视频。使用其他中继的第三方 Nostr 客户端上可能仍会显示。';
-
-  @override
-  String get videoGridDeleteConfirmNote => '这会向中继发送删除请求。注意：部分中继可能仍保留缓存副本。';
-
-  @override
-  String get videoGridDeleteCancel => '取消';
-
-  @override
-  String get videoGridDeleteConfirm => '删除';
-
-  @override
   String get videoGridDeletingContent => '正在删除内容...';
-
-  @override
-  String get videoGridDeleteSuccess => '删除请求已成功发送';
 
   @override
   String videoGridDeleteFailure(Object error) {
@@ -3779,9 +3760,6 @@ class AppLocalizationsZh extends AppLocalizations {
       '从 Divine 删除此视频。它可能仍会出现在其他 Nostr 客户端上。';
 
   @override
-  String get shareMenuDeleteWarning => '这会向所有中继发送删除请求（NIP-09）。部分中继可能仍会保留该内容。';
-
-  @override
   String get shareMenuVideoInTheseLists => '视频已在这些列表中：';
 
   @override
@@ -3809,9 +3787,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String shareMenuFailedToDeleteContent(String error) {
     return '删除内容失败：$error';
   }
-
-  @override
-  String get shareMenuDeleteRequestSent => '视频已删除';
 
   @override
   String get shareMenuDeleteFailedNotInitialized => '删除功能还没准备好，请稍后再试。';
@@ -3917,9 +3892,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get shareMenuDeleteVideoQuestion => '删除视频？';
-
-  @override
-  String get shareMenuDeleteRelayWarning => '这会向中继发送删除请求。注意：部分中继可能仍保留缓存副本。';
 
   @override
   String get shareMenuVideoDeletionRequested => '视频已删除';
@@ -8068,10 +8040,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get videoRecorderContinueToEditorLabel => '进入视频编辑器';
 
   @override
-  String get videoRecorderCaptureCloseLabel => '关闭';
+  String get videoRecorderCameraPreviewLabel => '相机预览';
 
   @override
-  String get videoRecorderCaptureNextLabel => '下一步';
+  String get videoRecorderCameraPreviewFocusHint => '相机对焦';
+
+  @override
+  String videoRecorderSwitchToModeLabel(String mode) {
+    return '切换到$mode模式';
+  }
 
   @override
   String get videoRecorderLipSyncAddAudioFirst => '录制前请先添加音频';
@@ -8122,6 +8099,36 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get videoRecorderStabilizationModeAuto => '自动';
+
+  @override
+  String get videoRecorderFlashValueOff => '关闭';
+
+  @override
+  String get videoRecorderFlashValueOn => '开启';
+
+  @override
+  String get videoRecorderFlashValueAuto => '自动';
+
+  @override
+  String get videoRecorderTimerValueOff => '关闭';
+
+  @override
+  String get videoRecorderTimerValueThreeSeconds => '3秒';
+
+  @override
+  String get videoRecorderTimerValueTenSeconds => '10秒';
+
+  @override
+  String get videoRecorderAspectRatioValueSquare => '正方形';
+
+  @override
+  String get videoRecorderAspectRatioValueVertical => '竖屏';
+
+  @override
+  String get videoRecorderCameraValueFront => '前置摄像头';
+
+  @override
+  String get videoRecorderCameraValueBack => '后置摄像头';
 
   @override
   String get videoRecorderLibraryEmptyLabel => '片段库，没有片段';

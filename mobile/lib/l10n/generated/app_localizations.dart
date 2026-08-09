@@ -2052,47 +2052,11 @@ abstract class AppLocalizations {
   /// **'Remove this video from Divine. It may still appear on other Nostr clients.'**
   String get videoGridDeleteVideoSubtitle;
 
-  /// No description provided for @videoGridDeleteConfirmTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete Video'**
-  String get videoGridDeleteConfirmTitle;
-
-  /// No description provided for @videoGridDeleteConfirmMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'This will permanently delete this video from Divine. It may still appear on third-party Nostr clients that use other relays.'**
-  String get videoGridDeleteConfirmMessage;
-
-  /// No description provided for @videoGridDeleteConfirmNote.
-  ///
-  /// In en, this message translates to:
-  /// **'This will send a deletion request to relays. Note: Some relays may still have cached copies.'**
-  String get videoGridDeleteConfirmNote;
-
-  /// No description provided for @videoGridDeleteCancel.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get videoGridDeleteCancel;
-
-  /// No description provided for @videoGridDeleteConfirm.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete'**
-  String get videoGridDeleteConfirm;
-
   /// No description provided for @videoGridDeletingContent.
   ///
   /// In en, this message translates to:
   /// **'Deleting content...'**
   String get videoGridDeletingContent;
-
-  /// No description provided for @videoGridDeleteSuccess.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete request sent successfully'**
-  String get videoGridDeleteSuccess;
 
   /// No description provided for @videoGridDeleteFailure.
   ///
@@ -6938,12 +6902,6 @@ abstract class AppLocalizations {
   /// **'Remove this video from Divine. It may still appear on other Nostr clients.'**
   String get shareMenuDeleteVideoSubtitle;
 
-  /// No description provided for @shareMenuDeleteWarning.
-  ///
-  /// In en, this message translates to:
-  /// **'This sends a delete request (NIP-09) to all relays. Some relays may still keep the content.'**
-  String get shareMenuDeleteWarning;
-
   /// No description provided for @shareMenuVideoInTheseLists.
   ///
   /// In en, this message translates to:
@@ -6991,12 +6949,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to delete content: {error}'**
   String shareMenuFailedToDeleteContent(String error);
-
-  /// No description provided for @shareMenuDeleteRequestSent.
-  ///
-  /// In en, this message translates to:
-  /// **'Video deleted'**
-  String get shareMenuDeleteRequestSent;
 
   /// No description provided for @shareMenuDeleteFailedNotInitialized.
   ///
@@ -7177,12 +7129,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete Video?'**
   String get shareMenuDeleteVideoQuestion;
-
-  /// No description provided for @shareMenuDeleteRelayWarning.
-  ///
-  /// In en, this message translates to:
-  /// **'This will send a deletion request to relays. Note: Some relays may still have cached copies.'**
-  String get shareMenuDeleteRelayWarning;
 
   /// No description provided for @shareMenuVideoDeletionRequested.
   ///
@@ -11024,7 +10970,7 @@ abstract class AppLocalizations {
   /// **'Not now'**
   String get commonNotNow;
 
-  /// Screen-reader label for a blocking progress spinner that covers the screen while an action is being prepared. Announced instead of the content behind it, which is not reachable while the spinner is up.
+  /// Screen-reader label for a progress indicator, announced while content or an action is loading. Covers both a full-screen spinner that blocks the content behind it and a small inline one next to content that stays reachable.
   ///
   /// In en, this message translates to:
   /// **'Loading'**
@@ -14622,17 +14568,23 @@ abstract class AppLocalizations {
   /// **'Continue to video editor'**
   String get videoRecorderContinueToEditorLabel;
 
-  /// No description provided for @videoRecorderCaptureCloseLabel.
+  /// Accessibility label for the live camera viewfinder when tap-to-focus is enabled.
   ///
   /// In en, this message translates to:
-  /// **'Close'**
-  String get videoRecorderCaptureCloseLabel;
+  /// **'Camera preview'**
+  String get videoRecorderCameraPreviewLabel;
 
-  /// No description provided for @videoRecorderCaptureNextLabel.
+  /// Accessibility tap-action hint for the live camera viewfinder. Screen readers add their own activation instruction.
   ///
   /// In en, this message translates to:
-  /// **'Next'**
-  String get videoRecorderCaptureNextLabel;
+  /// **'Focus camera'**
+  String get videoRecorderCameraPreviewFocusHint;
+
+  /// Accessibility label for an unselected video recorder mode. Announces the result of activating the mode selector.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to {mode} mode'**
+  String videoRecorderSwitchToModeLabel(String mode);
 
   /// Snackbar shown when the user taps the record button in lip-sync mode without first selecting a sound.
   ///
@@ -14717,6 +14669,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Auto'**
   String get videoRecorderStabilizationModeAuto;
+
+  /// Screen-reader state of the recorder's flash button when flash is off. Announced after the button label, e.g. 'Toggle flash, Off'.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get videoRecorderFlashValueOff;
+
+  /// Screen-reader state of the recorder's flash button when the light stays on (torch). Announced after the button label.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get videoRecorderFlashValueOn;
+
+  /// Screen-reader state of the recorder's flash button when the camera decides whether to fire the flash. Announced after the button label.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto'**
+  String get videoRecorderFlashValueAuto;
+
+  /// Screen-reader state of the recorder's countdown-timer button when no delay is set. Announced after the button label, e.g. 'Cycle timer, Off'.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get videoRecorderTimerValueOff;
+
+  /// Screen-reader state of the recorder's countdown-timer button when recording starts after a 3 second delay.
+  ///
+  /// In en, this message translates to:
+  /// **'3 seconds'**
+  String get videoRecorderTimerValueThreeSeconds;
+
+  /// Screen-reader state of the recorder's countdown-timer button when recording starts after a 10 second delay.
+  ///
+  /// In en, this message translates to:
+  /// **'10 seconds'**
+  String get videoRecorderTimerValueTenSeconds;
+
+  /// Screen-reader state of the recorder's aspect-ratio button when recording in 1:1. Announced after the button label.
+  ///
+  /// In en, this message translates to:
+  /// **'Square'**
+  String get videoRecorderAspectRatioValueSquare;
+
+  /// Screen-reader state of the recorder's aspect-ratio button when recording in 9:16. Announced after the button label.
+  ///
+  /// In en, this message translates to:
+  /// **'Vertical'**
+  String get videoRecorderAspectRatioValueVertical;
+
+  /// Screen-reader state of the recorder's switch-camera button while the selfie camera is active. Announced after the button label.
+  ///
+  /// In en, this message translates to:
+  /// **'Front camera'**
+  String get videoRecorderCameraValueFront;
+
+  /// Screen-reader state of the recorder's switch-camera button while the rear camera is active. Announced after the button label.
+  ///
+  /// In en, this message translates to:
+  /// **'Back camera'**
+  String get videoRecorderCameraValueBack;
 
   /// No description provided for @videoRecorderLibraryEmptyLabel.
   ///

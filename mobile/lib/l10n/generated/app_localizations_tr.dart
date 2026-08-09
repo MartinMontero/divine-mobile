@@ -1121,27 +1121,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get videoGridDeleteVideoSubtitle => 'Bu içeriği kalıcı olarak kaldır';
 
   @override
-  String get videoGridDeleteConfirmTitle => 'Videoyu Sil';
-
-  @override
-  String get videoGridDeleteConfirmMessage =>
-      'Bu videoyu silmek istediğinden emin misin?';
-
-  @override
-  String get videoGridDeleteConfirmNote =>
-      'Bu işlem tüm rölelere bir silme isteği (NIP-09) gönderir. Bazı röleler içeriği saklamaya devam edebilir.';
-
-  @override
-  String get videoGridDeleteCancel => 'İptal';
-
-  @override
-  String get videoGridDeleteConfirm => 'Sil';
-
-  @override
   String get videoGridDeletingContent => 'İçerik siliniyor...';
-
-  @override
-  String get videoGridDeleteSuccess => 'Silme isteği başarıyla gönderildi';
 
   @override
   String videoGridDeleteFailure(Object error) {
@@ -3961,10 +3941,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get shareMenuDeleteVideoSubtitle => 'Bu içeriği kalıcı olarak kaldır';
 
   @override
-  String get shareMenuDeleteWarning =>
-      'Bu işlem tüm rölelere bir silme isteği (NIP-09) gönderir. Bazı röleler içeriği saklamaya devam edebilir.';
-
-  @override
   String get shareMenuVideoInTheseLists => 'Video şu listelerde:';
 
   @override
@@ -3977,7 +3953,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get shareMenuDeleteConfirmation =>
-      'Bu videoyu silmek istediğinden emin misin?';
+      'Bu video Divine\'dan kalıcı olarak silinir. Diğer röleleri kullanan üçüncü taraf Nostr istemcilerinde hâlâ görünebilir.';
 
   @override
   String get shareMenuCancel => 'İptal';
@@ -3992,9 +3968,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String shareMenuFailedToDeleteContent(String error) {
     return 'İçerik silinemedi: $error';
   }
-
-  @override
-  String get shareMenuDeleteRequestSent => 'Silme isteği başarıyla gönderildi';
 
   @override
   String get shareMenuDeleteFailedNotInitialized =>
@@ -4112,11 +4085,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get shareMenuDeleteVideoQuestion => 'Video Silinsin mi?';
 
   @override
-  String get shareMenuDeleteRelayWarning =>
-      'Bu işlem rölelere bir silme isteği gönderir. Not: Bazı rölelerin hala önbelleğe alınmış kopyaları olabilir.';
-
-  @override
-  String get shareMenuVideoDeletionRequested => 'Video silme isteği alındı';
+  String get shareMenuVideoDeletionRequested => 'Video silindi';
 
   @override
   String get shareMenuContentLabels => 'İçerik etiketleri';
@@ -8448,10 +8417,15 @@ class AppLocalizationsTr extends AppLocalizations {
       'Video düzenleyiciye devam et';
 
   @override
-  String get videoRecorderCaptureCloseLabel => 'Kapat';
+  String get videoRecorderCameraPreviewLabel => 'Kamera önizlemesi';
 
   @override
-  String get videoRecorderCaptureNextLabel => 'İleri';
+  String get videoRecorderCameraPreviewFocusHint => 'Kamerayı odakla';
+
+  @override
+  String videoRecorderSwitchToModeLabel(String mode) {
+    return '$mode moduna geç';
+  }
 
   @override
   String get videoRecorderLipSyncAddAudioFirst => 'Kayıttan önce ses ekleyin';
@@ -8505,6 +8479,36 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get videoRecorderStabilizationModeAuto => 'Otomatik';
+
+  @override
+  String get videoRecorderFlashValueOff => 'Kapalı';
+
+  @override
+  String get videoRecorderFlashValueOn => 'Açık';
+
+  @override
+  String get videoRecorderFlashValueAuto => 'Otomatik';
+
+  @override
+  String get videoRecorderTimerValueOff => 'Kapalı';
+
+  @override
+  String get videoRecorderTimerValueThreeSeconds => '3 saniye';
+
+  @override
+  String get videoRecorderTimerValueTenSeconds => '10 saniye';
+
+  @override
+  String get videoRecorderAspectRatioValueSquare => 'Kare';
+
+  @override
+  String get videoRecorderAspectRatioValueVertical => 'Dikey';
+
+  @override
+  String get videoRecorderCameraValueFront => 'Ön kamera';
+
+  @override
+  String get videoRecorderCameraValueBack => 'Arka kamera';
 
   @override
   String get videoRecorderLibraryEmptyLabel => 'Klip kütüphanesi, klip yok';

@@ -1131,27 +1131,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get videoGridDeleteVideoSubtitle => 'إزالة هذا المحتوى نهائيًا';
 
   @override
-  String get videoGridDeleteConfirmTitle => 'حذف الفيديو';
-
-  @override
-  String get videoGridDeleteConfirmMessage =>
-      'هل أنت متأكد من رغبتك في حذف هذا الفيديو؟';
-
-  @override
-  String get videoGridDeleteConfirmNote =>
-      'سيرسل هذا طلب حذف (NIP-09) إلى جميع المحولات. قد تحتفظ بعض المحولات بالمحتوى.';
-
-  @override
-  String get videoGridDeleteCancel => 'إلغاء';
-
-  @override
-  String get videoGridDeleteConfirm => 'حذف';
-
-  @override
   String get videoGridDeletingContent => 'جاري حذف المحتوى...';
-
-  @override
-  String get videoGridDeleteSuccess => 'تم إرسال طلب الحذف بنجاح';
 
   @override
   String videoGridDeleteFailure(Object error) {
@@ -3957,10 +3937,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get shareMenuDeleteVideoSubtitle => 'إزالة هذا المحتوى نهائيًا';
 
   @override
-  String get shareMenuDeleteWarning =>
-      'سيرسل هذا طلب حذف (NIP-09) إلى جميع المحولات. قد تحتفظ بعض المحولات بالمحتوى.';
-
-  @override
   String get shareMenuVideoInTheseLists => 'الفيديو في هذه القوائم:';
 
   @override
@@ -3973,7 +3949,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get shareMenuDeleteConfirmation =>
-      'هل أنت متأكد من رغبتك في حذف هذا الفيديو؟';
+      'سيؤدي هذا إلى حذف هذا الفيديو نهائيًا من Divine. قد يظل يظهر في عملاء Nostr تابعين لجهات خارجية يستخدمون مرحّلات أخرى.';
 
   @override
   String get shareMenuCancel => 'إلغاء';
@@ -3988,9 +3964,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String shareMenuFailedToDeleteContent(String error) {
     return 'فشل حذف المحتوى: $error';
   }
-
-  @override
-  String get shareMenuDeleteRequestSent => 'تم إرسال طلب الحذف بنجاح';
 
   @override
   String get shareMenuDeleteFailedNotInitialized =>
@@ -4107,11 +4080,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get shareMenuDeleteVideoQuestion => 'حذف الفيديو؟';
 
   @override
-  String get shareMenuDeleteRelayWarning =>
-      'سيرسل هذا طلب حذف إلى المحولات. ملاحظة: قد تحتفظ بعض المحولات بنسخ مخزّنة.';
-
-  @override
-  String get shareMenuVideoDeletionRequested => 'تم طلب حذف الفيديو';
+  String get shareMenuVideoDeletionRequested => 'تم حذف الفيديو';
 
   @override
   String get shareMenuContentLabels => 'وسوم المحتوى';
@@ -8428,10 +8397,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get videoRecorderContinueToEditorLabel => 'المتابعة إلى محرر الفيديو';
 
   @override
-  String get videoRecorderCaptureCloseLabel => 'إغلاق';
+  String get videoRecorderCameraPreviewLabel => 'معاينة الكاميرا';
 
   @override
-  String get videoRecorderCaptureNextLabel => 'التالي';
+  String get videoRecorderCameraPreviewFocusHint => 'تركيز الكاميرا';
+
+  @override
+  String videoRecorderSwitchToModeLabel(String mode) {
+    return 'التبديل إلى وضع $mode';
+  }
 
   @override
   String get videoRecorderLipSyncAddAudioFirst => 'أضف صوتًا قبل التسجيل';
@@ -8488,6 +8462,36 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get videoRecorderStabilizationModeAuto => 'تلقائي';
+
+  @override
+  String get videoRecorderFlashValueOff => 'إيقاف';
+
+  @override
+  String get videoRecorderFlashValueOn => 'تشغيل';
+
+  @override
+  String get videoRecorderFlashValueAuto => 'تلقائي';
+
+  @override
+  String get videoRecorderTimerValueOff => 'إيقاف';
+
+  @override
+  String get videoRecorderTimerValueThreeSeconds => '3 ثوانٍ';
+
+  @override
+  String get videoRecorderTimerValueTenSeconds => '10 ثوانٍ';
+
+  @override
+  String get videoRecorderAspectRatioValueSquare => 'مربع';
+
+  @override
+  String get videoRecorderAspectRatioValueVertical => 'عمودي';
+
+  @override
+  String get videoRecorderCameraValueFront => 'الكاميرا الأمامية';
+
+  @override
+  String get videoRecorderCameraValueBack => 'الكاميرا الخلفية';
 
   @override
   String get videoRecorderLibraryEmptyLabel => 'مكتبة المقاطع، لا توجد مقاطع';

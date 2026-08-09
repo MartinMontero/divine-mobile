@@ -452,13 +452,7 @@
     "videoGridEditVideoSubtitle": "タイトル、説明、ハッシュタグを更新",
     "videoGridDeleteVideo": "動画を削除",
     "videoGridDeleteVideoSubtitle": "このコンテンツを完全に削除する",
-    "videoGridDeleteConfirmTitle": "動画を削除",
-    "videoGridDeleteConfirmMessage": "この動画を本当に削除する?",
-    "videoGridDeleteConfirmNote": "すべてのリレーに削除リクエスト (NIP-09) を送るよ。一部のリレーではコンテンツが残ることもあるよ。",
-    "videoGridDeleteCancel": "キャンセル",
-    "videoGridDeleteConfirm": "削除",
     "videoGridDeletingContent": "コンテンツを削除中...",
-    "videoGridDeleteSuccess": "削除リクエストを送ったよ",
     "videoGridDeleteFailure": "コンテンツの削除がうまくいかなかった: {error}",
     "@videoGridDeleteFailure": {
         "placeholders": {
@@ -1568,12 +1562,10 @@
         }
     },
     "shareMenuClose": "閉じる",
-    "shareMenuDeleteConfirmation": "この動画を本当に削除する?",
-    "shareMenuDeleteWarning": "すべてのリレーに削除リクエスト (NIP-09) を送るよ。一部のリレーではキャッシュが残ることもあるよ。",
+    "shareMenuDeleteConfirmation": "この動画はDivineから完全に削除されます。他のリレーを使うサードパーティのNostrクライアントには、まだ表示される場合があります。",
     "shareMenuCancel": "キャンセル",
     "shareMenuDelete": "削除",
     "shareMenuDeletingContent": "コンテンツを削除中...",
-    "shareMenuDeleteRequestSent": "削除リクエストを送ったよ",
     "shareMenuFailedToDeleteContent": "コンテンツの削除がうまくいかなかった: {error}",
     "@shareMenuFailedToDeleteContent": {
         "placeholders": {
@@ -1617,8 +1609,7 @@
         }
     },
     "shareMenuDeleteVideoQuestion": "動画を削除する?",
-    "shareMenuDeleteRelayWarning": "リレーに削除リクエストを送るよ。注意: 一部のリレーにはキャッシュが残ることもあるよ。",
-    "shareMenuVideoDeletionRequested": "動画の削除をリクエストしたよ",
+    "shareMenuVideoDeletionRequested": "動画を削除しました",
     "shareMenuFailedToDeleteVideo": "動画の削除がうまくいかなかった: {error}",
     "@shareMenuFailedToDeleteVideo": {
         "placeholders": {
@@ -3228,8 +3219,9 @@
     "videoRecorderAutosaveFoundSubtitle": "続きから再開しますか？",
     "videoRecorderAutosaveFoundTitle": "作業中のものが見つかりました",
     "videoRecorderAutosaveRestoreFailure": "下書きを復元できませんでした",
-    "videoRecorderCaptureCloseLabel": "閉じる",
-    "videoRecorderCaptureNextLabel": "次へ",
+    "videoRecorderCameraPreviewLabel": "カメラプレビュー",
+    "videoRecorderCameraPreviewFocusHint": "カメラの焦点を合わせる",
+    "videoRecorderSwitchToModeLabel": "{mode}モードに切り替える",
     "videoRecorderLipSyncAddAudioFirst": "録画する前にオーディオを追加してください",
     "videoRecorderStopMotionAssembleFailed": "動画を作成できませんでした。もう一度お試しください。",
     "videoRecorderStopMotionShotsLeft": "{count, plural, =0{残り0枚} other{残り{count}枚}}",
@@ -3290,6 +3282,16 @@
     "videoRecorderStabilizationModePreviewOptimized": "プレビュー最適化",
     "videoRecorderStabilizationModeLowLatency": "低遅延",
     "videoRecorderStabilizationModeAuto": "自動",
+    "videoRecorderFlashValueOff": "オフ",
+    "videoRecorderFlashValueOn": "オン",
+    "videoRecorderFlashValueAuto": "自動",
+    "videoRecorderTimerValueOff": "オフ",
+    "videoRecorderTimerValueThreeSeconds": "3秒",
+    "videoRecorderTimerValueTenSeconds": "10秒",
+    "videoRecorderAspectRatioValueSquare": "正方形",
+    "videoRecorderAspectRatioValueVertical": "縦型",
+    "videoRecorderCameraValueFront": "前面カメラ",
+    "videoRecorderCameraValueBack": "背面カメラ",
     "videoRecorderToggleFlashLabel": "フラッシュを切り替え",
     "videoRecorderToggleGhostFrameLabel": "ゴーストフレームを切り替え",
     "videoRecorderToggleGridLabel": "グリッドを切り替え",

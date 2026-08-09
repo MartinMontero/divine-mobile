@@ -1126,27 +1126,7 @@ class AppLocalizationsAm extends AppLocalizations {
       'ይህን ቪዲዮ ከDivine አስወግድ። በሌሎች Nostr ደንበኞች ላይ አሁንም ሊታይ ይችላል።';
 
   @override
-  String get videoGridDeleteConfirmTitle => 'ቪዲዮ ሰርዝ';
-
-  @override
-  String get videoGridDeleteConfirmMessage =>
-      'ይሄ ይህን ቪዲዮ ከDivine እስከመጨረሻው ይሰርዘዋል። አሁንም ሌሎች ማስተላለፊያዎችን በሚጠቀሙ የሶስተኛ ወገን Nostr ደንበኞች ላይ ሊታይ ይችላል።';
-
-  @override
-  String get videoGridDeleteConfirmNote =>
-      'ይህ የስረዛ ጥያቄን ወደ ማስተላለፊያዎች ይልካል። ማስታወሻ፡ አንዳንድ ማሰራጫዎች አሁንም የተሸጎጡ ቅጂዎች ሊኖራቸው ይችላል።';
-
-  @override
-  String get videoGridDeleteCancel => 'ሰርዝ';
-
-  @override
-  String get videoGridDeleteConfirm => 'ሰርዝ';
-
-  @override
   String get videoGridDeletingContent => 'ይዘትን በመሰረዝ ላይ...';
-
-  @override
-  String get videoGridDeleteSuccess => 'ጥያቄውን ሰርዝ በተሳካ ሁኔታ ተልኳል።';
 
   @override
   String videoGridDeleteFailure(Object error) {
@@ -3914,10 +3894,6 @@ class AppLocalizationsAm extends AppLocalizations {
       'ይህን ቪዲዮ ከDivine አስወግድ። በሌሎች Nostr ደንበኞች ላይ አሁንም ሊታይ ይችላል።';
 
   @override
-  String get shareMenuDeleteWarning =>
-      'ይህ የመሰረዝ ጥያቄን (NIP-09) ለሁሉም ማሰራጫዎች ይልካል። አንዳንድ ማሰራጫዎች አሁንም ይዘቱን ሊይዙት ይችላሉ።';
-
-  @override
   String get shareMenuVideoInTheseLists => 'ቪዲዮው በእነዚህ ዝርዝሮች ውስጥ ነው፡-';
 
   @override
@@ -3945,9 +3921,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String shareMenuFailedToDeleteContent(String error) {
     return 'ይዘትን መሰረዝ አልተሳካም፦ $error';
   }
-
-  @override
-  String get shareMenuDeleteRequestSent => 'ቪዲዮ ተሰርዟል።';
 
   @override
   String get shareMenuDeleteFailedNotInitialized =>
@@ -4059,10 +4032,6 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get shareMenuDeleteVideoQuestion => 'ቪዲዮ ይሰረዝ?';
-
-  @override
-  String get shareMenuDeleteRelayWarning =>
-      'ይህ የስረዛ ጥያቄን ወደ ማስተላለፊያዎች ይልካል። ማስታወሻ፡ አንዳንድ ማሰራጫዎች አሁንም የተሸጎጡ ቅጂዎች ሊኖራቸው ይችላል።';
 
   @override
   String get shareMenuVideoDeletionRequested => 'ቪዲዮ ተሰርዟል።';
@@ -8313,10 +8282,15 @@ class AppLocalizationsAm extends AppLocalizations {
   String get videoRecorderContinueToEditorLabel => 'ወደ ቪዲዮ አርታዒ ይቀጥሉ';
 
   @override
-  String get videoRecorderCaptureCloseLabel => 'ገጠመ';
+  String get videoRecorderCameraPreviewLabel => 'የካሜራ ቅድመ እይታ';
 
   @override
-  String get videoRecorderCaptureNextLabel => 'ቀጥሎ';
+  String get videoRecorderCameraPreviewFocusHint => 'ካሜራውን አተኩር';
+
+  @override
+  String videoRecorderSwitchToModeLabel(String mode) {
+    return 'ወደ $mode ሁነታ ቀይር';
+  }
 
   @override
   String get videoRecorderLipSyncAddAudioFirst => 'ከመቅረጽ በፊት ኦዲዮ ያክሉ';
@@ -8369,6 +8343,36 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get videoRecorderStabilizationModeAuto => 'ራስ-ሰር';
+
+  @override
+  String get videoRecorderFlashValueOff => 'ጠፍቷል';
+
+  @override
+  String get videoRecorderFlashValueOn => 'በርቷል';
+
+  @override
+  String get videoRecorderFlashValueAuto => 'ራስ-ሰር';
+
+  @override
+  String get videoRecorderTimerValueOff => 'ጠፍቷል';
+
+  @override
+  String get videoRecorderTimerValueThreeSeconds => '3 ሰከንድ';
+
+  @override
+  String get videoRecorderTimerValueTenSeconds => '10 ሰከንድ';
+
+  @override
+  String get videoRecorderAspectRatioValueSquare => 'ካሬ';
+
+  @override
+  String get videoRecorderAspectRatioValueVertical => 'አቀባዊ';
+
+  @override
+  String get videoRecorderCameraValueFront => 'የፊት ካሜራ';
+
+  @override
+  String get videoRecorderCameraValueBack => 'የኋላ ካሜራ';
 
   @override
   String get videoRecorderLibraryEmptyLabel => 'ክሊፕ ቤተ-መጽሐፍት፣ ምንም ቅንጥቦች የሉም';
