@@ -882,6 +882,7 @@ class VideoEventPublisher {
     String? inspiredByAddressableId,
     String? inspiredByRelayUrl,
     String? inspiredByNpub,
+    List<ClipSourceCredit> clipSourceCredits = const [],
     AudioEvent? selectedAudio,
     AudioShareAttribution? audioShareAttribution,
     String? selectedAudioEventId,
@@ -911,6 +912,7 @@ class VideoEventPublisher {
       inspiredByAddressableId: inspiredByAddressableId,
       inspiredByRelayUrl: inspiredByRelayUrl,
       inspiredByNpub: inspiredByNpub,
+      clipSourceCredits: clipSourceCredits,
       selectedAudio: selectedAudio,
       audioShareAttribution: audioShareAttribution,
       selectedAudioEventId: selectedAudioEventId,
@@ -958,6 +960,7 @@ class VideoEventPublisher {
     String? inspiredByAddressableId,
     String? inspiredByRelayUrl,
     String? inspiredByNpub,
+    List<ClipSourceCredit> clipSourceCredits = const [],
     AudioEvent? selectedAudio,
     AudioShareAttribution? audioShareAttribution,
     String? selectedAudioEventId,
@@ -1002,6 +1005,7 @@ class VideoEventPublisher {
       inspiredByAddressableId: inspiredByAddressableId,
       inspiredByRelayUrl: inspiredByRelayUrl,
       inspiredByNpub: inspiredByNpub,
+      clipSourceCredits: clipSourceCredits,
       selectedAudio: selectedAudio,
       audioShareAttribution: audioShareAttribution,
       selectedAudioEventId: selectedAudioEventId,
@@ -1039,6 +1043,7 @@ class VideoEventPublisher {
     String? inspiredByAddressableId,
     String? inspiredByRelayUrl,
     String? inspiredByNpub,
+    List<ClipSourceCredit> clipSourceCredits = const [],
     AudioEvent? selectedAudio,
     AudioShareAttribution? audioShareAttribution,
     String? selectedAudioEventId,
@@ -1440,6 +1445,29 @@ class VideoEventPublisher {
         ]);
       }
 
+      final emittedAddressableCredits = <String>{
+        if (shouldEmitInspiredByATag) inspiredByAddressableId.toLowerCase(),
+      };
+      for (final credit in clipSourceCredits) {
+        final addressableId = credit.addressableId;
+        if (addressableId == null || addressableId.isEmpty) continue;
+
+        final creatorPubkey = credit.authorPubkey.trim().toLowerCase();
+        if (creatorPubkey.isNotEmpty && creatorPubkey == selfPubkey) {
+          continue;
+        }
+        if (!emittedAddressableCredits.add(addressableId.toLowerCase())) {
+          continue;
+        }
+
+        tags.add([
+          'a',
+          addressableId,
+          credit.relayUrl ?? 'wss://relay.divine.video',
+          clipSourceCreditTagMarker,
+        ]);
+      }
+
       // p-tag the inspired-by creator(s) so they are notifiable. Added after
       // the collaborator/mention p-tags so those win dedup and caption
       // @token resolution keeps matching caption mentions first. Reply
@@ -1454,6 +1482,13 @@ class VideoEventPublisher {
             addressableId: inspiredByAddressableId,
             npub: inspiredByNpub,
             relayHint: inspiredByRelayUrl,
+            selfPubkey: _authService?.currentPublicKeyHex,
+          ),
+        );
+        tags.addAll(
+          buildClipSourceCreditPTags(
+            existingTags: tags,
+            clipSourceCredits: clipSourceCredits,
             selfPubkey: _authService?.currentPublicKeyHex,
           ),
         );

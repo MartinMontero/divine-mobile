@@ -2545,6 +2545,8 @@ void main() {
 
     DivineVideoClip timelineClip({
       String id = 'clip-1',
+      String? sourceAuthorPubkey,
+      String? sourceEventId,
       String? sourceAddressableId,
       String? sourceRelayHint,
     }) {
@@ -2555,6 +2557,8 @@ void main() {
         recordedAt: DateTime(2026),
         targetAspectRatio: .vertical,
         originalAspectRatio: 9 / 16,
+        sourceAuthorPubkey: sourceAuthorPubkey,
+        sourceEventId: sourceEventId,
         sourceAddressableId: sourceAddressableId,
         sourceRelayHint: sourceRelayHint,
       );
@@ -2656,15 +2660,17 @@ void main() {
       );
     });
 
-    test('does not credit clips when reused sources disagree', () {
+    test('keeps all clip-source credits when reused sources disagree', () {
       container.read(clipManagerProvider.notifier).replaceClips([
         timelineClip(
           id: 'source-a',
+          sourceAuthorPubkey: 'd' * 64,
           sourceAddressableId: '34236:${'d' * 64}:source-a',
           sourceRelayHint: 'wss://source-a.relay',
         ),
         timelineClip(
           id: 'source-b',
+          sourceAuthorPubkey: 'e' * 64,
           sourceAddressableId: '34236:${'e' * 64}:source-b',
           sourceRelayHint: 'wss://source-b.relay',
         ),
@@ -2675,6 +2681,34 @@ void main() {
           .getActiveDraft();
 
       expect(draft.inspiredByVideo, isNull);
+      expect(
+        draft.clipSourceCredits.map((credit) => credit.addressableId),
+        equals([
+          '34236:${'d' * 64}:source-a',
+          '34236:${'e' * 64}:source-b',
+        ]),
+      );
+    });
+
+    test('credits author-only reused clip provenance', () {
+      container.read(clipManagerProvider.notifier).replaceClips([
+        timelineClip(
+          id: 'author-only',
+          sourceAuthorPubkey: sourceCreator,
+          sourceEventId: sourceVideoId,
+          sourceRelayHint: 'wss://source.relay',
+        ),
+      ], autosave: false);
+
+      final draft = container
+          .read(videoEditorProvider.notifier)
+          .getActiveDraft();
+
+      expect(draft.inspiredByVideo, isNull);
+      expect(draft.clipSourceCredits, hasLength(1));
+      expect(draft.clipSourceCredits.single.authorPubkey, sourceCreator);
+      expect(draft.clipSourceCredits.single.eventId, sourceVideoId);
+      expect(draft.clipSourceCredits.single.relayUrl, 'wss://source.relay');
     });
   });
 
