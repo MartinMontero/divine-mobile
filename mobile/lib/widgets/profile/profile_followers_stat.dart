@@ -41,6 +41,7 @@ class ProfileFollowersStat extends ConsumerWidget {
 
     if (isOwnProfile) {
       return BlocProvider(
+        key: ValueKey((followRepository, blocklistRepository, pubkey)),
         create: (_) => MyFollowersBloc(
           followRepository: followRepository,
           contentBlocklistRepository: blocklistRepository,

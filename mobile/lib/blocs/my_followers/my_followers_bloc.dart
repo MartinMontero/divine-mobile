@@ -1,12 +1,11 @@
 // ABOUTME: BLoC for displaying current user's followers list
 // ABOUTME: Fetches Kind 3 events that mention current user in 'p' tags
 
-import 'dart:math';
-
 import 'package:content_blocklist_repository/content_blocklist_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:follow_repository/follow_repository.dart';
+import 'package:openvine/blocs/followers/follower_visibility.dart';
 import 'package:unified_logger/unified_logger.dart';
 
 part 'my_followers_event.dart';
@@ -34,15 +33,6 @@ class MyFollowersBloc extends Bloc<MyFollowersEvent, MyFollowersState> {
   final FollowRepository _followRepository;
   final ContentBlocklistRepository _blocklistRepository;
 
-  /// Filter pubkeys by removing blocked and follow-severed users.
-  List<String> _filterPubkeys(List<String> pubkeys) => pubkeys
-      .where(
-        (pk) =>
-            !_blocklistRepository.isBlocked(pk) &&
-            !_blocklistRepository.isFollowSevered(pk),
-      )
-      .toList();
-
   /// Handle request to load current user's followers list.
   ///
   /// Delegates to [FollowRepository.watchMyFollowersCached] for
@@ -63,7 +53,10 @@ class MyFollowersBloc extends Bloc<MyFollowersEvent, MyFollowersState> {
       await emit.forEach<CacheResult<FollowersSnapshot>>(
         _followRepository.watchMyFollowersCached(),
         onData: (result) {
-          final visiblePubkeys = _filterPubkeys(result.data.pubkeys);
+          final visiblePubkeys = filterMyFollowerPubkeys(
+            pubkeys: result.data.pubkeys,
+            blocklistRepository: _blocklistRepository,
+          );
           return state.copyWith(
             status: MyFollowersStatus.success,
             rawFollowersPubkeys: result.data.pubkeys,
@@ -95,7 +88,10 @@ class MyFollowersBloc extends Bloc<MyFollowersEvent, MyFollowersState> {
     // re-filtering alone updates it.
     emit(
       state.copyWith(
-        followersPubkeys: _filterPubkeys(state.rawFollowersPubkeys),
+        followersPubkeys: filterMyFollowerPubkeys(
+          pubkeys: state.rawFollowersPubkeys,
+          blocklistRepository: _blocklistRepository,
+        ),
       ),
     );
   }

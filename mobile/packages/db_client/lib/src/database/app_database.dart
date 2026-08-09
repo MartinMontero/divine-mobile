@@ -122,6 +122,8 @@ class AppDatabase extends _$AppDatabase {
       );
     }
 
+    // TODO(any): Remove once the schema has moved past v2 and old installs
+    // have had enough upgrade time. Tracking issue: #6953.
     // Runs on every open, not only the launch that adds the column, so an
     // upgrade interrupted after the ALTER committed still heals. The statement
     // matches nothing once the rows are anchored.
