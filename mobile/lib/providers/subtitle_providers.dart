@@ -2,7 +2,6 @@
 // ABOUTME: Delegates fetch logic to fetchSubtitleCues in subtitle_fetcher.dart.
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/misc.dart';
 import 'package:http/http.dart' as http;
 import 'package:openvine/providers/nostr_client_provider.dart';
 import 'package:openvine/providers/shared_preferences_provider.dart';
@@ -32,8 +31,9 @@ final subtitleVisibilityOverrideProvider =
       SubtitleVisibilityOverride?
     >(SubtitleVisibilityOverrideNotifier.new);
 
-final ProviderFamily<bool, String> subtitleVisibilityForVideoProvider =
-    Provider.family<bool, String>((
+// ignore: specify_nonobvious_property_types
+final subtitleVisibilityForVideoProvider = Provider.autoDispose
+    .family<bool, String>((
       ref,
       videoId,
     ) {
@@ -63,6 +63,13 @@ class SubtitleVisibilityOverrideNotifier
   void clear() {
     if (!ref.mounted) return;
     state = null;
+  }
+
+  void clearIfVideo(String videoId) {
+    if (!ref.mounted) return;
+    if (state?.videoId == videoId) {
+      state = null;
+    }
   }
 
   void clearUnlessVideo(String videoId) {
