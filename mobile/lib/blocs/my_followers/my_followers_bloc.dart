@@ -1,6 +1,8 @@
 // ABOUTME: BLoC for displaying current user's followers list
 // ABOUTME: Fetches Kind 3 events that mention current user in 'p' tags
 
+import 'dart:math';
+
 import 'package:content_blocklist_repository/content_blocklist_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,6 +43,18 @@ class MyFollowersBloc extends Bloc<MyFollowersEvent, MyFollowersState> {
       )
       .toList();
 
+  int _visibleFollowerCount({
+    required List<String> rawPubkeys,
+    required List<String> visiblePubkeys,
+    required int authoritativeCount,
+  }) {
+    final hiddenKnownFollowers = rawPubkeys.length - visiblePubkeys.length;
+    return max(
+      visiblePubkeys.length,
+      authoritativeCount - hiddenKnownFollowers,
+    );
+  }
+
   /// Handle request to load current user's followers list.
   ///
   /// Delegates to [FollowRepository.watchMyFollowersCached] for
@@ -61,11 +75,16 @@ class MyFollowersBloc extends Bloc<MyFollowersEvent, MyFollowersState> {
       await emit.forEach<CacheResult<FollowersSnapshot>>(
         _followRepository.watchMyFollowersCached(),
         onData: (result) {
+          final visiblePubkeys = _filterPubkeys(result.data.pubkeys);
           return state.copyWith(
             status: MyFollowersStatus.success,
             rawFollowersPubkeys: result.data.pubkeys,
-            followersPubkeys: _filterPubkeys(result.data.pubkeys),
-            followerCount: result.data.count,
+            followersPubkeys: visiblePubkeys,
+            followerCount: _visibleFollowerCount(
+              rawPubkeys: result.data.pubkeys,
+              visiblePubkeys: visiblePubkeys,
+              authoritativeCount: result.data.count,
+            ),
             isRefreshing: result.isStale,
           );
         },
@@ -88,10 +107,20 @@ class MyFollowersBloc extends Bloc<MyFollowersEvent, MyFollowersState> {
     Emitter<MyFollowersState> emit,
   ) {
     if (state.status != MyFollowersStatus.success) return;
+    final visiblePubkeys = _filterPubkeys(state.rawFollowersPubkeys);
+    final previousHiddenKnownFollowers =
+        state.rawFollowersPubkeys.length - state.followersPubkeys.length;
+    final authoritativeCount =
+        state.followerCount + previousHiddenKnownFollowers;
 
     emit(
       state.copyWith(
-        followersPubkeys: _filterPubkeys(state.rawFollowersPubkeys),
+        followersPubkeys: visiblePubkeys,
+        followerCount: _visibleFollowerCount(
+          rawPubkeys: state.rawFollowersPubkeys,
+          visiblePubkeys: visiblePubkeys,
+          authoritativeCount: authoritativeCount,
+        ),
       ),
     );
   }

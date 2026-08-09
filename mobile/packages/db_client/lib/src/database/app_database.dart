@@ -79,21 +79,46 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.test(super.e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) async {
       await m.createAll();
     },
+    onUpgrade: (m, from, to) async {
+      if (from < 2) {
+        await m.addColumn(
+          profileStats,
+          profileStats.followerCountsUpdatedAt,
+        );
+      }
+    },
     beforeOpen: (details) async {
       // Create any missing tables that should have been part of v1
       await _createMissingTables();
+      await _createMissingColumns();
 
       // Run cleanup of expired data on every app startup
       await runStartupCleanup();
     },
   );
+
+  /// Creates columns that were added to existing tables but are missing from
+  /// some installs that previously relied on startup schema repair.
+  Future<void> _createMissingColumns() async {
+    final followerCountTimestampResult = await customSelect(
+      "SELECT name FROM pragma_table_info('profile_statistics') "
+      "WHERE name='follower_counts_updated_at'",
+    ).get();
+
+    if (followerCountTimestampResult.isEmpty) {
+      await customStatement(
+        'ALTER TABLE profile_statistics '
+        'ADD COLUMN follower_counts_updated_at INTEGER',
+      );
+    }
+  }
 
   /// Creates tables that were added to the schema but missing from some
   /// installs.
