@@ -7741,6 +7741,18 @@ class AppLocalizationsBg extends AppLocalizations {
       'Актуализирането на следването не успя. Опитай пак.';
 
   @override
+  String get followersSortSemanticLabel => 'Сортиране на последователите';
+
+  @override
+  String get followersSortTitle => 'Сортиране по';
+
+  @override
+  String get followersSortNewest => 'Първо най-новите';
+
+  @override
+  String get followersSortOldest => 'Първо най-старите';
+
+  @override
   String get reportMessageTitle => 'Докладвай съобщението';
 
   @override
