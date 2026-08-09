@@ -92,6 +92,7 @@ class AppDatabase extends _$AppDatabase {
           profileStats,
           profileStats.followerCountsUpdatedAt,
         );
+        await _backfillFollowerCountTimestamps();
       }
     },
     beforeOpen: (details) async {
@@ -117,7 +118,26 @@ class AppDatabase extends _$AppDatabase {
         'ALTER TABLE profile_statistics '
         'ADD COLUMN follower_counts_updated_at INTEGER',
       );
+      await _backfillFollowerCountTimestamps();
     }
+  }
+
+  /// Anchors pre-v2 follower counts to the time they were actually written.
+  ///
+  /// Rows that predate `follower_counts_updated_at` carry counts with a NULL
+  /// timestamp, and every reader falls back to `cached_at` when it is NULL.
+  /// But `cached_at` is bumped by unrelated profile-stat writes, so on those
+  /// rows the follower freshness clock would restart on every profile refresh:
+  /// the staleness check could never fire, and a count that was already wrong
+  /// would be held forever. Backfilling once at upgrade gives the clock a real
+  /// anchor. Idempotent — rows that already have a timestamp are skipped.
+  Future<void> _backfillFollowerCountTimestamps() async {
+    await customStatement(
+      'UPDATE profile_statistics '
+      'SET follower_counts_updated_at = cached_at '
+      'WHERE follower_counts_updated_at IS NULL '
+      'AND (follower_count IS NOT NULL OR following_count IS NOT NULL)',
+    );
   }
 
   /// Creates tables that were added to the schema but missing from some
