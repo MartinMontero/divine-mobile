@@ -3666,7 +3666,7 @@
   "commonNotNow": "Bukan Sekarang",
   "commonLoading": "Memuatkan",
   "@commonLoading": {
-    "description": "Screen-reader label for a blocking progress spinner that covers the screen while an action is being prepared. Announced instead of the content behind it, which is not reachable while the spinner is up."
+    "description": "Screen-reader label for a progress indicator, announced while content or an action is loading. Covers both a full-screen spinner that blocks the content behind it and a small inline one next to content that stays reachable."
   },
   "videoMetadataEditCoverFailedSnackbar": "Tidak dapat mengemas kini muka depan. Cuba lagi.",
   "@videoMetadataEditCoverFailedSnackbar": {
@@ -5112,8 +5112,9 @@
   },
   "videoRecorderCloseLabel": "Tutup perakam video",
   "videoRecorderContinueToEditorLabel": "Teruskan ke penyunting video",
-  "videoRecorderCaptureCloseLabel": "Tutup",
-  "videoRecorderCaptureNextLabel": "Seterusnya",
+  "videoRecorderCameraPreviewLabel": "Pratonton kamera",
+  "videoRecorderCameraPreviewFocusHint": "Fokuskan kamera",
+  "videoRecorderSwitchToModeLabel": "Tukar kepada mod {mode}",
   "videoRecorderLipSyncAddAudioFirst": "Tambah audio sebelum merakam",
   "@videoRecorderLipSyncAddAudioFirst": {
     "description": "Snackbar shown when the user taps the record button in lip-sync mode without first selecting a sound."
@@ -5141,6 +5142,16 @@
   "videoRecorderStabilizationModePreviewOptimized": "Pratonton Dioptimumkan",
   "videoRecorderStabilizationModeLowLatency": "Latensi Rendah",
   "videoRecorderStabilizationModeAuto": "Auto",
+  "videoRecorderFlashValueOff": "Mati",
+  "videoRecorderFlashValueOn": "Hidup",
+  "videoRecorderFlashValueAuto": "Auto",
+  "videoRecorderTimerValueOff": "Mati",
+  "videoRecorderTimerValueThreeSeconds": "3 saat",
+  "videoRecorderTimerValueTenSeconds": "10 saat",
+  "videoRecorderAspectRatioValueSquare": "Segi empat sama",
+  "videoRecorderAspectRatioValueVertical": "Menegak",
+  "videoRecorderCameraValueFront": "Kamera hadapan",
+  "videoRecorderCameraValueBack": "Kamera belakang",
   "videoRecorderLibraryEmptyLabel": "Pustaka klip, tiada klip",
   "videoRecorderLibraryOpenLabel": "{clipCount, plural, one{Buka pustaka klip, 1 klip} other{Buka pustaka klip, {clipCount} klip}}",
   "@videoRecorderLibraryOpenLabel": {

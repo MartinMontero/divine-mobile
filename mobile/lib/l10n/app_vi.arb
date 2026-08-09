@@ -3666,7 +3666,7 @@
   "commonNotNow": "Để sau",
   "commonLoading": "Đang tải",
   "@commonLoading": {
-    "description": "Screen-reader label for a blocking progress spinner that covers the screen while an action is being prepared. Announced instead of the content behind it, which is not reachable while the spinner is up."
+    "description": "Screen-reader label for a progress indicator, announced while content or an action is loading. Covers both a full-screen spinner that blocks the content behind it and a small inline one next to content that stays reachable."
   },
   "videoMetadataEditCoverFailedSnackbar": "Không cập nhật được ảnh bìa. Thử lại nhé.",
   "@videoMetadataEditCoverFailedSnackbar": {
@@ -5112,8 +5112,9 @@
   },
   "videoRecorderCloseLabel": "Đóng máy quay",
   "videoRecorderContinueToEditorLabel": "Tiếp tục tới trình chỉnh sửa video",
-  "videoRecorderCaptureCloseLabel": "Đóng",
-  "videoRecorderCaptureNextLabel": "Tiếp",
+  "videoRecorderCameraPreviewLabel": "Bản xem trước camera",
+  "videoRecorderCameraPreviewFocusHint": "Lấy nét camera",
+  "videoRecorderSwitchToModeLabel": "Chuyển sang chế độ {mode}",
   "videoRecorderLipSyncAddAudioFirst": "Thêm âm thanh trước khi quay",
   "@videoRecorderLipSyncAddAudioFirst": {
     "description": "Snackbar shown when the user taps the record button in lip-sync mode without first selecting a sound."
@@ -5141,6 +5142,16 @@
   "videoRecorderStabilizationModePreviewOptimized": "Tối ưu xem trước",
   "videoRecorderStabilizationModeLowLatency": "Độ trễ thấp",
   "videoRecorderStabilizationModeAuto": "Tự động",
+  "videoRecorderFlashValueOff": "Tắt",
+  "videoRecorderFlashValueOn": "Bật",
+  "videoRecorderFlashValueAuto": "Tự động",
+  "videoRecorderTimerValueOff": "Tắt",
+  "videoRecorderTimerValueThreeSeconds": "3 giây",
+  "videoRecorderTimerValueTenSeconds": "10 giây",
+  "videoRecorderAspectRatioValueSquare": "Vuông",
+  "videoRecorderAspectRatioValueVertical": "Dọc",
+  "videoRecorderCameraValueFront": "Camera trước",
+  "videoRecorderCameraValueBack": "Camera sau",
   "videoRecorderLibraryEmptyLabel": "Thư viện clip, không có clip",
   "videoRecorderLibraryOpenLabel": "{clipCount, plural, one{Mở thư viện clip, 1 clip} other{Mở thư viện clip, {clipCount} clip}}",
   "@videoRecorderLibraryOpenLabel": {
