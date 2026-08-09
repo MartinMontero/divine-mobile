@@ -1538,6 +1538,14 @@ class AppLocalizationsId extends AppLocalizations {
   String get audioAttributionUnavailableSound => 'Suara tidak tersedia';
 
   @override
+  String videoInspiredByAttributionMultiple(
+    String creatorName,
+    int additionalCreatorCount,
+  ) {
+    return 'Terinspirasi oleh @$creatorName +$additionalCreatorCount';
+  }
+
+  @override
   String videoInspiredByAttribution(String creatorName) {
     return 'Terinspirasi oleh @$creatorName';
   }
@@ -7473,6 +7481,14 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get videoClipDelete => 'Hapus klip';
+
+  @override
+  String inspiredByAttributionMultipleSemanticLabel(
+    String creatorName,
+    int additionalCreatorCount,
+  ) {
+    return 'Terinspirasi oleh $creatorName +$additionalCreatorCount. Ketuk untuk melihat profil mereka.';
+  }
 
   @override
   String inspiredByAttributionSemanticLabel(String creatorName) {

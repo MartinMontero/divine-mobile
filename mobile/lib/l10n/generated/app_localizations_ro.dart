@@ -1614,6 +1614,14 @@ class AppLocalizationsRo extends AppLocalizations {
   String get audioAttributionUnavailableSound => 'Sunet indisponibil';
 
   @override
+  String videoInspiredByAttributionMultiple(
+    String creatorName,
+    int additionalCreatorCount,
+  ) {
+    return 'Inspirat de @$creatorName +$additionalCreatorCount';
+  }
+
+  @override
   String videoInspiredByAttribution(String creatorName) {
     return 'Inspirat de @$creatorName';
   }
@@ -7683,6 +7691,14 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get videoClipDelete => 'Șterge clipul';
+
+  @override
+  String inspiredByAttributionMultipleSemanticLabel(
+    String creatorName,
+    int additionalCreatorCount,
+  ) {
+    return 'Inspirat de $creatorName +$additionalCreatorCount. Atinge ca să-i vezi profilul.';
+  }
 
   @override
   String inspiredByAttributionSemanticLabel(String creatorName) {

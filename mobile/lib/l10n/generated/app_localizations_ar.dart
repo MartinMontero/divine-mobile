@@ -1554,6 +1554,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get audioAttributionUnavailableSound => 'الصوت غير متاح';
 
   @override
+  String videoInspiredByAttributionMultiple(
+    String creatorName,
+    int additionalCreatorCount,
+  ) {
+    return 'مستوحى من @$creatorName +$additionalCreatorCount';
+  }
+
+  @override
   String videoInspiredByAttribution(String creatorName) {
     return 'مستوحى من @$creatorName';
   }
@@ -7462,6 +7470,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get videoClipDelete => 'حذف المقطع';
+
+  @override
+  String inspiredByAttributionMultipleSemanticLabel(
+    String creatorName,
+    int additionalCreatorCount,
+  ) {
+    return 'مستوحى من $creatorName +$additionalCreatorCount. اضغط لعرض ملفه الشخصي.';
+  }
 
   @override
   String inspiredByAttributionSemanticLabel(String creatorName) {
