@@ -152,6 +152,7 @@ void main() {
       tester,
     ) async {
       final errorTracker = _MockErrorAnalyticsTracker();
+      final classicCompleter = Completer<PopularVideosPage>();
       when(
         () => errorTracker.trackSlowOperation(
           operation: any(named: 'operation'),
@@ -177,8 +178,8 @@ void main() {
         if (variant == PopularVideosVariant.native) {
           return Future.value(_popularPage([_video('popular-native')]));
         }
-        // Never completes: the switch stays in flight for the whole test.
-        return Completer<PopularVideosPage>().future;
+        // Held open until the assertion so the switch stays in flight.
+        return classicCompleter.future;
       });
 
       await tester.pumpWidget(
@@ -234,6 +235,9 @@ void main() {
           location: 'explore_popular',
         ),
       ).called(1);
+
+      classicCompleter.complete(_popularPage([_video('popular-classic')]));
+      await tester.pumpAndSettle();
     });
   });
 }
