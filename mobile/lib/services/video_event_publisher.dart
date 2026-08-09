@@ -18,6 +18,7 @@ import 'package:nostr_sdk/event_kind.dart';
 import 'package:nostr_sdk/filter.dart';
 import 'package:nostr_sdk/relay/publish_outcome.dart';
 import 'package:nostr_sdk/relay/relay_pool.dart';
+import 'package:openvine/constants/app_constants.dart';
 import 'package:openvine/constants/nip71_migration.dart';
 import 'package:openvine/constants/video_editor_constants.dart';
 import 'package:openvine/exceptions/video_exceptions.dart';
@@ -1440,14 +1441,12 @@ class VideoEventPublisher {
         tags.add([
           'a',
           inspiredByAddressableId,
-          inspiredByRelayUrl ?? 'wss://relay.divine.video',
+          inspiredByRelayUrl ?? AppConstants.defaultRelayUrl,
           'mention',
         ]);
       }
 
-      final emittedAddressableCredits = <String>{
-        if (shouldEmitInspiredByATag) inspiredByAddressableId.toLowerCase(),
-      };
+      final emittedAddressableCredits = <String>{};
       for (final credit in clipSourceCredits) {
         final addressableId = credit.addressableId;
         if (addressableId == null || addressableId.isEmpty) continue;
@@ -1463,7 +1462,7 @@ class VideoEventPublisher {
         tags.add([
           'a',
           addressableId,
-          credit.relayUrl ?? 'wss://relay.divine.video',
+          credit.relayUrl ?? AppConstants.defaultRelayUrl,
           clipSourceCreditTagMarker,
         ]);
       }

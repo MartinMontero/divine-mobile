@@ -612,10 +612,11 @@ class DivineVideoClip {
     return raw
         .whereType<Map>()
         .map(
-          (credit) => model.ClipSourceCredit.fromJson(
+          (credit) => model.ClipSourceCredit.tryFromJson(
             Map<String, dynamic>.from(credit),
           ),
         )
+        .nonNulls
         .toList(growable: false);
   }
 
