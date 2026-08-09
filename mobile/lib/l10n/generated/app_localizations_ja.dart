@@ -6116,6 +6116,21 @@ class AppLocalizationsJa extends AppLocalizations {
   String get libraryDeleteSelectedClipsTooltip => '選択したクリップを削除';
 
   @override
+  String get libraryCloseSemanticLabel => 'ライブラリを閉じる';
+
+  @override
+  String get libraryStopSelectingClipsSemanticLabel => 'クリップの選択を終了';
+
+  @override
+  String get libraryOpenTrashSemanticLabel => '最近削除したクリップを開く';
+
+  @override
+  String get librarySortClipsSemanticLabel => 'クリップを並べ替える';
+
+  @override
+  String get librarySelectClipsSemanticLabel => 'クリップを選択';
+
+  @override
   String get librarySelect => '選択';
 
   @override
@@ -6283,6 +6298,16 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String videoClipSemanticLabel(String duration) {
     return '動画クリップ、$duration秒';
+  }
+
+  @override
+  String videoClipStopMotionSemanticLabel(String frames) {
+    return 'ストップモーションクリップ、$frames';
+  }
+
+  @override
+  String videoClipSemanticValueSelectedAtPosition(int position) {
+    return '選択済み、$position 番目';
   }
 
   @override
@@ -8093,9 +8118,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get libraryTrashEntryLabel => '最近削除した項目';
-
-  @override
   String get videoRecorderCloseLabel => '動画レコーダーを閉じる';
 
   @override
@@ -8717,9 +8739,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get videoEditorStopMotionFramesPerImageButtonLabel => 'フレーム';
 
   @override
-  String get libraryStopMotionClipLabel => 'ストップモーションクリップ';
-
-  @override
   String videoEditorStopMotionFramesPerImageValueSemanticLabel(int count) {
     return '1枚あたり$countフレーム';
   }
@@ -9167,9 +9186,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get videoEditorAddElementSemanticLabel => '要素を追加';
-
-  @override
-  String get videoEditorCloseSemanticLabel => '閉じる';
 
   @override
   String get videoEditorDoneSemanticLabel => '完了';
@@ -10657,4 +10673,36 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get videoMetadataContentWarningsPickerConfirmSemanticLabel =>
       '選択したコンテンツ警告を適用';
+
+  @override
+  String get videoEditorCloseEditorSemanticLabel => '動画エディターを閉じる';
+
+  @override
+  String get videoEditorContinueToPostDetailsSemanticLabel => '投稿の詳細に進む';
+
+  @override
+  String videoEditorDiscardToolChangesSemanticLabel(String tool) {
+    return '$toolでの変更を破棄';
+  }
+
+  @override
+  String videoEditorApplyToolChangesSemanticLabel(String tool) {
+    return '$toolでの変更を適用';
+  }
+
+  @override
+  String get videoEditorRemoveAudioSemanticLabel => '音声を削除';
+
+  @override
+  String rgbColorSemanticLabel(int red, int green, int blue) {
+    return 'RGB $red、$green、$blue';
+  }
+
+  @override
+  String videoEditorColorPickerSwatchSemanticLabel(
+    String picker,
+    String color,
+  ) {
+    return '$picker、$color';
+  }
 }

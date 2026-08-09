@@ -6088,6 +6088,21 @@ class AppLocalizationsZh extends AppLocalizations {
   String get libraryDeleteSelectedClipsTooltip => '删除选中片段';
 
   @override
+  String get libraryCloseSemanticLabel => '关闭素材库';
+
+  @override
+  String get libraryStopSelectingClipsSemanticLabel => '停止选择片段';
+
+  @override
+  String get libraryOpenTrashSemanticLabel => '打开最近删除的片段';
+
+  @override
+  String get librarySortClipsSemanticLabel => '对片段排序';
+
+  @override
+  String get librarySelectClipsSemanticLabel => '选择片段';
+
+  @override
   String get librarySelect => '选择';
 
   @override
@@ -6262,6 +6277,16 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String videoClipSemanticLabel(String duration) {
     return '视频片段，$duration 秒';
+  }
+
+  @override
+  String videoClipStopMotionSemanticLabel(String frames) {
+    return '定格动画片段，$frames';
+  }
+
+  @override
+  String videoClipSemanticValueSelectedAtPosition(int position) {
+    return '已选中，第 $position 个';
   }
 
   @override
@@ -8037,9 +8062,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get libraryTrashEntryLabel => '最近删除';
-
-  @override
   String get videoRecorderCloseLabel => '关闭录像机';
 
   @override
@@ -8653,9 +8675,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get videoEditorStopMotionFramesPerImageButtonLabel => '帧数';
 
   @override
-  String get libraryStopMotionClipLabel => '定格动画片段';
-
-  @override
   String videoEditorStopMotionFramesPerImageValueSemanticLabel(int count) {
     return '每图 $count 帧';
   }
@@ -9096,9 +9115,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get videoEditorAddElementSemanticLabel => '添加元素';
-
-  @override
-  String get videoEditorCloseSemanticLabel => '关闭';
 
   @override
   String get videoEditorDoneSemanticLabel => '完成';
@@ -10525,4 +10541,36 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get videoMetadataContentWarningsPickerConfirmSemanticLabel =>
       '应用所选内容警告';
+
+  @override
+  String get videoEditorCloseEditorSemanticLabel => '关闭视频编辑器';
+
+  @override
+  String get videoEditorContinueToPostDetailsSemanticLabel => '继续前往帖子详情';
+
+  @override
+  String videoEditorDiscardToolChangesSemanticLabel(String tool) {
+    return '放弃在$tool中的更改';
+  }
+
+  @override
+  String videoEditorApplyToolChangesSemanticLabel(String tool) {
+    return '应用在$tool中的更改';
+  }
+
+  @override
+  String get videoEditorRemoveAudioSemanticLabel => '移除音频';
+
+  @override
+  String rgbColorSemanticLabel(int red, int green, int blue) {
+    return 'RGB $red、$green、$blue';
+  }
+
+  @override
+  String videoEditorColorPickerSwatchSemanticLabel(
+    String picker,
+    String color,
+  ) {
+    return '$picker、$color';
+  }
 }

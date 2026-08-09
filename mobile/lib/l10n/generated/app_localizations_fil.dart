@@ -6471,6 +6471,23 @@ class AppLocalizationsFil extends AppLocalizations {
       'Burahin ang mga napiling clip';
 
   @override
+  String get libraryCloseSemanticLabel => 'Isara ang library';
+
+  @override
+  String get libraryStopSelectingClipsSemanticLabel =>
+      'Ihinto ang pagpili ng mga clip';
+
+  @override
+  String get libraryOpenTrashSemanticLabel =>
+      'Buksan ang mga kamakailang na-delete na clip';
+
+  @override
+  String get librarySortClipsSemanticLabel => 'Ayusin ang mga clip';
+
+  @override
+  String get librarySelectClipsSemanticLabel => 'Pumili ng mga clip';
+
+  @override
   String get librarySelect => 'Piliin';
 
   @override
@@ -6651,6 +6668,16 @@ class AppLocalizationsFil extends AppLocalizations {
   @override
   String videoClipSemanticLabel(String duration) {
     return 'Video clip, $duration segundo';
+  }
+
+  @override
+  String videoClipStopMotionSemanticLabel(String frames) {
+    return 'Stop-motion clip, $frames';
+  }
+
+  @override
+  String videoClipSemanticValueSelectedAtPosition(int position) {
+    return 'Napili, numero $position';
   }
 
   @override
@@ -8555,9 +8582,6 @@ class AppLocalizationsFil extends AppLocalizations {
   }
 
   @override
-  String get libraryTrashEntryLabel => 'Kamakailan lang na nabura';
-
-  @override
   String get videoRecorderCloseLabel => 'Isara ang video recorder';
 
   @override
@@ -9210,9 +9234,6 @@ class AppLocalizationsFil extends AppLocalizations {
   String get videoEditorStopMotionFramesPerImageButtonLabel => 'Mga frame';
 
   @override
-  String get libraryStopMotionClipLabel => 'Stop-motion na clip';
-
-  @override
   String videoEditorStopMotionFramesPerImageValueSemanticLabel(int count) {
     return '$count na frame kada larawan';
   }
@@ -9696,9 +9717,6 @@ class AppLocalizationsFil extends AppLocalizations {
 
   @override
   String get videoEditorAddElementSemanticLabel => 'Magdagdag ng element';
-
-  @override
-  String get videoEditorCloseSemanticLabel => 'Isara';
 
   @override
   String get videoEditorDoneSemanticLabel => 'Tapos na';
@@ -11243,4 +11261,37 @@ class AppLocalizationsFil extends AppLocalizations {
   @override
   String get videoMetadataContentWarningsPickerConfirmSemanticLabel =>
       'Ilapat ang mga napiling babala sa content';
+
+  @override
+  String get videoEditorCloseEditorSemanticLabel => 'Isara ang video editor';
+
+  @override
+  String get videoEditorContinueToPostDetailsSemanticLabel =>
+      'Magpatuloy sa mga detalye ng post';
+
+  @override
+  String videoEditorDiscardToolChangesSemanticLabel(String tool) {
+    return 'I-discard ang mga pagbabago sa $tool';
+  }
+
+  @override
+  String videoEditorApplyToolChangesSemanticLabel(String tool) {
+    return 'Ilapat ang mga pagbabago sa $tool';
+  }
+
+  @override
+  String get videoEditorRemoveAudioSemanticLabel => 'Alisin ang audio';
+
+  @override
+  String rgbColorSemanticLabel(int red, int green, int blue) {
+    return 'RGB $red, $green, $blue';
+  }
+
+  @override
+  String videoEditorColorPickerSwatchSemanticLabel(
+    String picker,
+    String color,
+  ) {
+    return '$picker, $color';
+  }
 }

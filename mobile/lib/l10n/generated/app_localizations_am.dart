@@ -6265,6 +6265,21 @@ class AppLocalizationsAm extends AppLocalizations {
   String get libraryDeleteSelectedClipsTooltip => 'የተመረጡ ቅንጥቦችን ሰርዝ';
 
   @override
+  String get libraryCloseSemanticLabel => 'ቤተ-መጻሕፍቱን ዝጋ';
+
+  @override
+  String get libraryStopSelectingClipsSemanticLabel => 'ቅንጥቦችን መምረጥ አቁም';
+
+  @override
+  String get libraryOpenTrashSemanticLabel => 'በቅርቡ የተሰረዙ ቅንጥቦችን ክፈት';
+
+  @override
+  String get librarySortClipsSemanticLabel => 'ቅንጥቦችን ደርድር';
+
+  @override
+  String get librarySelectClipsSemanticLabel => 'ቅንጥቦችን ምረጥ';
+
+  @override
   String get librarySelect => 'ምረጥ';
 
   @override
@@ -6441,6 +6456,16 @@ class AppLocalizationsAm extends AppLocalizations {
   @override
   String videoClipSemanticLabel(String duration) {
     return 'የቪዲዮ ክሊፕ፣ $duration ሰከንድ';
+  }
+
+  @override
+  String videoClipStopMotionSemanticLabel(String frames) {
+    return 'የእንቅስቃሴ-አልባ ቅንጥብ፣ $frames';
+  }
+
+  @override
+  String videoClipSemanticValueSelectedAtPosition(int position) {
+    return 'ተመርጧል፣ ቁጥር $position';
   }
 
   @override
@@ -8282,9 +8307,6 @@ class AppLocalizationsAm extends AppLocalizations {
   }
 
   @override
-  String get libraryTrashEntryLabel => 'በቅርቡ የተሰረዘ';
-
-  @override
   String get videoRecorderCloseLabel => 'የቪዲዮ መቅረጫ ዝጋ';
 
   @override
@@ -8912,9 +8934,6 @@ class AppLocalizationsAm extends AppLocalizations {
   String get videoEditorStopMotionFramesPerImageButtonLabel => 'ፍሬሞች';
 
   @override
-  String get libraryStopMotionClipLabel => 'የስቶፕ-ሞሽን ክሊፕ';
-
-  @override
   String videoEditorStopMotionFramesPerImageValueSemanticLabel(int count) {
     return 'በአንድ ምስል $count ፍሬሞች';
   }
@@ -9372,9 +9391,6 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get videoEditorAddElementSemanticLabel => 'ኤለመንት አክል';
-
-  @override
-  String get videoEditorCloseSemanticLabel => 'ገጠመ';
 
   @override
   String get videoEditorDoneSemanticLabel => 'ተከናውኗል';
@@ -10872,4 +10888,37 @@ class AppLocalizationsAm extends AppLocalizations {
   @override
   String get videoMetadataContentWarningsPickerConfirmSemanticLabel =>
       'የተመረጡ የይዘት ማስጠንቀቂያዎችን ተግብር';
+
+  @override
+  String get videoEditorCloseEditorSemanticLabel => 'የቪዲዮ አርታዒውን ዝጋ';
+
+  @override
+  String get videoEditorContinueToPostDetailsSemanticLabel =>
+      'ወደ ልጥፍ ዝርዝሮች ቀጥል';
+
+  @override
+  String videoEditorDiscardToolChangesSemanticLabel(String tool) {
+    return 'በ$tool ውስጥ የተደረጉ ለውጦችን አስወግድ';
+  }
+
+  @override
+  String videoEditorApplyToolChangesSemanticLabel(String tool) {
+    return 'በ$tool ውስጥ የተደረጉ ለውጦችን ተግብር';
+  }
+
+  @override
+  String get videoEditorRemoveAudioSemanticLabel => 'ኦዲዮን አስወግድ';
+
+  @override
+  String rgbColorSemanticLabel(int red, int green, int blue) {
+    return 'RGB $red, $green, $blue';
+  }
+
+  @override
+  String videoEditorColorPickerSwatchSemanticLabel(
+    String picker,
+    String color,
+  ) {
+    return '$picker, $color';
+  }
 }

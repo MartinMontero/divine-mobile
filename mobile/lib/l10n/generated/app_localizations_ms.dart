@@ -6441,6 +6441,21 @@ class AppLocalizationsMs extends AppLocalizations {
   String get libraryDeleteSelectedClipsTooltip => 'Padam klip dipilih';
 
   @override
+  String get libraryCloseSemanticLabel => 'Tutup pustaka';
+
+  @override
+  String get libraryStopSelectingClipsSemanticLabel => 'Berhenti memilih klip';
+
+  @override
+  String get libraryOpenTrashSemanticLabel => 'Buka klip yang baru dipadam';
+
+  @override
+  String get librarySortClipsSemanticLabel => 'Isih klip';
+
+  @override
+  String get librarySelectClipsSemanticLabel => 'Pilih klip';
+
+  @override
   String get librarySelect => 'Pilih';
 
   @override
@@ -6620,6 +6635,16 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String videoClipSemanticLabel(String duration) {
     return 'Klip video, $duration saat';
+  }
+
+  @override
+  String videoClipStopMotionSemanticLabel(String frames) {
+    return 'Klip stop-motion, $frames';
+  }
+
+  @override
+  String videoClipSemanticValueSelectedAtPosition(int position) {
+    return 'Dipilih, nombor $position';
   }
 
   @override
@@ -8510,9 +8535,6 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get libraryTrashEntryLabel => 'Baru dipadam';
-
-  @override
   String get videoRecorderCloseLabel => 'Tutup perakam video';
 
   @override
@@ -9155,9 +9177,6 @@ class AppLocalizationsMs extends AppLocalizations {
   String get videoEditorStopMotionFramesPerImageButtonLabel => 'Bingkai';
 
   @override
-  String get libraryStopMotionClipLabel => 'Klip stop-motion';
-
-  @override
   String videoEditorStopMotionFramesPerImageValueSemanticLabel(int count) {
     return '$count bingkai setiap imej';
   }
@@ -9637,9 +9656,6 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get videoEditorAddElementSemanticLabel => 'Tambah elemen';
-
-  @override
-  String get videoEditorCloseSemanticLabel => 'Tutup';
 
   @override
   String get videoEditorDoneSemanticLabel => 'Siap';
@@ -11184,4 +11200,37 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get videoMetadataContentWarningsPickerConfirmSemanticLabel =>
       'Gunakan amaran kandungan yang dipilih';
+
+  @override
+  String get videoEditorCloseEditorSemanticLabel => 'Tutup editor video';
+
+  @override
+  String get videoEditorContinueToPostDetailsSemanticLabel =>
+      'Teruskan ke butiran siaran';
+
+  @override
+  String videoEditorDiscardToolChangesSemanticLabel(String tool) {
+    return 'Buang perubahan dalam $tool';
+  }
+
+  @override
+  String videoEditorApplyToolChangesSemanticLabel(String tool) {
+    return 'Gunakan perubahan dalam $tool';
+  }
+
+  @override
+  String get videoEditorRemoveAudioSemanticLabel => 'Alih keluar audio';
+
+  @override
+  String rgbColorSemanticLabel(int red, int green, int blue) {
+    return 'RGB $red, $green, $blue';
+  }
+
+  @override
+  String videoEditorColorPickerSwatchSemanticLabel(
+    String picker,
+    String color,
+  ) {
+    return '$picker, $color';
+  }
 }

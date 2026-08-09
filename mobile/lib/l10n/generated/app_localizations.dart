@@ -11192,6 +11192,36 @@ abstract class AppLocalizations {
   /// **'Delete selected clips'**
   String get libraryDeleteSelectedClipsTooltip;
 
+  /// Accessibility label for the library toolbar button that leaves the library screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Close library'**
+  String get libraryCloseSemanticLabel;
+
+  /// Accessibility label for the library toolbar button that exits clip-selection mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop selecting clips'**
+  String get libraryStopSelectingClipsSemanticLabel;
+
+  /// Accessibility label for the library toolbar button that opens the recently deleted clips screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open recently deleted clips'**
+  String get libraryOpenTrashSemanticLabel;
+
+  /// Accessibility label for the library toolbar button that opens clip sorting options.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort clips'**
+  String get librarySortClipsSemanticLabel;
+
+  /// Accessibility label for the library toolbar button that enters clip-selection mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Select clips'**
+  String get librarySelectClipsSemanticLabel;
+
   /// No description provided for @librarySelect.
   ///
   /// In en, this message translates to:
@@ -11455,6 +11485,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Video clip, {duration} seconds'**
   String videoClipSemanticLabel(String duration);
+
+  /// Accessibility label for a stop-motion clip thumbnail. {frames} is the already-localized frame count from videoEditorStopMotionFramesCount. Replaces the duration label, which is a misleading value for stop-motion and is hidden visually for the same reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop-motion clip, {frames}'**
+  String videoClipStopMotionSemanticLabel(String frames);
+
+  /// Accessibility value for a selected video clip thumbnail, announcing its position in the selection order. Mirrors the number shown in the on-screen selection badge.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected, number {position}'**
+  String videoClipSemanticValueSelectedAtPosition(int position);
 
   /// No description provided for @videoClipSemanticValueSelected.
   ///
@@ -14568,12 +14610,6 @@ abstract class AppLocalizations {
   /// **'This permanently deletes {count, plural, =1{1 clip} other{{count} clips}} from trash right away.'**
   String libraryTrashEmptyConfirmMessage(int count);
 
-  /// Menu/button label on the library screen that opens the trash view.
-  ///
-  /// In en, this message translates to:
-  /// **'Recently deleted'**
-  String get libraryTrashEntryLabel;
-
   /// No description provided for @videoRecorderCloseLabel.
   ///
   /// In en, this message translates to:
@@ -15696,12 +15732,6 @@ abstract class AppLocalizations {
   /// **'Frames'**
   String get videoEditorStopMotionFramesPerImageButtonLabel;
 
-  /// Accessibility label for the badge that marks a clip in the library as a stop-motion recording.
-  ///
-  /// In en, this message translates to:
-  /// **'Stop-motion clip'**
-  String get libraryStopMotionClipLabel;
-
   /// Accessibility value announcing the current stop-motion hold length, in output frames per still.
   ///
   /// In en, this message translates to:
@@ -16497,12 +16527,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add element'**
   String get videoEditorAddElementSemanticLabel;
-
-  /// No description provided for @videoEditorCloseSemanticLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Close'**
-  String get videoEditorCloseSemanticLabel;
 
   /// No description provided for @videoEditorDoneSemanticLabel.
   ///
@@ -19119,6 +19143,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apply selected content warnings'**
   String get videoMetadataContentWarningsPickerConfirmSemanticLabel;
+
+  /// No description provided for @videoEditorCloseEditorSemanticLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Close video editor'**
+  String get videoEditorCloseEditorSemanticLabel;
+
+  /// No description provided for @videoEditorContinueToPostDetailsSemanticLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to post details'**
+  String get videoEditorContinueToPostDetailsSemanticLabel;
+
+  /// Accessibility label for closing a named video-editor tool without applying its changes.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard changes in {tool}'**
+  String videoEditorDiscardToolChangesSemanticLabel(String tool);
+
+  /// Accessibility label for applying changes made in a named video-editor tool.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply changes in {tool}'**
+  String videoEditorApplyToolChangesSemanticLabel(String tool);
+
+  /// No description provided for @videoEditorRemoveAudioSemanticLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove audio'**
+  String get videoEditorRemoveAudioSemanticLabel;
+
+  /// Accessibility label announcing a color swatch as its RGB triplet, used when the color has no human-readable name.
+  ///
+  /// In en, this message translates to:
+  /// **'RGB {red}, {green}, {blue}'**
+  String rgbColorSemanticLabel(int red, int green, int blue);
+
+  /// Joins the custom color swatch's picker role and its color description into one accessibility label. Translate the separator, not the placeholders: locales that do not list with a Latin comma should use their own (for example '、' or '، '), matching rgbColorSemanticLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{picker}, {color}'**
+  String videoEditorColorPickerSwatchSemanticLabel(String picker, String color);
 }
 
 class _AppLocalizationsDelegate

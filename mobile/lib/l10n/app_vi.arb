@@ -3725,6 +3725,11 @@
   "libraryTabClips": "Clip",
   "librarySaveToCameraRollTooltip": "Lưu vào thư viện ảnh",
   "libraryDeleteSelectedClipsTooltip": "Xóa clip đã chọn",
+  "libraryCloseSemanticLabel": "Đóng thư viện",
+  "libraryStopSelectingClipsSemanticLabel": "Dừng chọn clip",
+  "libraryOpenTrashSemanticLabel": "Mở các clip đã xóa gần đây",
+  "librarySortClipsSemanticLabel": "Sắp xếp clip",
+  "librarySelectClipsSemanticLabel": "Chọn clip",
   "librarySelect": "Chọn",
   "librarySortNewestCreation": "Mới tạo nhất",
   "librarySortOldestCreation": "Cũ nhất",
@@ -3846,6 +3851,7 @@
   "libraryAddClips": "Thêm",
   "libraryRecordVideo": "Quay video",
   "videoClipSemanticLabel": "Clip video, {duration} giây",
+  "videoClipStopMotionSemanticLabel": "Đoạn stop-motion, {frames}",
   "@videoClipSemanticLabel": {
     "description": "Accessibility label for a video clip thumbnail. Duration is formatted as seconds with 2 decimal places, e.g. '5.73'.",
     "placeholders": {
@@ -3854,6 +3860,7 @@
       }
     }
   },
+  "videoClipSemanticValueSelectedAtPosition": "Đã chọn, số {position}",
   "videoClipSemanticValueSelected": "Đã chọn",
   "videoClipSemanticValueNotSelected": "Chưa chọn",
   "videoClipSemanticHintDisabled": "Đã tắt",
@@ -5108,10 +5115,6 @@
       }
     }
   },
-  "libraryTrashEntryLabel": "Đã xóa gần đây",
-  "@libraryTrashEntryLabel": {
-    "description": "Menu/button label on the library screen that opens the trash view."
-  },
   "videoRecorderCloseLabel": "Đóng máy quay",
   "videoRecorderContinueToEditorLabel": "Tiếp tục tới trình chỉnh sửa video",
   "videoRecorderCaptureCloseLabel": "Đóng",
@@ -5383,10 +5386,6 @@
   "videoEditorStopMotionFramesPerImageButtonLabel": "Khung hình",
   "@videoEditorStopMotionFramesPerImageButtonLabel": {
     "description": "Short label under the stop-motion frames-per-image action button in the timeline edit bar."
-  },
-  "libraryStopMotionClipLabel": "Clip stop-motion",
-  "@libraryStopMotionClipLabel": {
-    "description": "Accessibility label for the badge that marks a clip in the library as a stop-motion recording."
   },
   "videoEditorStopMotionFramesPerImageValueSemanticLabel": "{count} khung hình mỗi ảnh",
   "@videoEditorStopMotionFramesPerImageValueSemanticLabel": {
@@ -5826,7 +5825,6 @@
   },
   "videoEditorHueSemanticLabel": "Tông màu",
   "videoEditorAddElementSemanticLabel": "Thêm phần tử",
-  "videoEditorCloseSemanticLabel": "Đóng",
   "videoEditorDoneSemanticLabel": "Xong",
   "videoEditorLevelSemanticLabel": "Mức",
   "videoMetadataClosePostDetailsSemanticLabel": "Đóng chi tiết bài đăng",
@@ -6784,5 +6782,12 @@
   "userPickerConfirmSemanticLabel": "Xác nhận người dùng đã chọn",
   "userPickerClearSelectionSemanticLabel": "Xóa lựa chọn người dùng",
   "videoMetadataContentWarningsPickerCancelSemanticLabel": "Hủy chọn cảnh báo nội dung",
-  "videoMetadataContentWarningsPickerConfirmSemanticLabel": "Áp dụng các cảnh báo nội dung đã chọn"
+  "videoMetadataContentWarningsPickerConfirmSemanticLabel": "Áp dụng các cảnh báo nội dung đã chọn",
+  "videoEditorCloseEditorSemanticLabel": "Đóng trình chỉnh sửa video",
+  "videoEditorContinueToPostDetailsSemanticLabel": "Tiếp tục đến chi tiết bài đăng",
+  "videoEditorDiscardToolChangesSemanticLabel": "Hủy thay đổi trong {tool}",
+  "videoEditorApplyToolChangesSemanticLabel": "Áp dụng thay đổi trong {tool}",
+  "videoEditorRemoveAudioSemanticLabel": "Xóa âm thanh",
+  "rgbColorSemanticLabel": "RGB {red}, {green}, {blue}",
+  "videoEditorColorPickerSwatchSemanticLabel": "{picker}, {color}"
 }

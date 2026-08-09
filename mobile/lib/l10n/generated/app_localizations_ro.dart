@@ -6552,6 +6552,23 @@ class AppLocalizationsRo extends AppLocalizations {
   String get libraryDeleteSelectedClipsTooltip => 'Șterge clipurile selectate';
 
   @override
+  String get libraryCloseSemanticLabel => 'Închide biblioteca';
+
+  @override
+  String get libraryStopSelectingClipsSemanticLabel =>
+      'Oprește selectarea clipurilor';
+
+  @override
+  String get libraryOpenTrashSemanticLabel =>
+      'Deschide clipurile șterse recent';
+
+  @override
+  String get librarySortClipsSemanticLabel => 'Sortează clipurile';
+
+  @override
+  String get librarySelectClipsSemanticLabel => 'Selectează clipuri';
+
+  @override
   String get librarySelect => 'Selectează';
 
   @override
@@ -6730,6 +6747,16 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String videoClipSemanticLabel(String duration) {
     return 'Clip video, $duration secunde';
+  }
+
+  @override
+  String videoClipStopMotionSemanticLabel(String frames) {
+    return 'Clip stop-motion, $frames';
+  }
+
+  @override
+  String videoClipSemanticValueSelectedAtPosition(int position) {
+    return 'Selectat, numărul $position';
   }
 
   @override
@@ -8638,9 +8665,6 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get libraryTrashEntryLabel => 'Șterse recent';
-
-  @override
   String get videoRecorderCloseLabel => 'Închide înregistratorul video';
 
   @override
@@ -9299,9 +9323,6 @@ class AppLocalizationsRo extends AppLocalizations {
   String get videoEditorStopMotionFramesPerImageButtonLabel => 'Cadre';
 
   @override
-  String get libraryStopMotionClipLabel => 'Clip stop-motion';
-
-  @override
   String videoEditorStopMotionFramesPerImageValueSemanticLabel(int count) {
     return '$count cadre pe imagine';
   }
@@ -9787,9 +9808,6 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get videoEditorAddElementSemanticLabel => 'Adaugă element';
-
-  @override
-  String get videoEditorCloseSemanticLabel => 'Închide';
 
   @override
   String get videoEditorDoneSemanticLabel => 'Gata';
@@ -11338,4 +11356,37 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String get videoMetadataContentWarningsPickerConfirmSemanticLabel =>
       'Aplică avertismentele de conținut selectate';
+
+  @override
+  String get videoEditorCloseEditorSemanticLabel => 'Închide editorul video';
+
+  @override
+  String get videoEditorContinueToPostDetailsSemanticLabel =>
+      'Continuă la detaliile postării';
+
+  @override
+  String videoEditorDiscardToolChangesSemanticLabel(String tool) {
+    return 'Renunță la modificările din $tool';
+  }
+
+  @override
+  String videoEditorApplyToolChangesSemanticLabel(String tool) {
+    return 'Aplică modificările din $tool';
+  }
+
+  @override
+  String get videoEditorRemoveAudioSemanticLabel => 'Elimină sunetul';
+
+  @override
+  String rgbColorSemanticLabel(int red, int green, int blue) {
+    return 'RGB $red, $green, $blue';
+  }
+
+  @override
+  String videoEditorColorPickerSwatchSemanticLabel(
+    String picker,
+    String color,
+  ) {
+    return '$picker, $color';
+  }
 }

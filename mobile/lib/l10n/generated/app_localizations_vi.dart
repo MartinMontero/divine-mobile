@@ -6401,6 +6401,21 @@ class AppLocalizationsVi extends AppLocalizations {
   String get libraryDeleteSelectedClipsTooltip => 'Xóa clip đã chọn';
 
   @override
+  String get libraryCloseSemanticLabel => 'Đóng thư viện';
+
+  @override
+  String get libraryStopSelectingClipsSemanticLabel => 'Dừng chọn clip';
+
+  @override
+  String get libraryOpenTrashSemanticLabel => 'Mở các clip đã xóa gần đây';
+
+  @override
+  String get librarySortClipsSemanticLabel => 'Sắp xếp clip';
+
+  @override
+  String get librarySelectClipsSemanticLabel => 'Chọn clip';
+
+  @override
   String get librarySelect => 'Chọn';
 
   @override
@@ -6580,6 +6595,16 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String videoClipSemanticLabel(String duration) {
     return 'Clip video, $duration giây';
+  }
+
+  @override
+  String videoClipStopMotionSemanticLabel(String frames) {
+    return 'Đoạn stop-motion, $frames';
+  }
+
+  @override
+  String videoClipSemanticValueSelectedAtPosition(int position) {
+    return 'Đã chọn, số $position';
   }
 
   @override
@@ -8463,9 +8488,6 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get libraryTrashEntryLabel => 'Đã xóa gần đây';
-
-  @override
   String get videoRecorderCloseLabel => 'Đóng máy quay';
 
   @override
@@ -9107,9 +9129,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String get videoEditorStopMotionFramesPerImageButtonLabel => 'Khung hình';
 
   @override
-  String get libraryStopMotionClipLabel => 'Clip stop-motion';
-
-  @override
   String videoEditorStopMotionFramesPerImageValueSemanticLabel(int count) {
     return '$count khung hình mỗi ảnh';
   }
@@ -9584,9 +9603,6 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get videoEditorAddElementSemanticLabel => 'Thêm phần tử';
-
-  @override
-  String get videoEditorCloseSemanticLabel => 'Đóng';
 
   @override
   String get videoEditorDoneSemanticLabel => 'Xong';
@@ -11127,4 +11143,38 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get videoMetadataContentWarningsPickerConfirmSemanticLabel =>
       'Áp dụng các cảnh báo nội dung đã chọn';
+
+  @override
+  String get videoEditorCloseEditorSemanticLabel =>
+      'Đóng trình chỉnh sửa video';
+
+  @override
+  String get videoEditorContinueToPostDetailsSemanticLabel =>
+      'Tiếp tục đến chi tiết bài đăng';
+
+  @override
+  String videoEditorDiscardToolChangesSemanticLabel(String tool) {
+    return 'Hủy thay đổi trong $tool';
+  }
+
+  @override
+  String videoEditorApplyToolChangesSemanticLabel(String tool) {
+    return 'Áp dụng thay đổi trong $tool';
+  }
+
+  @override
+  String get videoEditorRemoveAudioSemanticLabel => 'Xóa âm thanh';
+
+  @override
+  String rgbColorSemanticLabel(int red, int green, int blue) {
+    return 'RGB $red, $green, $blue';
+  }
+
+  @override
+  String videoEditorColorPickerSwatchSemanticLabel(
+    String picker,
+    String color,
+  ) {
+    return '$picker, $color';
+  }
 }
