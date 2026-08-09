@@ -36,7 +36,12 @@ void main() {
       // unrelated profile-stat writes keep bumping — so the staleness clock
       // would restart forever and an already-wrong count could never be
       // replaced.
-      final writtenAt = DateTime(2026, 8, 8, 22);
+      // Relative to now on purpose: the fixture age is load-bearing in both
+      // directions. It must be past the 5-minute stats cache so cleanup sweeps
+      // the count-free row, and inside the follower window so the anchored row
+      // survives. An absolute date drifts out of that band and fails the test
+      // for reasons unrelated to the backfill.
+      final writtenAt = DateTime.now().subtract(const Duration(hours: 10));
       final schema = await verifier.schemaAt(1);
       schema.rawDatabase.execute(
         'INSERT INTO profile_statistics '

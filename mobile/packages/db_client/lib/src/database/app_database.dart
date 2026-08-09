@@ -88,11 +88,11 @@ class AppDatabase extends _$AppDatabase {
     },
     onUpgrade: (m, from, to) async {
       if (from < 2) {
-        await m.addColumn(
-          profileStats,
-          profileStats.followerCountsUpdatedAt,
-        );
-        await _backfillFollowerCountTimestamps();
+        // Reuse the repair path rather than a bare addColumn: it tolerates an
+        // install that already has the column despite reporting an older
+        // user_version, which is the schema drift _createMissingColumns
+        // exists to absorb.
+        await _createMissingColumns();
       }
     },
     beforeOpen: (details) async {
@@ -115,11 +115,17 @@ class AppDatabase extends _$AppDatabase {
 
     if (followerCountTimestampResult.isEmpty) {
       await customStatement(
+        // Mirrors the declaration drift's own addColumn emits, so a database
+        // repaired here validates identically to one migrated by drift.
         'ALTER TABLE profile_statistics '
-        'ADD COLUMN follower_counts_updated_at INTEGER',
+        'ADD COLUMN follower_counts_updated_at INTEGER NULL',
       );
-      await _backfillFollowerCountTimestamps();
     }
+
+    // Runs on every open, not only the launch that adds the column, so an
+    // upgrade interrupted after the ALTER committed still heals. The statement
+    // matches nothing once the rows are anchored.
+    await _backfillFollowerCountTimestamps();
   }
 
   /// Anchors pre-v2 follower counts to the time they were actually written.
