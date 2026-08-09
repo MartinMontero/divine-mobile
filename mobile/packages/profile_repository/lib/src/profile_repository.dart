@@ -511,12 +511,9 @@ class ProfileRepository implements ProfileReader {
   /// Returns `null` when no event is found or the query fails.
   Future<Event?> _fetchIdentityEvent(String pubkey) async {
     try {
-      final events = await _nostrClient.queryEvents(
-        [
-          Filter(kinds: const [identityEventKind], authors: [pubkey], limit: 5),
-        ],
-        useCache: false,
-      );
+      final events = await _nostrClient.queryEvents([
+        Filter(kinds: const [identityEventKind], authors: [pubkey], limit: 5),
+      ], useCache: false);
       final identityEvents = events
           .where((e) => e.kind == identityEventKind)
           .toList();
@@ -583,8 +580,8 @@ class ProfileRepository implements ProfileReader {
         pubkey: row.pubkey,
         videoCount: row.videoCount ?? 0,
         totalLikes: row.totalLikes ?? 0,
-        followers: row.followerCount ?? 0,
-        following: row.followingCount ?? 0,
+        followers: row.followerCount,
+        following: row.followingCount,
         totalViews: row.totalViews ?? 0,
         lastUpdated: row.cachedAt,
       );
